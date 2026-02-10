@@ -67,10 +67,10 @@ This platform bridges the gap between citizen ideas and municipal decision-makin
 ```
 ┌─────────────────────────────────────────────────┐
 │           FRONTEND (React + TS)                 │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐     │
-│  │ 3D Map   │→ │ Proposal │→ │  Agent   │     │
-│  │ Mapbox   │  │  Panel   │  │  Panel   │     │
-│  └──────────┘  └──────────┘  └──────────┘     │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐       │
+│  │ 3D Map   │→ │ Proposal │→ │  Agent   │       │
+│  │ Mapbox   │  │  Panel   │  │  Panel   │       │
+│  └──────────┘  └──────────┘  └──────────┘       │
 └──────────────────┬──────────────────────────────┘
                    │
          ┌─────────▼─────────┐
@@ -261,7 +261,7 @@ Five specialist agents evaluate every proposal:
 
 ## 🎓 Academic Context
 
-This project is part of a master's thesis at **IAAC (Institute for Advanced Architecture of Catalonia)** exploring the intersection of:
+This project is part of **MaAI**'s "AI for All" class at **IAAC (Institute for Advanced Architecture of Catalonia)** exploring the intersection of:
 - **Participatory Urban Planning**
 - **AI-Assisted Decision Making**
 - **Civic Technology**
@@ -280,19 +280,9 @@ MIT License — Feel free to use this project for academic or personal purposes.
 
 ---
 
-## 🙏 Acknowledgments
-
-- **Mapbox** — 3D mapping infrastructure
-- **Recharts** — Data visualization
-- **Dieter Rams** — Design philosophy inspiration
-- **Barcelona City Council** — Urban data and inspiration
-
----
 
 ## 📧 Contact
 
 For questions, collaboration, or feedback about this project, please open an issue or reach out via GitHub.
 
----
 
-**Built with ❤️ in Barcelona**
