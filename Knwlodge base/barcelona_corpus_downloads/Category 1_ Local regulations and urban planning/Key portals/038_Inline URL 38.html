@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<!--[if IE 7]> <html lang="ca" class="ie ie7"> <![endif]-->
+<!--[if IE 8]> <html lang="ca" class="ie ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="ca" class="ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="ca"> <!--<![endif]-->
+  <head>
+    <!--[if lte ie 8]><script type="text/javascript" src="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/html5.min.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/select2/select2.css" />
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/css/:version:2022-01-27T09:22:25.80/main.min.css" />
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/font-awesome/css/font-awesome.min.css" />
+<!--[if ie 7]><link rel="stylesheet" type="text/css" href="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/font-awesome/css/font-awesome-ie7.min.css" /><![endif]-->
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/ckanext-geoview/:version:2021-11-25T16:05:46/css/geo-resource-styles.css" />
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/odatabcn/:version:2026-02-04T10:58:13.30/odatabcn.css" />
+
+    <meta charset="utf-8" />
+      <meta name="generator" content="ckan 2.6.9" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catàleg del Repositori Obert de Coneixement de l&#39;Ajuntament de Barcelona (BCNROC) - Conjunts de dades - Open Data Barcelona</title>
+
+    
+    <link rel="shortcut icon" href="https://www.barcelona.cat/favicon.ico" />
+    
+    
+  
+      
+    
+
+  
+  
+  <script type="text/javascript" src="https://w9.barcelona.cat/assets/core/javascripts/core.js"></script>
+  
+  <meta name="theme-color" content="#1e529e" />
+
+
+    
+
+
+    
+      
+      
+    
+  
+  <meta property="og:title" content="Catàleg del Repositori Obert de Coneixement de l&#39;Ajuntament de Barcelona (BCNROC) - Open Data Barcelona">
+  <meta property="og:description" content="Meta data and documents from the catalogue of Barcelona City Council&amp;#39;s public document repository (BCNROC)">
+
+    
+  </head>
+
+  
+  <body data-site-root="https://opendata-ajuntament.barcelona.cat/data/" data-locale-root="https://opendata-ajuntament.barcelona.cat/data/ca/" >
+
+    
+    <div class="hide"><a href="#content">Saltar al contingut</a></div>
+  
+
+  
+    
+
+
+<div id="wrapper">
+
+
+<!-- NIRON_opendata_2026-01-14T12:43:07Z  -->
+<header id="brand" alias="opendata" brand="opendata_2026-01-14T12:43:07Z" class="v2025 bcnbrand-legacy lang-ca" data-plausible="bcn0257" data-matomo="LYVTvL8u" data-avisos="auto" data-web-cerca="https%3A%2F%2Fopendata-ajuntament.barcelona.cat%2F" data-web-nom="Open Data BCN" data-cercador="true">
+    <div id="ajuntament-avisos-header"/>
+    <div class="bcnbrand-navs-container container">
+        <!-- Logo -->
+        <div class="bcnbrand-logo-main">
+            <a class="plausible-event-name=barra-logo" target="_blank" href="https://www.barcelona.cat/ca/" data-ga="L'Ajuntament">
+                <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/logo-ajbcn.svg" alt="Logo Ajuntament de Barcelona">
+      </a>
+            </div>
+            <div class="bcnbrand-navs-wrapper">
+                <!-- Idiomas -->
+                <nav class="bcnbrand-lang lang" id="bcnbrand-lang-nav" aria-label="Selecciona idioma">
+                    <div class="bcnbrand-dropdown bcnbrand-lang-dropdown" id="bcnbrand-lang-dropdown">
+                        <button id="bcnbrand-lang-toggle" class="bcnbrand-dropdown-toggle bcnbrand-nav-link plausible-event-name=barra-idioma-desplegar" aria-expanded="false" aria-controls="bcnbrand-language-dropdown-list" aria-label="Català (Canviar idioma)">
+                            <span class="bcnbrand-icon icobcn-mon2-l-light" aria-hidden="true"></span>
+                            Català
+                            <span class="bcnbrand-icon icobcn-fletxa-baix3" aria-hidden="true"></span>
+                            <span class="custom-tooltip">Selecciona un idioma</span>
+                        </button>
+                        <div class="bcnbrand-dropdown-menu bcnbrand-list" id="bcnbrand-language-dropdown-list" aria-label="Selecciona idioma">
+                            <h2 class="header-menu-bcnbrand-lang" tabindex="-1">Selecciona idioma</h2>
+                            <ul>
+                                <li>
+                                    <a href="/data/ca/dataset/cataleg-bcnroc" aria-current="true" class="active" lang="ca" data-ga="CA">Català</a>
+                                </li>
+                                <li>
+                                    <a href="/data/es/dataset/cataleg-bcnroc" lang="es" data-ga="ES">Castellano</a>
+                                </li>
+                                <li>
+                                    <a href="/data/en/dataset/cataleg-bcnroc" lang="en" data-ga="EN">English</a>
+                                </li>
+                            </ul>
+                            <!--<h2 class="header-menu-bcnbrand-lang-extended" tabindex="-1">Contingut específic en altres idiomes:</h2>
+            <ul class="bcnbrand-language-extended">
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/es/bienvenido-barcelona" class="plausible-event-name=barra-idioma-refugiat-ES" title="Si eres un refugiado" lang="es">Si eres un refugiado</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/en/welcome-barcelona" class="plausible-event-name=barra-idioma-refugiat-EN" title="If you are a refugee" lang="en">If you are a refugee</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/fr/bienvenue-barcelone" class="plausible-event-name=barra-idioma-refugiat-FR" title="Si vous êtes réfugié(e)" lang="fr">Si vous êtes réfugié(e)</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/ar/hl-bk-fy-brshlwn" class="plausible-event-name=barra-idioma-refugiat-AR" title="إذا كنت لاجئا " lang="ar">إذا كنت لاجئا </a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/ru/dobro-pozhalovat-v-barselonu" class="plausible-event-name=barra-idioma-refugiat-RU" title="если вы являетесь беженцем" lang="ru">если вы являетесь беженцем</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/ur/brslwn-myn-khwsh-amdyd" class="plausible-event-name=barra-idioma-refugiat-UR" title="اگر آپ مہاجر ہیں " lang="ur">اگر آپ مہاجر ہیں </a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/uk/vitayemo-v-barseloni" class="plausible-event-name=barra-idioma-refugiat-UK" title="Якщо ви біженець" lang="uk">Якщо ви біженець</a>
+              </li>
+            </ul>-->
+                        </div>
+                    </div>
+                </nav>
+                <!-- Buscador -->
+                <nav class="bcnbrand-navbar-search" aria-label="Cerca en el web">
+                    <div class="bcnbrand-dropdown" id="bcnbrand-search-dropdown">
+                        <button id="bcnbrand-search-toggle" class="bcnbrand-dropdown-toggle bcnbrand-nav-link plausible-event-name=barra-cerca-desplegar" aria-expanded="false" aria-controls="bcnbrand-search-menu" aria-describedby="tooltip-search">
+                            <span class="bcnbrand-icon icobcn-lupa-l" aria-hidden="true"/>
+                            <span id="tooltip-search" role="tooltip" class="custom-tooltip">Cerca en el web</span>
+                        </button>
+                        <div class="bcnbrand-dropdown-menu" id="bcnbrand-search-menu">
+                            <form action="https://cercador.barcelona.cat/ca" method="get">
+                                <div class="bcnbrand-search-wrapper">
+                                    <label for="bcnbrand-search-input" class="bcnbrand-search-input-label">Cerca en el web</label>
+                                    <input id="bcnbrand-search-input" type="text" name="query"/>
+                                    <button type="button" id="bcnbrand-search-clear" hidden aria-label="Esborra el text">
+                                        <span class="bcnbrand-icon icobcn-creu-l" aria-hidden="true"/>
+                                    </button>
+                                    <button type="submit" aria-label="Cerca en el web" data-ga="Cerca en el web" class="plausible-event-name=barra-cerca">
+                                        <span class="bcnbrand-icon icobcn-lupa-l" aria-hidden="true"/>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Atajos -->
+                <nav class="bcnbrand-navbar-shortcuts" aria-label="Altres webs municipals">
+                    <div class="bcnbrand-dropdown" id="bcnbrand-shortcuts-dropdown">
+                        <button id="bcnbrand-shortcuts-toggle" class="bcnbrand-dropdown-toggle bcnbrand-nav-link plausible-event-name=barra-drecera-desplegar" aria-expanded="false" aria-controls="bcnbrand-shortcuts-menu">
+                            <span class="bcnbrand-icon icobcn-grid" aria-hidden="true"/>
+                            <span class="custom-tooltip">Altres webs</span>
+                        </button>
+                        <div class="bcnbrand-dropdown-menu" id="bcnbrand-shortcuts-menu">
+                            <div class="bcnbrand-list">
+                                <h2>Altres webs de l'Ajuntament de Barcelona</h2>
+                                <div role="list">
+                                    <div class="bcnbrand-row">
+                                        <div role="listitem">
+                                            <a target="_blank" href="https://ajuntament.barcelona.cat/ca/" class="plausible-event-name=barra-drecera-ajuntament">
+                                                <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-ajuntament.svg" alt="">
+                                                    <span class="bcnbrand-link">L'Ajuntament</span>
+                                                </a>
+                                            </div>
+                                            <div role="listitem">
+                                                <a target="_blank" href="https://ajuntament.barcelona.cat/canals-comunicacio-ciutadana/" class="plausible-event-name=barra-drecera-Canals%20de%20comunicaci%C3%B3">
+                                                    <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-iris.svg" alt="">
+                                                        <span class="bcnbrand-link">Contacte</span>
+                                                    </a>
+                                                </div>
+                                                <div role="listitem">
+                                                    <a target="_blank" href="https://seuelectronica.ajuntament.barcelona.cat/oficinavirtual/ca/" class="plausible-event-name=barra-drecera-Tr%C3%A0mits">
+                                                        <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-tramits.svg" alt="">
+                                                            <span class="bcnbrand-link">Tràmits</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="bcnbrand-row">
+                                                    <div role="listitem">
+                                                        <a target="_blank" href="https://seuelectronica.ajuntament.barcelona.cat/processosselectius/ca" class="plausible-event-name=barra-drecera-Processos-selectius">
+                                                            <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-difusio.svg" alt="">
+                                                                <span class="bcnbrand-link">Treballa a l'Ajuntament</span>
+                                                            </a>
+                                                        </div>
+                                                        <div role="listitem">
+                                                            <a target="_blank" href="https://www.barcelona.cat/infobarcelona/ca/" class="plausible-event-name=barra-drecera-Info%20Barcelona">
+                                                                <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-premsa.svg" alt="">
+                                                                    <span class="bcnbrand-link">Noticies</span>
+                                                                </a>
+                                                            </div>
+                                                            <div role="listitem">
+                                                                <a target="_blank" href="https://guia.barcelona.cat/ca/" class="plausible-event-name=barra-drecera-Guia%20BCN">
+                                                                    <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-agenda.svg" alt="">
+                                                                        <span class="bcnbrand-link">Agenda</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bcnbrand-row bcnbrand-row--center">
+                                                                <div role="listitem">
+                                                                    <a target="_blank" href="https://geoportal.barcelona.cat/planolbcn/ca/" class="plausible-event-name=barra-drecera-Pl%C3%A0nol%20BCN">
+                                                                        <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-planol.svg" alt="">
+                                                                            <span class="bcnbrand-link">Mapa</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div role="listitem">
+                                                                        <a target="_blank" href="https://www.barcelona.cat/com-shi-va/ca/" class="plausible-event-name=barra-drecera-Com%20Com%20s%27hi%20va">
+                                                                            <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-comshiva.svg" alt="">
+                                                                                <span class="bcnbrand-link">Com s'hi va</span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </header>
+
+<div id="portal-title" class="bcnbrand-navs-container container">
+	<h1><a href="/ca/"><!--<span class="bcn-icon-dades-obertes" style="color:#000; font-size: 0.75em;"></span> Open Data <span>BCN</span>--><span>Open Data BCN</span></a></h1>
+	<p class="slogan">Servei de dades obertes de l&#39;Ajuntament de Barcelona</p>
+</div>
+
+<div class="clearfix"></div>
+<div id="nav-wrapper">
+<header class="navbar navbar-static-top masthead" id="navbar"  data-spy="affix" data-offset-top="60">
+	<div id="mobile-title">
+		<h1><a href="/ca/">Open Data <span>BCN</span></a></h1>
+	</div>
+  
+    
+  
+  <div class="container">
+    
+    <hgroup class="header-image pull-left">
+
+      
+          <a href="/" class="home-link">
+	        <span class="bcn-icon-casa hidden-xs"></span>
+			<span>Open Data Barcelona</span>
+          </a>
+          
+      
+
+    </hgroup>
+
+	<button class="navbar-toggle collapsed" type="button" data-target=".nav-collapse" data-toggle="collapse">
+       <span class="bcn-icon-tancar-medium"></span>
+    </button>
+    <div class="nav-collapse collapse" id="block-bcn-megamenu-bcn-megamenu-main-menu">
+
+      
+		
+		<div class="menu-overlay"></div>
+        <nav class="section navigation">
+          <ul class="nav nav-pills">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Sobre aquest lloc <i class="arrow bcn-icon-baix-medium"></i></span></a>
+			  	<ul class="dropdown-menu" role="menu">
+					<li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Sobre aquest lloc</a>
+					</li>
+					<li class="first" aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/open-data-bcn"><span>Open Data BCN</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/caracteristiques-portal"><span>Característiques del portal</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/iniciatives-relacionades"><span>Iniciatives relacionades</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/faqs"><span>FAQs</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="active"><a href="/data/ca/dataset"><span>Catàleg de datasets</span></a></li>
+          	<!--<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Actualitat <i class="arrow bcn-icon-baix-medium"></i></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Actualitat</a>
+					</li>
+					<li class="first" aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/novetats"><span>Novetats del portal</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/noticies"><span>Notícies</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/entrevistes"><span>Entrevistes</span></a>
+					</li>
+                    <li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/histories-us"><span>Histories d&#39;ús</span></a>
+					</li>
+				</ul> 
+			</li>-->
+            <li class="dropdown">
+				<!--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span >Visualitzacions<br />i</br />aplicacions <i class="arrow bcn-icon-baix-medium"></i></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Visualitzacions i aplicacions</a>
+					<li aria-controls="main-menu-ul" aria-checked="false" class="first">
+						<a href="/ca/visualitzacions-i-aplicacions"><span>Visualitzacions</span></a>
+						<ul class="depth-3">
+							<li>
+								<i class="arrow hidden-xs bcn-icon-dreta-medium"></i>
+								<a href="/ca/visualitzacions-per-temes">Visualitzacions per temes</a>
+							</li>
+						</ul>
+					</li>
+                    <li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/aplicacions"><span>Aplicacions</span></a>
+					</li>
+                </ul> 
+			</li>-->
+			<li>
+				<a href="/ca/analytics"><span>Estadístiques</span></a>
+			</li>
+            </li>
+            <li>
+				<a href="/ca/desenvolupadors"><span>Desenvolupadors</span></a>
+			</li>
+            <li>
+				<a href="/ca/dades-alt-valor"><span>DADES D&#39;ALT VALOR</span></a>
+			</li>
+            <li>
+				<a href="/ca/ods-agenda2030"><span>AGENDA 2030-ODS</span></a>
+			</li>
+            <li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span >Projectes de Difusió <i class="arrow bcn-icon-baix-medium"></i></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Projectes de Difusió</a>
+					<li aria-controls="main-menu-ul" aria-checked="false" class="first">
+						<a href="/ca/repte-barcelona-dades-obertes"><span>Repte Barcelona Dades Obertes</span></a>
+					</li>
+                    <li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/data-viz-kobe-home"><span>World Data Viz Challenge Barcelona-Kobe</span></a>
+					</li>
+                </ul> 
+				</li>
+			</li>
+						
+			
+			
+			
+			
+          </ul>
+        </nav>
+      
+
+    </div>
+  </div>
+</header>
+</div>
+
+
+  
+    <div role="main">
+      <div id="content" class="container">
+        
+          
+            
+            <div class="flash-messages">
+              
+                
+              
+            </div>
+          
+          
+
+          
+            
+            <div class="toolbar">
+              
+                
+                  <ol class="breadcrumb">
+                    
+ <li class="home"><a href="/ca/"><i class="icon-home"></i><span> Inici</span></a></li>
+                    
+
+    
+    
+      
+	  
+	  
+      
+      
+          <li><a href="/data/ca/organization/administracio">Administració</a></li>
+      
+      <li><a href="/data/ca/organization/sector-public">Sector públic</a></li>
+    
+    <li class="active"><a class=" active" href="/data/ca/dataset/cataleg-bcnroc">Catàleg del Repositori ...</a></li>
+  
+
+
+                  </ol>
+                
+              
+            </div>
+          
+          
+
+          <div class="row wrapper">
+
+            
+            
+	
+	
+      
+	  
+	  <div class="span12" typeof="dcat:Dataset">
+	<script type="application/ld+json">
+		{
+		"@context":"https://schema.org/",
+		"@type":"dataset",
+		"name": "cataleg-bcnroc",
+		"description":"Conjunt de metadades i enllaç als documents del repositori de documents públics de l&#39;Ajuntament de Barcelona (BCNROC).",
+		"url":"https://opendata-ajuntament.barcelona.cat/data/ca/dataset/cataleg-bcnroc",
+		"dateModified":"2023-03-21T10:52:55.313327",
+		"keywords":"Documents,Repositoris",
+		"license":"CC-BY-4.0",
+		"distribution":[
+		
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"CSV",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/1450d26b-2589-4f90-95fc-32428829626c/resource/2dee8894-1d28-499b-af0e-9097027629b1/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/1450d26b-2589-4f90-95fc-32428829626c/resource/ad9f03d0-1c47-4793-afa1-33d30522095c/download"
+				}
+			
+			
+			]
+		}
+	</script>
+	  
+      
+		
+		
+    <h1 class="page-heading">
+        <span property="dc:title">Catàleg del Repositori Obert de Coneixement de l&#39;Ajuntament de Barcelona (BCNROC)</span>
+        
+        
+		
+		
+    </h1>
+
+
+	
+	
+	
+	
+    
+	  <ul class="dataset-groups">
+      	
+			  
+		  	<li class="parent">
+				<a href="/data/ca/organization/administracio" rel="dc:subject">
+    				
+        				<i class="bcn-icon-ajuntament"></i>
+    				
+					Administració
+				</a>
+		 	</li>
+      	
+		
+		
+		<li class="child">
+			<a href="/data/ca/organization/sector-public" rel="dc:subject">
+				
+        			<i class="bcn-icon-punts-registre"></i>
+    			
+				Sector públic
+			</a>
+		  </li>
+	  </ul>
+	
+
+    
+        <div class="notes embedded-content" property="dc:description">
+          <p>Conjunt de metadades i enllaç als documents del repositori de documents públics de l'Ajuntament de Barcelona (BCNROC).</p>    
+        </div>
+    
+      
+    
+      <div class="field-description">
+          <p class="field-description-show">
+            <a data-toggle="collapse" href="#fieldDescription" aria-expanded="false" aria-controls="fieldDescription">
+                <i class="icon-th-list"></i>
+				
+					Veure definició de camps
+				
+            </a>
+          </p>
+          <div class="collapse" id="fieldDescription">
+            <div class="well">
+				
+			
+				
+					<table class="table">
+						<thead>
+						  <tr>
+							<th scope="col" width="25%">Camp</th>
+							<th scope="col">Descripció</th>
+						  </tr>
+						</thead>
+						<tbody>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.dc.accrualPeriodicity</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Periodicitat. Periodicitat d'una revista o publicació periòdica</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>02.dc.accrualPolicy</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Estat de la col·lecció. La política d'ingrés d'ítems en una col·lecció. S'indica si una col·lecció està oberta o tancada, viva o morta</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>03.dc.contributor.author</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Autor. Autor o autors del document Es consignen els autors, sempre que siguin creadors del document (p.ex. els departaments o entitats que elaboren el document, els fotògrafs, els autors d'articles de revista, de monografies, etc…) Vocabulari controlat parcialment amb la Llista d'encapçalaments de noms i títols de la Biblioteca de Catalunya (Lenoti)</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>04.dc.contributor.emissor</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Persones o entitats que contribueixen en el contingut del(s) ddocument(s)</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>05.dc.contributor.other</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Col·laborador. Persona o entitat responsable de fer contribucions al contingut del recurs, però que no són creadors directes del contingut: editors de contingut, traductors, prologuistes, etc... Vocabulari controlat amb la Llista d'encapçalaments de noms i títols de la Biblioteca de Catalunya (Lenoti)</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>06.dc.coverage.spatial</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Cobertura geogràfica. Característiques espacials del recurs com ara llocs determinats, barris, carrers i districtes. Es fa servir una llista controlada. Els criteris que se segueixen són: per als carrers: Nomenclàtor de carrers de Barcelona, per als barris: nom del barri (Barcelona : barri). Exemple: Gràcia (Barcelona : Barri) El nom del barri s'agafa de les fitxes de barri: <a href="http://www.bcn.cat/estadistica/catala/dades/inf/barris/index.htm" target="_blank" rel="nofollow">http://www.bcn.cat/estadistica/catala/dades/inf/barris/index.htm</a> i per als districtes: Barcelona. Districte núm. Nom del districte (exemple: Barcelona. Districte 1. Ciutat Vella)</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>07.dc.coverage.temporal</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Cobertura temporal. Característiques temporals del recurs com ara períodes, una data o un grup de dates.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>08.dc.coverage.vigencia</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Vigència. Condició per determinar que en aquests moments un document és vigent o aplicable. És un camp de validació útil per a la gestió interna de certs documents</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>09.dc.date.copyright</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data dels drets d'autor</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>10.dc.date.created</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data d'aprovació/creació. Data de creació del contingut del recurs. <em>En els documents normatius, és la data d'aprovació </em>En les mesures de govern i en els informes, és la data de presentació al Consell Plenari *En els documents del Registre d’estudis i informes és la data d’encàrrec de l’informe o estudi. Se seguirà la norma ISO 8601</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>11.dc.date.issued</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data de publicació. Data d'emissió formal (per exemple, la publicació) del recurs. * En general, és la data de publicació * En els documents normatius, la data de publicació en el BOP, GM, etc. * En els documents del Registre d’estudis i informes és la data de versió definitiva del document * En els documents digitalitzats, data de publicació del document original * És la data en què es comunica alguna cosa als ciutadans (bans, discursos, conferències, dossiers de premsa)</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>12.dc.date.review</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data de revisió. Data en la que un recurs haurà de ser revisat. Format: Seguint la norma ISO 8601, el format serà AAAA-MM-DD, on A=any, M=mes i D=dia.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>13.dc.date.submitted</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data en què s'ha entrat el document a BCNROC</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>14.dc.date.updated</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data d'actualització del document o de les metadades</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>15.dc.date.validfinal</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Fi vigència. Data en què deixa de ser vigent una normativa o un acte administratiu. Format: Seguint la norma ISO 8601</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>16.dc.date.validinici</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Inici vigència. Data en què comença a ser vigent una normativa o un acte administratiu. Format: Seguint la norma ISO 8601</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>17.dc.description</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Nota. Qualsevol descripció o nota que no sigui el resum i que es consideri d’interès per a l’usuari.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>18.dc.description.LegislationChangedBy</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Afectació passiva. Indica les normes o sentències que modifiquen, substitueixen, deroguen o despleguen, en part o en la seva totalitat, la norma descrita.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>19.dc.description.LegislationChanges</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Afectació activa. Indica les normes que queden modificades, derogades o desplegades per la norma descrita.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>20.dc.description.abstract</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Resum. Resum del contingut del document</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>21.dc.description.sponsorship</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Digitalització. Responsables Informació sobre els responsables de la digitalització d'un document S'indica l'empresa que fa la digitalització (Agència responsable de l’esdeveniment) i el departament que fa l’encàrrec de la digitalització (l'Òrgan responsable de l’esdeveniment). * Complementat amb les metadades: Relation.Isformatof, Description.provenance, Format.medium</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>22.dc.description.tableofcontents</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Conté. Llista de subunitats d'un document</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>23.dc.description.version</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Comentari sobre el document</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>24.dc.disposal</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Instruccions de conservació i eliminació del recurs. Instruccions de conservació i eliminació del recurs</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>25.dc.format</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Format. Manifestació física o digital del recurs. Serveix per determinar el programari, maquinari o un altre equip necessari per a mostrar o operar el recurs Es segueix una llista controlada, d'acord amb la a llista de Tipus d'internet mitjans de comunicació [MIME]. Exemple: application/pdf</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>26.dc.format.extent</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Extensió. Durada o tamany del recurs descrit Es recomana fer servir valors controlats. # Mides: píxels x píxels (en el cas de les imatges) # Durada: minuts, segons, fraccions de segons (en el cas dels vídeos) # Pes: Els Mbytes que pesa el fitxer # Característiques: b/n, color, so Exemples: 21 min. ; 150 p. ; 899 Kb No es posa quan d'una descripció pengen diversos fitxers</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>27.dc.format.medium</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Format original. Suport físic del recurs Es farà servir únicament per indicar el format original d'una fotografia o vídeo digitalitzat, inclosa la durada</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>28.dc.identifier.BG</p></th>
+							<td class="dataset-details" property="rdf:value"><p>ID Hyperion. Núm. Identificador del document a l'antic repositori Digibab</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>29.dc.identifier.ab</p></th>
+							<td class="dataset-details" property="rdf:value"><p>ID Ajuntament. Identificadors numèrics que poden constar en certs documents municipals (per exemple, la referència intern en els informes jurídics)</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>30.dc.identifier.citation</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Citació. Codificació de la informació que identifica la cita bibliogràfica d'un article de revista, o d'un altre recurs bibliogràfic</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>31.dc.identifier.entitat</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Tipus d’entitat. Serveix per agrupar la documentació per tipus d’entitat del qual emana. Es fa servir una llista controlada. Els valors que es fan servir són: associacions, consells, consorcis, districtes, entitats públiques empresarials, fundacions, organismes autònoms, societats mercantils</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>32.dc.identifier.imagurb</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Topogràfic. Signatura que identifica cadascuna de les imatges d'Urbanisme.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>33.dc.identifier.imagurbcd</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Núm. Cd/DVD. Núm. del CD/DVD codi que identifica la ubicació física dels TIFFs de les fotografies d'Urbanisme.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>34.dc.identifier.isbn</p></th>
+							<td class="dataset-details" property="rdf:value"><p>ISBN. El número internacional normalitzat per a llibres (International Standard Book Number)</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>35.dc.identifier.issn</p></th>
+							<td class="dataset-details" property="rdf:value"><p>ISSN. És un codi internacional d'identificació de revistes, diaris, etc.. ISSN (International Standard Serial Number)</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>36.dc.identifier.mandat</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Mandat de govern. Període de 4 anys de política municipal. Serveix per recuperar els documents que s’han generat durant un mandat. Llista controlada. Els valors actuals son: LLISTA DE VALIDACIÓ PER LA METADADA identifier.mandatQuan comença i quan acaba cada mandat: Mandat 2015-Actualitat: de 13/06/2015 a actualitat. Mandat 2011-2015: de 01/07/2011 a 12/06/2015. Mandat 2007-2011: de 16/06/2007 a 30/06/2011. Mandat 2003-2007: de 14/06/2003 a 15/06/2007. Mandat 1999-2003: de 03/07/1999 a 13/06/2003. Mandat 1995-1999: de 17/06/1995 a 02/07/1999. Mandat 1991-1995: de 05/07/0991 a 16/06/1995. Mandat 1987 - 1991: de 30/06/1987 a 04/07/1991. Mandat 1983 - 1987: de 24/05/1983 a 29/06/1987. Mandat: 1979 - 1983: de 19/04/1979 a 23/05/1983. Mandats anteriors a 1979: (no consta). Es fa servir una llista controlada elaborada per el SEDAC Aquesta metadada es posa només als documents següents: Acords, actes i ordres del dia dels Òrgans de Govern, Acords Òrgans de Govern, Comptes, Declaracions institucionals, Decrets d’Alcaldia, Documents de l’alcalde, Documents del Registre d’estudis i informes, Dossiers i Notes de premsa, Informes presentats als Òrgans de Govern, Memòries generals, Mesures de govern, Plans estratègics municipals, Plans de treball, Pressupostos i Comptes, Vídeos institucionals</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>37.dc.identifier.uri</p></th>
+							<td class="dataset-details" property="rdf:value"><p>URI. Identificador per a l’original analògic o per a l’objecte nascut digital.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>38.dc.identifier.video</p></th>
+							<td class="dataset-details" property="rdf:value"><p>URL utilitzada per enllaçar vídeos</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>39.dc.language</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Llengua. Llengua o llengües del contingut intel·lectual del recurs Es fa servir una llista controlada, seguint la norma ISO 639.2</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>40.dc.publisher</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Publicat per. Entitat responsable de fer accessible un recurs. Pot ser una persona, una organització o un servei. * En els casos de documentació digitalitzada, s'utilitza aquest camp per fer constar l'editor del document original, si en té.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>41.dc.relation</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Enllaç. Relació entre el recurs descrit i un altre recurs que hi està relacionat S'utilitza per enllaçar amb recursos que no estan a BCNROC, per relacionar diverses versions lingüístiques d’un mateix document...</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>42.dc.relation.hasformat</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Té format. El recurs descrit és el mateix contingut intel·lectual del recurs referenciat, però presentat en un altre format. Nota: el document descrit és el document originat per un altre anterior Utilitzat per les digitalitzacions</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>43.dc.relation.haspart</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Té part. Referència a un recurs que s'inclou ja sigui física o lògicament en el recurs descrit.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>44.dc.relation.hasversion</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Té versió. El document descrit té una versió, edició, o adaptació en un document posterior. Han de ser canvis substancials del contingut o reflecteix una evolució lineal</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>45.dc.relation.isbasedon</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Es basa en. Relació «transversal» amb un altre recurs, ja sigui de naturalesa similar o d'un recurs totalment independent. S'inspira o utilitza l'altre recurs</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>46.dc.relation.isbasisfor</p></th>
+							<td class="dataset-details" property="rdf:value"><p>És base per. Relació «transversal» amb un altre recurs, ja sigui de naturalesa similar o d'un recurs totalment independent que, no obstant, inspira l'altre recurs</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>47.dc.relation.isformatof</p></th>
+							<td class="dataset-details" property="rdf:value"><p>És format de. El recurs descrit és el mateix contingut intel·lectual del recurs referenciat, però presentat en un altre format. Nota: el document descrit és el document que origina el document referenciat. Nota: el document descrit és el document que origina el document referenciat Utilitzat per les digitalitzacions</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>48.dc.relation.ispartof</p></th>
+							<td class="dataset-details" property="rdf:value"><p>És part de. Referència a un recurs relacionat del qual el recurs descrit és una part física o lògica</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>49.dc.relation.isreferencedby</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Referenciat per. Referència a un recurs que referencia, cita o d'alguna manera indica el document descrit</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>50.dc.relation.isreplacedby</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Substituït per. Referència a un recurs que el substitueix, desplaça o reemplaça</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>51.dc.relation.isrequiredby</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Requerit per. Referència a un recurs que requereix el recurs descrit per recolzar la seva funció, lliurament o coherència. Es farà servir per modificacions i correccions de normativa</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>52.dc.relation.isversionof</p></th>
+							<td class="dataset-details" property="rdf:value"><p>És versió de. El document descrit és una versió, edició o adaptació d'un document anterior. Han de ser canvis substancials del contingut o reflecteix una evolució lineal</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>53.dc.relation.references</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Referencia. Referència a un recurs que és referenciat, citat o d'alguna manera indicat pel document descrit</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>54.dc.relation.replaces</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Substitueix. Referència a un recurs que substitueix, desplaça o reemplaça el document descrit</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>55.dc.relation.requires</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Requereix. Referència a un recurs que és requerit pel recurs descrit per recolzar la seva funció, lliurament o coherència. Es farà servir per modificacions i correccions de normativa</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>56.dc.relation.uri</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Enllaç a un document relacionat</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>57.dc.rights</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Condicions d'ús. Informació dels drets sobre aquest recurs. Inclou informació com els drets d’accés, drets de propietat intel·lectual (IPR), copyrights, referències a documents legals que descriuen com utilitzar un recurs, etc * Es fa servir una llista controlada, d'acord a la Circular per la qual s'aprova el BCNROC</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>58.dc.rights.accessRights</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Drets d'accés. Informació dels drets d’accés sobre aquest recurs. Es fa constar informació sobre les restriccions de visualització, cerca o ús del recurs. Aquestes restriccions poden venir determinades pel mateix recurs o per la categoria de l’usuari. Es fa servir una llista controlada, amb els valors següents: obert, tancat, embargat, restringit</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>59.dc.rights.license</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Drets del document</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>60.dc.rights.notes</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Detall de les condicions d’ús. Petita explicació de la restricció dels drets</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>61.dc.rights.rightsHolder</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Propietari dels drets. Persona o organització propietària o que gestiona els drets d'un recurs * Només es farà constar quan siguin drets restringits o sense drets</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>62.dc.rights.uri</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Més informació dels drets d’ús. Enllaç al text de la llicència Creative Commons que explica les condicions d’accés del recurs.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>63.dc.source</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Font. En casos de documents digitalitzats, peu d’impremta del document original</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>64.dc.subject</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Matèria. Tema del recurs. Vocabulari controlat amb la Llista d'encapçalaments de matèria en català (LEMAC) però no s'usen els subencapçalaments de forma, geogràfics o temporals</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>65.dc.subject.category</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Categoria temàtica. Categories temàtiques generals d'una llista prescrita. Es fa servir una llista controlada, traducció al català de la Taxonomia de Datos.gob, que s'utilitza per a la reutilització de recursos d'informació. Els valors són: ciència-tecnologia, comerç, cultura-oci, demografia, economia, educació, energia, esport, habitatge, hisenda, indústria, legislació-justícia, medi-ambient, medi-rural-pesca, ocupació, salut, sector-públic, seguretat, societat-benestar, transport, turisme, urbanisme-infraestructures</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>66.dc.subject.classification</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Classificació temàtica del document</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>67.dc.subject.forma</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Tipus de document. Serveix per agrupar i afinar diferents tipologies: tipus de documents (acords, enquestes, etc.); forma dels documents (articles, parts de llibre, documents digitalitzats, etc.) i tipologies d'imatges (fotografies aèries, maquetes, etc.) ; Es fa servir una llista controlada.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>68.dc.subject.imagurb</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Matèria d'imatges. Tema d'un recurs fotogràfic. Vocabulari controlat amb el Tesaure BIMA municipal i la Llista d'encapçalaments de noms i títols de la Biblioteca de Catalunya (Lenoti) pel que fa als onomàstics.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>69.dc.subject.other</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Matèries de què tracta el document</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>70.dc.subject.programme</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Pla/programa municipal. Tema referent als plans i programes municipals o d'interès municipal. Se segueix una llista controlada elaborada pel SEDAC a partir dels propis plans i es procura posar, sempre que sigui possible, els anys d'aplicació</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>71.dc.title</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Títol. Nom o noms amb què un recurs és conegut formalment</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>72.dc.title.alternative</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Altres títols. Nom o noms usats com a substitut o alternatiu del títol formal. Són títols secundaris, abreviacions d’un títol, traduccions d’un títol, etc.</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>73.dc.type</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Tipus de contingut. Terme que indica la naturalesa o gènere del recurs. Fem servir el vocabulari controlat DCMI Type Vocabulary Els valors que es fan servir son: classe, col·lecció, conjunt de dades, esdeveniment, imatge, imatge en moviment, imatge fixa, objecte físic, recurs interactiu, servei, so, text</p></td>
+						  </tr>
+						
+						</tbody>
+					</table>
+				
+            </div>
+          </div>
+      </div>
+    
+
+    <div class="dataset-info">
+        
+
+
+  
+    
+      
+        <p class="license">
+
+            <strong><i class="icon-medium icon-lock"></i> Llicència: </strong>
+
+                
+  
+    <a href="https://creativecommons.org/licenses/by/4.0/" rel="dc:rights">Creative Commons Attribution 4.0</a>
+  
+
+                
+                  <a href="http://opendefinition.org/okd/" title="Aquest conjunt de dades satisfà la Open Definition.">
+                      <img class="open-data" src="/data/base/images/od_80x15_blue.png" alt="[Open Data]" />
+                  </a>
+                
+        </p>
+		
+		<p class="license">
+			<strong><i class="icon-eye-open"></i> Grau d&#39;obertura: </strong>
+			<a href="http://5stardata.info" target="_blank">
+<!--<div class="qa openness-3">-->
+  
+    <span title="Motiu: El conjunt de dades conté un arxiu amb un format que és equivalent a 3 punts. Comprovat: 25 Febrer 2026">
+    
+<span class="star-rating"><span class="star-rating-stars"><span class="icon icon-star"></span><span class="icon icon-star"></span><span class="icon icon-star"></span><span class="icon icon-star-empty"></span><span class="icon icon-star-empty"></span></span></span>
+ <br>
+  
+<!--</div>--></a>
+		</p>
+      
+    
+  
+
+    </div>
+
+    
+    <span class="insert-comment-thread"></span>
+
+  
+
+  
+    
+<section id="dataset-resources" class="resources">
+  <h2>Dada i recursos</h2>
+  <div class="accordion" id="historic-series">
+  
+  
+  
+  
+  
+    
+		
+			
+		
+			
+		
+	
+      <ul class="resource-list">
+        
+          
+            
+            
+                  
+                  
+
+
+
+<li class="resource-item" data-id="2dee8894-1d28-499b-af0e-9097027629b1">
+  
+  <a class="heading" href="/data/ca/dataset/cataleg-bcnroc/resource/2dee8894-1d28-499b-af0e-9097027629b1" title="BCNROC_Tot_708.csv" rel="dcat:distribution">
+    BCNROC_Tot_708.csv<span class="format-label" property="dcat:mediaType" data-format="csv" content="text/csv">CSV</span>
+  </a>
+
+  
+    <p class="description">
+      
+        Temps descàrrega: Alt / Tiempo descarga: Alto / Download time: High
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/1450d26b-2589-4f90-95fc-32428829626c/resource/2dee8894-1d28-499b-af0e-9097027629b1/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/cataleg-bcnroc/resource/2dee8894-1d28-499b-af0e-9097027629b1">
+            
+              <i class="icon-bar-chart"></i>
+              Previsualització
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+                  
+                  
+
+
+
+<li class="resource-item" data-id="ad9f03d0-1c47-4793-afa1-33d30522095c">
+  
+  <a class="heading" href="/data/ca/dataset/cataleg-bcnroc/resource/ad9f03d0-1c47-4793-afa1-33d30522095c" title="BCNROC_Tot_XML_709.xml" rel="dcat:distribution">
+    BCNROC_Tot_XML_709.xml<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+        Temps descàrrega: Alt / Tiempo descarga: Alto / Download time: High
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/1450d26b-2589-4f90-95fc-32428829626c/resource/ad9f03d0-1c47-4793-afa1-33d30522095c/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/cataleg-bcnroc/resource/ad9f03d0-1c47-4793-afa1-33d30522095c">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+              
+            </ul>
+            
+    
+
+    
+  </div>
+</section>
+  
+
+  
+    
+  <section class="tags" id="tags">
+	<h2>Etiquetes</h2>
+    <div class="tag-content">
+      
+
+
+  <ul class="tag-list">
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Documents">Documents</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Repositoris">Repositoris</a>
+      </li>
+    
+  </ul>
+
+    </div>
+    <div id="show-more-tags"><span id="view-more"><i class="bcn-icon-mes-bold"></i> Mostra més</span> <span id="view-less"><i class="bcn-icon-menys-bold"></i> Oculta</span></div>
+  </section>
+
+  
+
+  
+  <section class="additional-info">
+  <h3>Informació addicional</h3>
+  <table class="table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th scope="col">Camp</th>
+        <th scope="col">Descripció</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="dataset-label">Títol</th>
+        <td class="dataset-details">Catàleg del Repositori Obert de Coneixement de l&#39;Ajuntament de Barcelona (BCNROC)</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Més informació</th>
+        <td class="dataset-details"><a href="https://bcnroc.ajuntament.barcelona.cat/jspui" rel="" target="_blank">https://bcnroc.ajuntament.barcelona.cat/jspui</a></td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Dades d&#39;Alt Valor</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Agenda 2030. ODS Principal</th>
+        <td class="dataset-details">ODS 16: Pau, justícia i institucions sòlides</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Agenda 2030. ODS Colateral 1</th>
+        <td class="dataset-details">N/A</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Agenda 2030. ODS Colateral 2</th>
+        <td class="dataset-details">N/A</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Font</th>
+        <td class="dataset-details" property="foaf:homepage">SEDAC (Servei de Documentació i Accés al Coneixement) </td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Geolocalització</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Format Long disponible</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Informació històrica</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">API CKAN disponible</th>
+        <td class="dataset-details">Sí</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Token requerit</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Gerència</th>
+        <td class="dataset-details" property="dc:creator">Gerència de Serveis Generals</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Departament</th>
+        <td class="dataset-details">SEDAC (Servei de Documentació i Accés al Coneixement) </td>
+      </tr><tr>
+            <th scope="row" class="dataset-label">Data primera publicació</th>
+            <td class="dataset-details">22/01/2018</td>
+          </tr>
+    <tr>
+      <th scope="row" class="dataset-label">Freqüència actualització</th>
+      <td class="dataset-details">Mensual</td>
+    </tr>
+
+	
+	
+
+	<tr>
+	  <th scope="row" class="dataset-label">Visites recents (últimes 2 setmanes)</th>
+	  <td class="dataset-details">19</td>
+	</tr>
+	<tr>
+	  <th scope="row" class="dataset-label">Visites totals</th>
+	  <td class="dataset-details">2086</td>
+	</tr>
+	<tr>
+	  <th scope="row" class="dataset-label">Nombre de recursos</th>
+	  <td class="dataset-details">2</td>
+	</tr>
+  
+
+      
+      
+  
+
+    </tbody>
+  </table>
+</section>
+
+  
+			</div>
+		</div>
+	</div>
+	
+	<div id="resource-additional-info">
+		<div id="content" class="container">
+			<div class="dataset-comments" id="cataleg-bcnroc" lang="ca"></div>
+
+
+
+            
+              
+            
+
+            
+              
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <footer class="site-footer">
+  <div class="container">
+    
+
+	
+
+
+    <div class="row">
+      <div class="span12 footer-links">
+        <span class="footer-logo"></span>
+        
+          <ul class="unstyled">
+            
+			  
+              <li>Ajuntament de Barcelona</li>
+			  <li><a href="/ca/user">El meu compte</a></li>
+			  
+              <li><a href="http://www.bcn.cat/cgi-bin/consultesIRIS?id=239">Contacteu-nos</a></li>
+			  
+			  
+			  
+			  
+			  <li><a href="http://ajuntament.barcelona.cat/accessibilitat/ca/">Accessibilitat</a></li>
+			  
+			  
+			  
+			  <li><a href="/ca/avis-legal">Avís legal</a></li>
+			  <li><a href="/ca/condicions-us">Condicions d&#39;ús<img src="/sites/all/themes/bcn_bootstrap/img/common/cc-by.png" alt="" style="height: 30px;" /></a></li>
+            
+          </ul>
+        
+      </div>
+    </div>
+</div>
+
+
+  </div>
+
+  
+    
+  
+</footer>
+  
+    
+    
+    
+      
+    
+  
+    
+
+      
+  <script>document.getElementsByTagName('html')[0].className += ' js';</script>
+<script type="text/javascript" src="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/jquery.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/:bundle:bootstrap/js/bootstrap.min.js;jed.min.js;moment-with-locales.js;select2/select2.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/base/:version:2022-01-27T09:22:25.82/:bundle:plugins/jquery.inherit.min.js;plugins/jquery.proxy-all.min.js;plugins/jquery.url-helpers.min.js;plugins/jquery.date-helpers.min.js;plugins/jquery.slug.min.js;plugins/jquery.slug-preview.min.js;plugins/jquery.truncator.min.js;plugins/jquery.masonry.min.js;plugins/jquery.form-warning.min.js;sandbox.min.js;module.min.js;pubsub.min.js;client.min.js;notify.min.js;i18n.min.js;main.min.js;modules/select-switch.min.js;modules/slug-preview.min.js;modules/basic-form.min.js;modules/confirm-action.min.js;modules/api-info.min.js;modules/autocomplete.min.js;modules/custom-fields.min.js;modules/data-viewer.min.js;modules/table-selectable-rows.min.js;modules/resource-form.min.js;modules/resource-upload-field.min.js;modules/resource-reorder.min.js;modules/resource-view-reorder.min.js;modules/follow.min.js;modules/activity-stream.min.js;modules/dashboard.min.js;modules/resource-view-embed.min.js;view-filters.min.js;modules/resource-view-filters-form.min.js;modules/resource-view-filters.min.js;modules/table-toggle-more.min.js;modules/dataset-visibility.min.js;modules/media-grid.min.js;modules/image-upload.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/base/:version:2022-01-27T09:22:25.82/tracking.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/odatabcn/:version:2026-02-04T10:58:13.30/odatabcn_theme_hierarchy.js"></script></body>
+</html>
