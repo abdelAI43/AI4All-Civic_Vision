@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<!--[if IE 7]> <html lang="en" class="ie ie7"> <![endif]-->
+<!--[if IE 8]> <html lang="en" class="ie ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+  <head>
+    <!--[if lte ie 8]><script type="text/javascript" src="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/html5.min.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/select2/select2.css" />
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/css/:version:2022-01-27T09:22:25.80/main.min.css" />
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/font-awesome/css/font-awesome.min.css" />
+<!--[if ie 7]><link rel="stylesheet" type="text/css" href="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/font-awesome/css/font-awesome-ie7.min.css" /><![endif]-->
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/ckanext-geoview/:version:2021-11-25T16:05:46/css/geo-resource-styles.css" />
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/odatabcn/:version:2026-02-04T10:58:13.30/odatabcn.css" />
+
+    <meta charset="utf-8" />
+      <meta name="generator" content="ckan 2.6.9" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban map of the city of Barcelona - Datasets - Open Data Barcelona</title>
+
+    
+    <link rel="shortcut icon" href="https://www.barcelona.cat/favicon.ico" />
+    
+    
+  
+      
+    
+
+  
+  
+  <script type="text/javascript" src="https://w9.barcelona.cat/assets/core/javascripts/core.js"></script>
+  
+  <meta name="theme-color" content="#1e529e" />
+
+
+    
+
+
+    
+      
+      
+    
+  
+  <meta property="og:title" content="Urban map of the city of Barcelona - Open Data Barcelona">
+  <meta property="og:description" content="Urban planning map with information on zoning, classifications, urban planning and urban management areas and protected architectural heritage catalogue of the city of Barcelona.">
+
+    
+  </head>
+
+  
+  <body data-site-root="https://opendata-ajuntament.barcelona.cat/data/" data-locale-root="https://opendata-ajuntament.barcelona.cat/data/en/" >
+
+    
+    <div class="hide"><a href="#content">Skip to content</a></div>
+  
+
+  
+    
+
+
+<div id="wrapper">
+
+
+<!-- NIRON_opendata_2026-01-14T12:43:07Z  -->
+<header id="brand" alias="opendata" brand="opendata_2026-01-14T12:43:07Z" class="v2025 bcnbrand-legacy lang-ca" data-plausible="bcn0257" data-matomo="LYVTvL8u" data-avisos="auto" data-web-cerca="https%3A%2F%2Fopendata-ajuntament.barcelona.cat%2F" data-web-nom="Open Data BCN" data-cercador="true">
+    <div id="ajuntament-avisos-header"/>
+    <div class="bcnbrand-navs-container container">
+        <!-- Logo -->
+        <div class="bcnbrand-logo-main">
+            <a class="plausible-event-name=barra-logo" target="_blank" href="https://www.barcelona.cat/en/" data-ga="L'Ajuntament">
+                <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/logo-ajbcn.svg" alt="Logo Ajuntament de Barcelona">
+      </a>
+            </div>
+            <div class="bcnbrand-navs-wrapper">
+                <!-- Idiomas -->
+                <nav class="bcnbrand-lang lang" id="bcnbrand-lang-nav" aria-label="Selecciona idioma">
+                    <div class="bcnbrand-dropdown bcnbrand-lang-dropdown" id="bcnbrand-lang-dropdown">
+                        <button id="bcnbrand-lang-toggle" class="bcnbrand-dropdown-toggle bcnbrand-nav-link plausible-event-name=barra-idioma-desplegar" aria-expanded="false" aria-controls="bcnbrand-language-dropdown-list" aria-label="Català (Canviar idioma)">
+                            <span class="bcnbrand-icon icobcn-mon2-l-light" aria-hidden="true"></span>
+                            English
+                            <span class="bcnbrand-icon icobcn-fletxa-baix3" aria-hidden="true"></span>
+                            <span class="custom-tooltip">Select language</span>
+                        </button>
+                        <div class="bcnbrand-dropdown-menu bcnbrand-list" id="bcnbrand-language-dropdown-list" aria-label="Selecciona idioma">
+                            <h2 class="header-menu-bcnbrand-lang" tabindex="-1">Select language</h2>
+                            <ul>
+                                <li>
+                                    <a href="/data/en/dataset/mapa-urbanistic" lang="ca" data-ga="CA">Català</a>
+                                </li>
+                                <li>
+                                    <a href="/data/es/dataset/mapa-urbanistic" lang="es" data-ga="ES">Castellano</a>
+                                </li>
+                                <li>
+                                    <a href="/data/en/dataset/mapa-urbanistic" aria-current="true" class="active" lang="en" data-ga="EN">English</a>
+                                </li>
+                            </ul>
+                            <!--<h2 class="header-menu-bcnbrand-lang-extended" tabindex="-1">Contingut específic en altres idiomes:</h2>
+            <ul class="bcnbrand-language-extended">
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/es/bienvenido-barcelona" class="plausible-event-name=barra-idioma-refugiat-ES" title="Si eres un refugiado" lang="es">Si eres un refugiado</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/en/welcome-barcelona" class="plausible-event-name=barra-idioma-refugiat-EN" title="If you are a refugee" lang="en">If you are a refugee</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/fr/bienvenue-barcelone" class="plausible-event-name=barra-idioma-refugiat-FR" title="Si vous êtes réfugié(e)" lang="fr">Si vous êtes réfugié(e)</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/ar/hl-bk-fy-brshlwn" class="plausible-event-name=barra-idioma-refugiat-AR" title="إذا كنت لاجئا " lang="ar">إذا كنت لاجئا </a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/ru/dobro-pozhalovat-v-barselonu" class="plausible-event-name=barra-idioma-refugiat-RU" title="если вы являетесь беженцем" lang="ru">если вы являетесь беженцем</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/ur/brslwn-myn-khwsh-amdyd" class="plausible-event-name=barra-idioma-refugiat-UR" title="اگر آپ مہاجر ہیں " lang="ur">اگر آپ مہاجر ہیں </a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/uk/vitayemo-v-barseloni" class="plausible-event-name=barra-idioma-refugiat-UK" title="Якщо ви біженець" lang="uk">Якщо ви біженець</a>
+              </li>
+            </ul>-->
+                        </div>
+                    </div>
+                </nav>
+                <!-- Buscador -->
+                <nav class="bcnbrand-navbar-search" aria-label="Cerca en el web">
+                    <div class="bcnbrand-dropdown" id="bcnbrand-search-dropdown">
+                        <button id="bcnbrand-search-toggle" class="bcnbrand-dropdown-toggle bcnbrand-nav-link plausible-event-name=barra-cerca-desplegar" aria-expanded="false" aria-controls="bcnbrand-search-menu" aria-describedby="tooltip-search">
+                            <span class="bcnbrand-icon icobcn-lupa-l" aria-hidden="true"/>
+                            <span id="tooltip-search" role="tooltip" class="custom-tooltip">Search the website</span>
+                        </button>
+                        <div class="bcnbrand-dropdown-menu" id="bcnbrand-search-menu">
+                            <form action="https://cercador.barcelona.cat/en" method="get">
+                                <div class="bcnbrand-search-wrapper">
+                                    <label for="bcnbrand-search-input" class="bcnbrand-search-input-label">Search the website</label>
+                                    <input id="bcnbrand-search-input" type="text" name="query"/>
+                                    <button type="button" id="bcnbrand-search-clear" hidden aria-label="Esborra el text">
+                                        <span class="bcnbrand-icon icobcn-creu-l" aria-hidden="true"/>
+                                    </button>
+                                    <button type="submit" aria-label="Cerca en el web" data-ga="Cerca en el web" class="plausible-event-name=barra-cerca">
+                                        <span class="bcnbrand-icon icobcn-lupa-l" aria-hidden="true"/>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Atajos -->
+                <nav class="bcnbrand-navbar-shortcuts" aria-label="Altres webs municipals">
+                    <div class="bcnbrand-dropdown" id="bcnbrand-shortcuts-dropdown">
+                        <button id="bcnbrand-shortcuts-toggle" class="bcnbrand-dropdown-toggle bcnbrand-nav-link plausible-event-name=barra-drecera-desplegar" aria-expanded="false" aria-controls="bcnbrand-shortcuts-menu">
+                            <span class="bcnbrand-icon icobcn-grid" aria-hidden="true"/>
+                            <span class="custom-tooltip">Other websites</span>
+                        </button>
+                        <div class="bcnbrand-dropdown-menu" id="bcnbrand-shortcuts-menu">
+                            <div class="bcnbrand-list">
+                                <h2>Other Barcelona City Council websites</h2>
+                                <div role="list">
+                                    <div class="bcnbrand-row">
+                                        <div role="listitem">
+                                            <a target="_blank" href="https://ajuntament.barcelona.cat/en/" class="plausible-event-name=barra-drecera-ajuntament">
+                                                <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-ajuntament.svg" alt="">
+                                                    <span class="bcnbrand-link">The City Council</span>
+                                                </a>
+                                            </div>
+                                            <div role="listitem">
+                                                <a target="_blank" href="https://ajuntament.barcelona.cat/en/citizen-communication-channels" class="plausible-event-name=barra-drecera-Canals%20de%20comunicaci%C3%B3">
+                                                    <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-iris.svg" alt="">
+                                                        <span class="bcnbrand-link">Contact</span>
+                                                    </a>
+                                                </div>
+                                                <div role="listitem">
+                                                    <a target="_blank" href="https://seuelectronica.ajuntament.barcelona.cat/oficinavirtual/es/" class="plausible-event-name=barra-drecera-Tr%C3%A0mits">
+                                                        <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-tramits.svg" alt="">
+                                                            <span class="bcnbrand-link">Procedures</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="bcnbrand-row">
+                                                    <div role="listitem">
+                                                        <a target="_blank" href="https://seuelectronica.ajuntament.barcelona.cat/processosselectius/es" class="plausible-event-name=barra-drecera-Processos-selectius">
+                                                            <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-difusio.svg" alt="">
+                                                                <span class="bcnbrand-link">Work at the City Council</span>
+                                                            </a>
+                                                        </div>
+                                                        <div role="listitem">
+                                                            <a target="_blank" href="https://www.barcelona.cat/infobarcelona/en/" class="plausible-event-name=barra-drecera-Info%20Barcelona">
+                                                                <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-premsa.svg" alt="">
+                                                                    <span class="bcnbrand-link">News</span>
+                                                                </a>
+                                                            </div>
+                                                            <div role="listitem">
+                                                                <a target="_blank" href="https://guia.barcelona.cat/en/" class="plausible-event-name=barra-drecera-Guia%20BCN">
+                                                                    <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-agenda.svg" alt="">
+                                                                        <span class="bcnbrand-link">Agenda</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bcnbrand-row bcnbrand-row--center">
+                                                                <div role="listitem">
+                                                                    <a target="_blank" href="https://geoportal.barcelona.cat/planolbcn/en/" class="plausible-event-name=barra-drecera-Pl%C3%A0nol%20BCN">
+                                                                        <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-planol.svg" alt="">
+                                                                            <span class="bcnbrand-link">Map</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div role="listitem">
+                                                                        <a target="_blank" href="https://www.barcelona.cat/com-shi-va/en/" class="plausible-event-name=barra-drecera-Com%20Com%20s%27hi%20va">
+                                                                            <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-comshiva.svg" alt="">
+                                                                                <span class="bcnbrand-link">Getting there</span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </header>
+
+<div id="portal-title" class="bcnbrand-navs-container container">
+	<h1><a href="/en/"><!--<span class="bcn-icon-dades-obertes" style="color:#000; font-size: 0.75em;"></span> Open Data <span>BCN</span>--><span>Open Data BCN</span></a></h1>
+	<p class="slogan">Barcelona&#39;s City Hall Open Data Service</p>
+</div>
+
+<div class="clearfix"></div>
+<div id="nav-wrapper">
+<header class="navbar navbar-static-top masthead" id="navbar"  data-spy="affix" data-offset-top="60">
+	<div id="mobile-title">
+		<h1><a href="/en/">Open Data <span>BCN</span></a></h1>
+	</div>
+  
+    
+  
+  <div class="container">
+    
+    <hgroup class="header-image pull-left">
+
+      
+          <a href="/" class="home-link">
+	        <span class="bcn-icon-casa hidden-xs"></span>
+			<span>Open Data Barcelona</span>
+          </a>
+          
+      
+
+    </hgroup>
+
+	<button class="navbar-toggle collapsed" type="button" data-target=".nav-collapse" data-toggle="collapse">
+       <span class="bcn-icon-tancar-medium"></span>
+    </button>
+    <div class="nav-collapse collapse" id="block-bcn-megamenu-bcn-megamenu-main-menu">
+
+      
+		
+		<div class="menu-overlay"></div>
+        <nav class="section navigation">
+          <ul class="nav nav-pills">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>About this site <i class="arrow bcn-icon-baix-medium"></i></span></a>
+			  	<ul class="dropdown-menu" role="menu">
+					<li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> About this site</a>
+					</li>
+					<li class="first" aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/en/open-data-bcn"><span>Open Data BCN</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/en/caracteristiques-portal"><span>Portal Features</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/en/iniciatives-relacionades"><span>Related initiatives</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/faqs"><span>FAQs</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="active"><a href="/data/en/dataset"><span>Dataset Catalogue</span></a></li>
+          	<!--<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Present <i class="arrow bcn-icon-baix-medium"></i></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Present</a>
+					</li>
+					<li class="first" aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/en/novetats"><span>Portal News</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/en/noticies"><span>News</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/en/entrevistes"><span>Interviews</span></a>
+					</li>
+                    <li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/en/histories-us"><span>Case stories</span></a>
+					</li>
+				</ul> 
+			</li>-->
+            <li class="dropdown">
+				<!--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:12px;">Data visualizations and applications <i class="arrow bcn-icon-baix-medium"></i></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Data visualizations and applications</a>
+					<li aria-controls="main-menu-ul" aria-checked="false" class="first">
+						<a href="/en/visualitzacions-i-aplicacions"><span>Data visualizations</span></a>
+						<ul class="depth-3">
+							<li>
+								<i class="arrow hidden-xs bcn-icon-dreta-medium"></i>
+								<a href="/en/visualitzacions-per-temes">Visualizations by themes</a>
+							</li>
+						</ul>
+					</li>
+                    <li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/en/aplicacions"><span>Applications</span></a>
+					</li>
+                </ul> 
+			</li>-->
+			<li>
+				<a href="/en/analytics"><span>Statistics</span></a>
+			</li>
+            </li>
+            <li>
+				<a href="/en/desenvolupadors"><span>Developers</span></a>
+			</li>
+            <li>
+				<a href="/en/dades-alt-valor"><span>HIGH VALUE DATA</span></a>
+			</li>
+            <li>
+				<a href="/en/ods-agenda2030"><span>AGENDA 2030-ODS</span></a>
+			</li>
+            <li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:12px;">Difussion Projects <i class="arrow bcn-icon-baix-medium"></i></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Difussion Projects</a>
+					<li aria-controls="main-menu-ul" aria-checked="false" class="first">
+						<a href="/en/repte-barcelona-dades-obertes"><span>Barcelona Dades Obertes Challenge</span></a>
+					</li>
+                    <li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/en/data-viz-kobe-home"><span>World Data Viz Challenge Barcelona-Kobe</span></a>
+					</li>
+                </ul> 
+				</li>
+			</li>
+						
+			
+			
+			
+				
+			
+			
+          </ul>
+        </nav>
+      
+
+    </div>
+  </div>
+</header>
+</div>
+
+
+  
+    <div role="main">
+      <div id="content" class="container">
+        
+          
+            
+            <div class="flash-messages">
+              
+                
+              
+            </div>
+          
+          
+
+          
+            
+            <div class="toolbar">
+              
+                
+                  <ol class="breadcrumb">
+                    
+ <li class="home"><a href="/en/"><i class="icon-home"></i><span> Home</span></a></li>
+                    
+
+    
+    
+      
+	  
+	  
+      
+      
+          <li><a href="/data/en/organization/territori">Territory</a></li>
+      
+      <li><a href="/data/en/organization/urbanisme-i-infraestructures">Town planning and ...</a></li>
+    
+    <li class="active"><a class=" active" href="/data/en/dataset/mapa-urbanistic">Urban map of the city of ...</a></li>
+  
+
+
+                  </ol>
+                
+              
+            </div>
+          
+          
+
+          <div class="row wrapper">
+
+            
+            
+	
+	
+      
+	  
+	  <div class="span12" typeof="dcat:Dataset">
+	<script type="application/ld+json">
+		{
+		"@context":"https://schema.org/",
+		"@type":"dataset",
+		"name": "mapa-urbanistic",
+		"description":"Mapa urbanístic amb informació de zonificacions, qualificacions, àmbits de planejament urbanístic, gestió urbanística i catàleg de patrimoni arquitectònic protegit de la ciutat de Barcelona.",
+		"url":"https://opendata-ajuntament.barcelona.cat/data/en/dataset/mapa-urbanistic",
+		"dateModified":"2025-04-08T12:10:53.714890",
+		"keywords":"Geoservei,Mapa urbanístic,Servei geogràfic,Servei web",
+		"license":"CC-BY-4.0",
+		"distribution":[
+		
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"WMS",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/ade3ed9d-9fb6-4ecb-9083-1ebeed0c7166/resource/2a027edc-c24d-46a5-9fc7-6506863df996/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"WMTS",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/ade3ed9d-9fb6-4ecb-9083-1ebeed0c7166/resource/b8a66571-7c2a-4633-afd1-8be14f40a751/download"
+				}
+			
+			
+			]
+		}
+	</script>
+	  
+      
+		
+		
+    <h1 class="page-heading">
+        <span property="dc:title">Urban map of the city of Barcelona</span>
+        
+        
+		
+		
+    </h1>
+
+
+	
+	
+	
+	
+    
+	  <ul class="dataset-groups">
+      	
+			  
+		  	<li class="parent">
+				<a href="/data/en/organization/territori" rel="dc:subject">
+    				
+        				<i class="bcn-icon2-territori"></i>
+    				
+					Territory
+				</a>
+		 	</li>
+      	
+		
+		
+		<li class="child">
+			<a href="/data/en/organization/urbanisme-i-infraestructures" rel="dc:subject">
+				
+        			<i class="bcn-icon-urbanisme"></i>
+    			
+				Town planning and Infrastructures
+			</a>
+		  </li>
+	  </ul>
+	
+
+    
+        <div class="notes embedded-content" property="dc:description">
+          <p>Urban planning map with information on zoning, classifications, urban planning and urban management areas and protected architectural heritage catalogue of the city of Barcelona.</p>    
+        </div>
+    
+      
+    
+
+    <div class="dataset-info">
+        
+
+
+  
+    
+      
+        <p class="license">
+
+            <strong><i class="icon-medium icon-lock"></i> License: </strong>
+
+                
+  
+    <a href="https://creativecommons.org/licenses/by/4.0/" rel="dc:rights">Creative Commons Attribution 4.0</a>
+  
+
+                
+                  <a href="http://opendefinition.org/okd/" title="This dataset satisfies the Open Definition.">
+                      <img class="open-data" src="/data/base/images/od_80x15_blue.png" alt="[Open Data]" />
+                  </a>
+                
+        </p>
+		
+		<p class="license">
+			<strong><i class="icon-eye-open"></i> Openness: </strong>
+			<a href="http://5stardata.info" target="_blank">
+<!--<div class="qa openness-3">-->
+  
+    <span title="Reason: The Dataset contains a file with a format that is equivalent to 3 points. Checked: February 25, 2026">
+    
+<span class="star-rating"><span class="star-rating-stars"><span class="icon icon-star"></span><span class="icon icon-star"></span><span class="icon icon-star"></span><span class="icon icon-star-empty"></span><span class="icon icon-star-empty"></span></span></span>
+ <br>
+  
+<!--</div>--></a>
+		</p>
+      
+    
+  
+
+    </div>
+
+    
+    <span class="insert-comment-thread"></span>
+
+  
+
+  
+    
+<section id="dataset-resources" class="resources">
+  <h2>Data and Resources</h2>
+  <div class="accordion" id="historic-series">
+  
+  
+  
+  
+  
+    
+		
+			
+		
+			
+		
+	
+      <ul class="resource-list">
+        
+          
+            
+            
+                  
+                  
+
+
+
+<li class="resource-item" data-id="2a027edc-c24d-46a5-9fc7-6506863df996">
+  
+  <a class="heading" href="/data/en/dataset/mapa-urbanistic/resource/2a027edc-c24d-46a5-9fc7-6506863df996" title="Planol_urbanistic.wms" rel="dcat:distribution">
+    Planol_urbanistic.wms<span class="format-label" property="dcat:mediaType" data-format="wms" content="text/wms">WMS</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/ade3ed9d-9fb6-4ecb-9083-1ebeed0c7166/resource/2a027edc-c24d-46a5-9fc7-6506863df996/download" target="_blank">
+            
+              <i class="icon-download"></i> Download
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/en/dataset/mapa-urbanistic/resource/2a027edc-c24d-46a5-9fc7-6506863df996">
+            
+              <i class="icon-bar-chart"></i>
+              Preview
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+                  
+                  
+
+
+
+<li class="resource-item" data-id="b8a66571-7c2a-4633-afd1-8be14f40a751">
+  
+  <a class="heading" href="/data/en/dataset/mapa-urbanistic/resource/b8a66571-7c2a-4633-afd1-8be14f40a751" title="Planol_urbanistic.wmts" rel="dcat:distribution">
+    Planol_urbanistic.wmts<span class="format-label" property="dcat:mediaType" data-format="wmts" content="text/plain">WMTS</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/ade3ed9d-9fb6-4ecb-9083-1ebeed0c7166/resource/b8a66571-7c2a-4633-afd1-8be14f40a751/download" target="_blank">
+            
+              <i class="icon-download"></i> Download
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/en/dataset/mapa-urbanistic/resource/b8a66571-7c2a-4633-afd1-8be14f40a751">
+            
+              <i class="icon-bar-chart"></i>
+              Preview
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+              
+            </ul>
+            
+    
+
+    
+  </div>
+</section>
+  
+
+  
+    
+  <section class="tags" id="tags">
+	<h2>Tags</h2>
+    <div class="tag-content">
+      
+
+
+  <ul class="tag-list">
+    
+      <li>
+        <a class="tag" href="/data/en/dataset?tags=Geoservei">Geoservice</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/en/dataset?tags=Mapa+urban%C3%ADstic">Urban planning map</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/en/dataset?tags=Servei+geogr%C3%A0fic">Geographic service</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/en/dataset?tags=Servei+web">Website service</a>
+      </li>
+    
+  </ul>
+
+    </div>
+    <div id="show-more-tags"><span id="view-more"><i class="bcn-icon-mes-bold"></i> Show more</span> <span id="view-less"><i class="bcn-icon-menys-bold"></i> Hide</span></div>
+  </section>
+
+  
+
+  
+  <section class="additional-info">
+  <h3>Additional Information</h3>
+  <table class="table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th scope="col">Field</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="dataset-label">Title</th>
+        <td class="dataset-details">Urban map of the city of Barcelona</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">More information</th>
+        <td class="dataset-details"><a href="https://www.barcelona.cat/geoportal/en" rel="" target="_blank">https://www.barcelona.cat/geoportal/en</a></td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">High Value Data</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Agenda 2030. SDG Principal</th>
+        <td class="dataset-details">SDG 11: Sustainable cities and communities</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Agenda 2030. SDG Collateral 1</th>
+        <td class="dataset-details">N/A</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Agenda 2030. SDG Collateral 2</th>
+        <td class="dataset-details">N/A</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Source</th>
+        <td class="dataset-details" property="foaf:homepage">Ajuntament de Barcelona - Geoportal</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Geolocation</th>
+        <td class="dataset-details">Yes, no map view</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Long format available</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Historical information</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">CKAN API available</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Token required</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Management</th>
+        <td class="dataset-details" property="dc:creator">Gerència d&#39;Àrea d&#39;Agenda 2030, Transició Digital i Esports</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Department</th>
+        <td class="dataset-details">Institut Municipal d&#39;Informàtica</td>
+      </tr><tr>
+            <th scope="row" class="dataset-label">First publication date</th>
+            <td class="dataset-details">17/02/2011</td>
+          </tr>
+    <tr>
+      <th scope="row" class="dataset-label">Update frequency</th>
+      <td class="dataset-details">According to availability/needed</td>
+    </tr>
+
+	
+	
+
+	<tr>
+	  <th scope="row" class="dataset-label">Recent Views (last 2 weeks)</th>
+	  <td class="dataset-details">42</td>
+	</tr>
+	<tr>
+	  <th scope="row" class="dataset-label">Total Views</th>
+	  <td class="dataset-details">4788</td>
+	</tr>
+	<tr>
+	  <th scope="row" class="dataset-label">Number of Resources</th>
+	  <td class="dataset-details">2</td>
+	</tr>
+  
+
+      
+      
+  
+
+    </tbody>
+  </table>
+</section>
+
+  
+			</div>
+		</div>
+	</div>
+	
+	<div id="resource-additional-info">
+		<div id="content" class="container">
+			<div class="dataset-comments" id="mapa-urbanistic" lang="en"></div>
+
+
+
+            
+              
+            
+
+            
+              
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <footer class="site-footer">
+  <div class="container">
+    
+
+	
+
+
+    <div class="row">
+      <div class="span12 footer-links">
+        <span class="footer-logo"></span>
+        
+          <ul class="unstyled">
+            
+			  
+              <li>Ajuntament de Barcelona</li>
+			  <li><a href="/en/user">My account</a></li>
+			  
+			  
+			  
+			  <li><a href="http://www.bcn.cat/cgi-bin/consultesIRIS?id=241">Contact us</a></li>
+			  
+			  
+			  
+			  
+			  <li><a href="http://ajuntament.barcelona.cat/accessibilitat/en/">Accessibility</a></li>
+			  
+			  <li><a href="/en/avis-legal">Legal notice</a></li>
+			  <li><a href="/en/condicions-us">Terms of use<img src="/sites/all/themes/bcn_bootstrap/img/common/cc-by.png" alt="" style="height: 30px;" /></a></li>
+            
+          </ul>
+        
+      </div>
+    </div>
+</div>
+
+
+  </div>
+
+  
+    
+  
+</footer>
+  
+    
+    
+    
+      
+    
+  
+    
+
+      
+  <script>document.getElementsByTagName('html')[0].className += ' js';</script>
+<script type="text/javascript" src="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/jquery.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/:bundle:bootstrap/js/bootstrap.min.js;jed.min.js;moment-with-locales.js;select2/select2.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/base/:version:2022-01-27T09:22:25.82/:bundle:plugins/jquery.inherit.min.js;plugins/jquery.proxy-all.min.js;plugins/jquery.url-helpers.min.js;plugins/jquery.date-helpers.min.js;plugins/jquery.slug.min.js;plugins/jquery.slug-preview.min.js;plugins/jquery.truncator.min.js;plugins/jquery.masonry.min.js;plugins/jquery.form-warning.min.js;sandbox.min.js;module.min.js;pubsub.min.js;client.min.js;notify.min.js;i18n.min.js;main.min.js;modules/select-switch.min.js;modules/slug-preview.min.js;modules/basic-form.min.js;modules/confirm-action.min.js;modules/api-info.min.js;modules/autocomplete.min.js;modules/custom-fields.min.js;modules/data-viewer.min.js;modules/table-selectable-rows.min.js;modules/resource-form.min.js;modules/resource-upload-field.min.js;modules/resource-reorder.min.js;modules/resource-view-reorder.min.js;modules/follow.min.js;modules/activity-stream.min.js;modules/dashboard.min.js;modules/resource-view-embed.min.js;view-filters.min.js;modules/resource-view-filters-form.min.js;modules/resource-view-filters.min.js;modules/table-toggle-more.min.js;modules/dataset-visibility.min.js;modules/media-grid.min.js;modules/image-upload.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/base/:version:2022-01-27T09:22:25.82/tracking.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/odatabcn/:version:2026-02-04T10:58:13.30/odatabcn_theme_hierarchy.js"></script></body>
+</html>

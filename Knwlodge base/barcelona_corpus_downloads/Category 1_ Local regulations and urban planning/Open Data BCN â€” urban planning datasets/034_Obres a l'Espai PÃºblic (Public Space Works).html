@@ -1,0 +1,2543 @@
+<!DOCTYPE html>
+<!--[if IE 7]> <html lang="ca" class="ie ie7"> <![endif]-->
+<!--[if IE 8]> <html lang="ca" class="ie ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="ca" class="ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="ca"> <!--<![endif]-->
+  <head>
+    <!--[if lte ie 8]><script type="text/javascript" src="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/html5.min.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/select2/select2.css" />
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/css/:version:2022-01-27T09:22:25.80/main.min.css" />
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/font-awesome/css/font-awesome.min.css" />
+<!--[if ie 7]><link rel="stylesheet" type="text/css" href="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/font-awesome/css/font-awesome-ie7.min.css" /><![endif]-->
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/ckanext-geoview/:version:2021-11-25T16:05:46/css/geo-resource-styles.css" />
+<link rel="stylesheet" type="text/css" href="/data/fanstatic/odatabcn/:version:2026-02-04T10:58:13.30/odatabcn.css" />
+
+    <meta charset="utf-8" />
+      <meta name="generator" content="ckan 2.6.9" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obres a l&#39;espai públic de la ciutat de Barcelona - Conjunts de dades - Open Data Barcelona</title>
+
+    
+    <link rel="shortcut icon" href="https://www.barcelona.cat/favicon.ico" />
+    
+    
+  
+      
+    
+
+  
+  
+  <script type="text/javascript" src="https://w9.barcelona.cat/assets/core/javascripts/core.js"></script>
+  
+  <meta name="theme-color" content="#1e529e" />
+
+
+    
+
+
+    
+      
+      
+    
+  
+  <meta property="og:title" content="Obres a l&#39;espai públic de la ciutat de Barcelona - Open Data Barcelona">
+  <meta property="og:description" content="Road Works that take place in Barcelona&amp;#39;s urban public space and/or that have an impact on it. Each road work is georeferenced and has its own index card: type, estatus, duration, ..">
+
+    
+  </head>
+
+  
+  <body data-site-root="https://opendata-ajuntament.barcelona.cat/data/" data-locale-root="https://opendata-ajuntament.barcelona.cat/data/ca/" >
+
+    
+    <div class="hide"><a href="#content">Saltar al contingut</a></div>
+  
+
+  
+    
+
+
+<div id="wrapper">
+
+
+<!-- NIRON_opendata_2026-01-14T12:43:07Z  -->
+<header id="brand" alias="opendata" brand="opendata_2026-01-14T12:43:07Z" class="v2025 bcnbrand-legacy lang-ca" data-plausible="bcn0257" data-matomo="LYVTvL8u" data-avisos="auto" data-web-cerca="https%3A%2F%2Fopendata-ajuntament.barcelona.cat%2F" data-web-nom="Open Data BCN" data-cercador="true">
+    <div id="ajuntament-avisos-header"/>
+    <div class="bcnbrand-navs-container container">
+        <!-- Logo -->
+        <div class="bcnbrand-logo-main">
+            <a class="plausible-event-name=barra-logo" target="_blank" href="https://www.barcelona.cat/ca/" data-ga="L'Ajuntament">
+                <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/logo-ajbcn.svg" alt="Logo Ajuntament de Barcelona">
+      </a>
+            </div>
+            <div class="bcnbrand-navs-wrapper">
+                <!-- Idiomas -->
+                <nav class="bcnbrand-lang lang" id="bcnbrand-lang-nav" aria-label="Selecciona idioma">
+                    <div class="bcnbrand-dropdown bcnbrand-lang-dropdown" id="bcnbrand-lang-dropdown">
+                        <button id="bcnbrand-lang-toggle" class="bcnbrand-dropdown-toggle bcnbrand-nav-link plausible-event-name=barra-idioma-desplegar" aria-expanded="false" aria-controls="bcnbrand-language-dropdown-list" aria-label="Català (Canviar idioma)">
+                            <span class="bcnbrand-icon icobcn-mon2-l-light" aria-hidden="true"></span>
+                            Català
+                            <span class="bcnbrand-icon icobcn-fletxa-baix3" aria-hidden="true"></span>
+                            <span class="custom-tooltip">Selecciona un idioma</span>
+                        </button>
+                        <div class="bcnbrand-dropdown-menu bcnbrand-list" id="bcnbrand-language-dropdown-list" aria-label="Selecciona idioma">
+                            <h2 class="header-menu-bcnbrand-lang" tabindex="-1">Selecciona idioma</h2>
+                            <ul>
+                                <li>
+                                    <a href="/data/ca/dataset/obres" aria-current="true" class="active" lang="ca" data-ga="CA">Català</a>
+                                </li>
+                                <li>
+                                    <a href="/data/es/dataset/obres" lang="es" data-ga="ES">Castellano</a>
+                                </li>
+                                <li>
+                                    <a href="/data/en/dataset/obres" lang="en" data-ga="EN">English</a>
+                                </li>
+                            </ul>
+                            <!--<h2 class="header-menu-bcnbrand-lang-extended" tabindex="-1">Contingut específic en altres idiomes:</h2>
+            <ul class="bcnbrand-language-extended">
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/es/bienvenido-barcelona" class="plausible-event-name=barra-idioma-refugiat-ES" title="Si eres un refugiado" lang="es">Si eres un refugiado</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/en/welcome-barcelona" class="plausible-event-name=barra-idioma-refugiat-EN" title="If you are a refugee" lang="en">If you are a refugee</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/fr/bienvenue-barcelone" class="plausible-event-name=barra-idioma-refugiat-FR" title="Si vous êtes réfugié(e)" lang="fr">Si vous êtes réfugié(e)</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/ar/hl-bk-fy-brshlwn" class="plausible-event-name=barra-idioma-refugiat-AR" title="إذا كنت لاجئا " lang="ar">إذا كنت لاجئا </a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/ru/dobro-pozhalovat-v-barselonu" class="plausible-event-name=barra-idioma-refugiat-RU" title="если вы являетесь беженцем" lang="ru">если вы являетесь беженцем</a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/ur/brslwn-myn-khwsh-amdyd" class="plausible-event-name=barra-idioma-refugiat-UR" title="اگر آپ مہاجر ہیں " lang="ur">اگر آپ مہاجر ہیں </a>
+              </li>
+              <li>
+                <a href="https://www.ciutatrefugi.barcelona/uk/vitayemo-v-barseloni" class="plausible-event-name=barra-idioma-refugiat-UK" title="Якщо ви біженець" lang="uk">Якщо ви біженець</a>
+              </li>
+            </ul>-->
+                        </div>
+                    </div>
+                </nav>
+                <!-- Buscador -->
+                <nav class="bcnbrand-navbar-search" aria-label="Cerca en el web">
+                    <div class="bcnbrand-dropdown" id="bcnbrand-search-dropdown">
+                        <button id="bcnbrand-search-toggle" class="bcnbrand-dropdown-toggle bcnbrand-nav-link plausible-event-name=barra-cerca-desplegar" aria-expanded="false" aria-controls="bcnbrand-search-menu" aria-describedby="tooltip-search">
+                            <span class="bcnbrand-icon icobcn-lupa-l" aria-hidden="true"/>
+                            <span id="tooltip-search" role="tooltip" class="custom-tooltip">Cerca en el web</span>
+                        </button>
+                        <div class="bcnbrand-dropdown-menu" id="bcnbrand-search-menu">
+                            <form action="https://cercador.barcelona.cat/ca" method="get">
+                                <div class="bcnbrand-search-wrapper">
+                                    <label for="bcnbrand-search-input" class="bcnbrand-search-input-label">Cerca en el web</label>
+                                    <input id="bcnbrand-search-input" type="text" name="query"/>
+                                    <button type="button" id="bcnbrand-search-clear" hidden aria-label="Esborra el text">
+                                        <span class="bcnbrand-icon icobcn-creu-l" aria-hidden="true"/>
+                                    </button>
+                                    <button type="submit" aria-label="Cerca en el web" data-ga="Cerca en el web" class="plausible-event-name=barra-cerca">
+                                        <span class="bcnbrand-icon icobcn-lupa-l" aria-hidden="true"/>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Atajos -->
+                <nav class="bcnbrand-navbar-shortcuts" aria-label="Altres webs municipals">
+                    <div class="bcnbrand-dropdown" id="bcnbrand-shortcuts-dropdown">
+                        <button id="bcnbrand-shortcuts-toggle" class="bcnbrand-dropdown-toggle bcnbrand-nav-link plausible-event-name=barra-drecera-desplegar" aria-expanded="false" aria-controls="bcnbrand-shortcuts-menu">
+                            <span class="bcnbrand-icon icobcn-grid" aria-hidden="true"/>
+                            <span class="custom-tooltip">Altres webs</span>
+                        </button>
+                        <div class="bcnbrand-dropdown-menu" id="bcnbrand-shortcuts-menu">
+                            <div class="bcnbrand-list">
+                                <h2>Altres webs de l'Ajuntament de Barcelona</h2>
+                                <div role="list">
+                                    <div class="bcnbrand-row">
+                                        <div role="listitem">
+                                            <a target="_blank" href="https://ajuntament.barcelona.cat/ca/" class="plausible-event-name=barra-drecera-ajuntament">
+                                                <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-ajuntament.svg" alt="">
+                                                    <span class="bcnbrand-link">L'Ajuntament</span>
+                                                </a>
+                                            </div>
+                                            <div role="listitem">
+                                                <a target="_blank" href="https://ajuntament.barcelona.cat/canals-comunicacio-ciutadana/" class="plausible-event-name=barra-drecera-Canals%20de%20comunicaci%C3%B3">
+                                                    <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-iris.svg" alt="">
+                                                        <span class="bcnbrand-link">Contacte</span>
+                                                    </a>
+                                                </div>
+                                                <div role="listitem">
+                                                    <a target="_blank" href="https://seuelectronica.ajuntament.barcelona.cat/oficinavirtual/ca/" class="plausible-event-name=barra-drecera-Tr%C3%A0mits">
+                                                        <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-tramits.svg" alt="">
+                                                            <span class="bcnbrand-link">Tràmits</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="bcnbrand-row">
+                                                    <div role="listitem">
+                                                        <a target="_blank" href="https://seuelectronica.ajuntament.barcelona.cat/processosselectius/ca" class="plausible-event-name=barra-drecera-Processos-selectius">
+                                                            <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-difusio.svg" alt="">
+                                                                <span class="bcnbrand-link">Treballa a l'Ajuntament</span>
+                                                            </a>
+                                                        </div>
+                                                        <div role="listitem">
+                                                            <a target="_blank" href="https://www.barcelona.cat/infobarcelona/ca/" class="plausible-event-name=barra-drecera-Info%20Barcelona">
+                                                                <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-premsa.svg" alt="">
+                                                                    <span class="bcnbrand-link">Noticies</span>
+                                                                </a>
+                                                            </div>
+                                                            <div role="listitem">
+                                                                <a target="_blank" href="https://guia.barcelona.cat/ca/" class="plausible-event-name=barra-drecera-Guia%20BCN">
+                                                                    <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-agenda.svg" alt="">
+                                                                        <span class="bcnbrand-link">Agenda</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bcnbrand-row bcnbrand-row--center">
+                                                                <div role="listitem">
+                                                                    <a target="_blank" href="https://geoportal.barcelona.cat/planolbcn/ca/" class="plausible-event-name=barra-drecera-Pl%C3%A0nol%20BCN">
+                                                                        <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-planol.svg" alt="">
+                                                                            <span class="bcnbrand-link">Mapa</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div role="listitem">
+                                                                        <a target="_blank" href="https://www.barcelona.cat/com-shi-va/ca/" class="plausible-event-name=barra-drecera-Com%20Com%20s%27hi%20va">
+                                                                            <img src="https://www.barcelona.cat/assets/images/brand/banner/2025/ico-comshiva.svg" alt="">
+                                                                                <span class="bcnbrand-link">Com s'hi va</span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </header>
+
+<div id="portal-title" class="bcnbrand-navs-container container">
+	<h1><a href="/ca/"><!--<span class="bcn-icon-dades-obertes" style="color:#000; font-size: 0.75em;"></span> Open Data <span>BCN</span>--><span>Open Data BCN</span></a></h1>
+	<p class="slogan">Servei de dades obertes de l&#39;Ajuntament de Barcelona</p>
+</div>
+
+<div class="clearfix"></div>
+<div id="nav-wrapper">
+<header class="navbar navbar-static-top masthead" id="navbar"  data-spy="affix" data-offset-top="60">
+	<div id="mobile-title">
+		<h1><a href="/ca/">Open Data <span>BCN</span></a></h1>
+	</div>
+  
+    
+  
+  <div class="container">
+    
+    <hgroup class="header-image pull-left">
+
+      
+          <a href="/" class="home-link">
+	        <span class="bcn-icon-casa hidden-xs"></span>
+			<span>Open Data Barcelona</span>
+          </a>
+          
+      
+
+    </hgroup>
+
+	<button class="navbar-toggle collapsed" type="button" data-target=".nav-collapse" data-toggle="collapse">
+       <span class="bcn-icon-tancar-medium"></span>
+    </button>
+    <div class="nav-collapse collapse" id="block-bcn-megamenu-bcn-megamenu-main-menu">
+
+      
+		
+		<div class="menu-overlay"></div>
+        <nav class="section navigation">
+          <ul class="nav nav-pills">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Sobre aquest lloc <i class="arrow bcn-icon-baix-medium"></i></span></a>
+			  	<ul class="dropdown-menu" role="menu">
+					<li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Sobre aquest lloc</a>
+					</li>
+					<li class="first" aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/open-data-bcn"><span>Open Data BCN</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/caracteristiques-portal"><span>Característiques del portal</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/iniciatives-relacionades"><span>Iniciatives relacionades</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/faqs"><span>FAQs</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="active"><a href="/data/ca/dataset"><span>Catàleg de datasets</span></a></li>
+          	<!--<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Actualitat <i class="arrow bcn-icon-baix-medium"></i></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Actualitat</a>
+					</li>
+					<li class="first" aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/novetats"><span>Novetats del portal</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/noticies"><span>Notícies</span></a>
+					</li>
+					<li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/entrevistes"><span>Entrevistes</span></a>
+					</li>
+                    <li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/histories-us"><span>Histories d&#39;ús</span></a>
+					</li>
+				</ul> 
+			</li>-->
+            <li class="dropdown">
+				<!--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span >Visualitzacions<br />i</br />aplicacions <i class="arrow bcn-icon-baix-medium"></i></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Visualitzacions i aplicacions</a>
+					<li aria-controls="main-menu-ul" aria-checked="false" class="first">
+						<a href="/ca/visualitzacions-i-aplicacions"><span>Visualitzacions</span></a>
+						<ul class="depth-3">
+							<li>
+								<i class="arrow hidden-xs bcn-icon-dreta-medium"></i>
+								<a href="/ca/visualitzacions-per-temes">Visualitzacions per temes</a>
+							</li>
+						</ul>
+					</li>
+                    <li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/aplicacions"><span>Aplicacions</span></a>
+					</li>
+                </ul> 
+			</li>-->
+			<li>
+				<a href="/ca/analytics"><span>Estadístiques</span></a>
+			</li>
+            </li>
+            <li>
+				<a href="/ca/desenvolupadors"><span>Desenvolupadors</span></a>
+			</li>
+            <li>
+				<a href="/ca/dades-alt-valor"><span>DADES D&#39;ALT VALOR</span></a>
+			</li>
+            <li>
+				<a href="/ca/ods-agenda2030"><span>AGENDA 2030-ODS</span></a>
+			</li>
+            <li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span >Projectes de Difusió <i class="arrow bcn-icon-baix-medium"></i></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="submenu-header">
+						<a data-toggle="dropdown" href="#"><i class="arrow bcn-icon-esquerra-medium"></i> Projectes de Difusió</a>
+					<li aria-controls="main-menu-ul" aria-checked="false" class="first">
+						<a href="/ca/repte-barcelona-dades-obertes"><span>Repte Barcelona Dades Obertes</span></a>
+					</li>
+                    <li aria-controls="main-menu-ul" aria-checked="false">
+						<a href="/ca/data-viz-kobe-home"><span>World Data Viz Challenge Barcelona-Kobe</span></a>
+					</li>
+                </ul> 
+				</li>
+			</li>
+						
+			
+			
+			
+			
+          </ul>
+        </nav>
+      
+
+    </div>
+  </div>
+</header>
+</div>
+
+
+  
+    <div role="main">
+      <div id="content" class="container">
+        
+          
+            
+            <div class="flash-messages">
+              
+                
+              
+            </div>
+          
+          
+
+          
+            
+            <div class="toolbar">
+              
+                
+                  <ol class="breadcrumb">
+                    
+ <li class="home"><a href="/ca/"><i class="icon-home"></i><span> Inici</span></a></li>
+                    
+
+    
+    
+      
+	  
+	  
+      
+      
+          <li><a href="/data/ca/organization/territori">Territori</a></li>
+      
+      <li><a href="/data/ca/organization/urbanisme-i-infraestructures">Urbanisme i infraestructures</a></li>
+    
+    <li class="active"><a class=" active" href="/data/ca/dataset/obres">Obres a l&#39;espai públic de ...</a></li>
+  
+
+
+                  </ol>
+                
+              
+            </div>
+          
+          
+
+          <div class="row wrapper">
+
+            
+            
+	
+	
+      
+	  
+	  <div class="span12" typeof="dcat:Dataset">
+	<script type="application/ld+json">
+		{
+		"@context":"https://schema.org/",
+		"@type":"dataset",
+		"name": "obres",
+		"description":"Obres que es desenvolupen a l&#39;espai públic urbà de Barcelona i que hi tenen impacte. Cada obra està georeferenciada i disposa de fitxa pròpia amb la informació sobre l&#39;obra: tipologia, estat, durada,...   
+",
+		"url":"https://opendata-ajuntament.barcelona.cat/data/ca/dataset/obres",
+		"dateModified":"2026-01-01T02:37:15.859423",
+		"keywords":"Any 2018,Espai públic,Obres,Any 2019,Any 2020,Any 2021,Any 2022,Any 2023,Any 2025",
+		"license":"CC-BY-4.0",
+		"distribution":[
+		
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"JSON",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/089bcf9e-140e-4ea3-bf93-03c6260ba0f5/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"CSV",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/4e6b3bfe-2f47-4d35-aa7d-3e4bcc930cea/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"ZIP",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/fb919246-cb72-4842-901c-0445e476da9f/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"ZIP",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/540ca8e0-c8d3-42f4-b821-5259786f910e/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"GeoJSON",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/762fea42-4d98-40b0-a346-2097104e389c/download/2023_1t_afectacions-mobilitat-.geojson"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/5eb1fe08-6906-46dc-be7c-c050d811bc07/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/14d83cef-46b0-43e6-bd81-717612a9344e/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/f063703c-4c9a-42c2-9a4c-aa8f191bd6df/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/ed001368-20c4-4643-b42d-2ca949b3c084/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/670ca72f-a92b-4f61-841f-91c5fa41fff5/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/092ada97-7546-4e33-87dd-0d01c60c940c/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/a345a10a-21d1-4536-a5f8-54d68d6f3e38/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/20c0cb41-d0b9-4d04-a8e0-8f89ea10ce04/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/7f8418d3-7f6b-4283-a9d3-dd6594fe059f/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/38be8eb6-8767-41c8-8c9c-bd5d7321d615/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/64ac93e5-a6f5-4ae5-91b0-36a4a7ed8d56/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/c400e4a3-0b85-4415-a8e4-99bc6ece44e6/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/65c65030-c95c-4889-b0cf-2c2d8a707650/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/458b93f1-1f63-4678-88a7-b2114d7fbfdc/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/9a841603-b358-48b7-8029-c8b31150d96e/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/cbf9dcc3-921c-4a0a-8d04-506b68cc8ad1/download"
+				},
+				
+			
+			
+			
+				{
+					"@type":"DataDownload",
+					"encodingFormat":"XML",
+					"contentUrl":"https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/f684fd55-b4f8-4a70-ac94-0e1eae8cc258/download"
+				}
+			
+			
+			]
+		}
+	</script>
+	  
+      
+		
+		
+    <h1 class="page-heading">
+        <span property="dc:title">Obres a l&#39;espai públic de la ciutat de Barcelona</span>
+        
+        
+		
+		
+    </h1>
+
+
+	
+	
+	
+	
+    
+	  <ul class="dataset-groups">
+      	
+			  
+		  	<li class="parent">
+				<a href="/data/ca/organization/territori" rel="dc:subject">
+    				
+        				<i class="bcn-icon2-territori"></i>
+    				
+					Territori
+				</a>
+		 	</li>
+      	
+		
+		
+		<li class="child">
+			<a href="/data/ca/organization/urbanisme-i-infraestructures" rel="dc:subject">
+				
+        			<i class="bcn-icon-urbanisme"></i>
+    			
+				Urbanisme i infraestructures
+			</a>
+		  </li>
+	  </ul>
+	
+
+    
+        <div class="notes embedded-content" property="dc:description">
+          <p>Obres que es desenvolupen a l'espai públic urbà de Barcelona i que hi tenen impacte. Cada obra està georeferenciada i disposa de fitxa pròpia amb la informació sobre l'obra: tipologia, estat, durada,...</p>    
+        </div>
+    
+      
+    
+      <div class="field-description">
+          <p class="field-description-show">
+            <a data-toggle="collapse" href="#fieldDescription" aria-expanded="false" aria-controls="fieldDescription">
+                <i class="icon-th-list"></i>
+				
+					Veure descripció complementària i definició de camps
+				
+            </a>
+          </p>
+          <div class="collapse" id="fieldDescription">
+            <div class="well">
+				
+					<div class="text-content">
+						<p><strong>NOTA:</strong> Amb data <strong>11/3/2025</strong> es comença a publicar de nou la informació amb actualització diària.   <br>
+Amb data 14/3/2022  s'aturà l'actualització d'aquest dataset amb motiu de la posada en producció del nou sistema GIAT (Gestió Integrada d'Actuacions de Transformació ).  </p>
+<p>Els <strong>fitxers històrics</strong> publicats abans de l'any 2025 contenen les dades publicades l'última setmana de cada trimestre. <br>
+ Els <strong>fitxers històrics</strong> publicats a partir de l'any 2025 contenen les dades publicades el primer dia del trimestre.</p>
+					</div>
+				
+			
+				
+					<table class="table">
+						<thead>
+						  <tr>
+							<th scope="col" width="25%">Camp</th>
+							<th scope="col">Descripció</th>
+						  </tr>
+						</thead>
+						<tbody>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*00.</p></th>
+							<td class="dataset-details" property="rdf:value"><p><strong>ESTRUCTURA DE LES DADES A PARTIR DE L'ANY  2025</strong></p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*00.codi</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Codi identificador de l'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*01.ubicacio</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Adreça de l'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*03.codi_districte</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Codi del districte</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*04.nom_districte</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Nom del districte</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*05.codi_barri</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Codi del barri</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*06.nom_barri</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Nom del barri</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*07.tipusobra</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Tipus d'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*08.pressupost_licitacio</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Pressupost de la licitació</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*09.pressupost_adjudicacio</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Pressupost de l'adjudicació</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*10.data_inici</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data real d'inici</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*11.data_fi</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data  real de fi</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*12.promotor</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Nom del promotor</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*13.constructor</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Nom del constructor</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*14.estat</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Estat de l'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*15.titol</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Títol de l'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*16.descripcio</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Descripció</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*17.url_web_obres</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Url de la web d'obres</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*18.geometria_etrs89</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Geometria en ETRS89</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>*19.geometria_wgs84</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Geometria en WGS84</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>00.</p></th>
+							<td class="dataset-details" property="rdf:value"><p><strong>ESTRUCTURA  DELS RECURSOS .XML (FINS A 2023)</strong></p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01..OBRES</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Array de les obres</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01..CA</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Indicador de l'idioma</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01..obra</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Entrada de l'array d'obres</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01..card</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Detalls de l'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.01.title</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Nom de l'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.02.description</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Descripció de l'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.03.issued</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data del registreq</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.04..address</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Dades de l'adreça</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.04.01..zone</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Detalls de barri i districte</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.04.01.01.district</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Nom del districte</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.04.01.02.neighborhood</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Nom del barri</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.04.02.geo</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Coordenades de longitud i latitud</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.04.03.object</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Objecte annexat</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.04.04.comments</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Comentaris</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.05.worktype</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Tipus d'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.06.period</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Període d'obres</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.07.status</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Estat de l'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.08.developer-company</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Companyia desenvolupadora</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.09.construction-company</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Companyia constructora</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.10..milestones</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Fases de l'obra</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.10.01.title</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Títol de la fase</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.10.02.description</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Descripció de la fase</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.10.03.dtstart</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data d'inici de les obres</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.10.04.dtend</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data de finalització de les obres</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.10.05..affectations</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Array d'afectacions a les obres</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.10.05.01..affectation</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Detall de l'afectació</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.10.05.01.01.title</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Nom de l'afectació</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.10.05.01.02.description</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Descripció de l'afectació</p></td>
+						  </tr>
+						
+						  
+						  <tr rel="dc:relation" resource="_:extra">
+							<th scope="row" class="dataset-label" property="rdfs:label"><p>01.01.01.01.11.dtlaspub</p></th>
+							<td class="dataset-details" property="rdf:value"><p>Data d'última publicació</p></td>
+						  </tr>
+						
+						</tbody>
+					</table>
+				
+            </div>
+          </div>
+      </div>
+    
+
+    <div class="dataset-info">
+        
+
+
+  
+    
+      
+        <p class="license">
+
+            <strong><i class="icon-medium icon-lock"></i> Llicència: </strong>
+
+                
+  
+    <a href="https://creativecommons.org/licenses/by/4.0/" rel="dc:rights">Creative Commons Attribution 4.0</a>
+  
+
+                
+                  <a href="http://opendefinition.org/okd/" title="Aquest conjunt de dades satisfà la Open Definition.">
+                      <img class="open-data" src="/data/base/images/od_80x15_blue.png" alt="[Open Data]" />
+                  </a>
+                
+        </p>
+		
+		<p class="license">
+			<strong><i class="icon-eye-open"></i> Grau d&#39;obertura: </strong>
+			<a href="http://5stardata.info" target="_blank">
+<!--<div class="qa openness-3">-->
+  
+    <span title="Motiu: El conjunt de dades conté un arxiu amb un format que és equivalent a 3 punts. Comprovat: 25 Febrer 2026">
+    
+<span class="star-rating"><span class="star-rating-stars"><span class="icon icon-star"></span><span class="icon icon-star"></span><span class="icon icon-star"></span><span class="icon icon-star-empty"></span><span class="icon icon-star-empty"></span></span></span>
+ <br>
+  
+<!--</div>--></a>
+		</p>
+      
+    
+  
+
+    </div>
+
+    
+    <span class="insert-comment-thread"></span>
+
+  
+
+  
+    
+<section id="dataset-resources" class="resources">
+  <h2>Dada i recursos</h2>
+  <div class="accordion" id="historic-series">
+  
+  
+  
+  
+  
+    
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	
+      <ul class="resource-list">
+        
+          
+            
+            
+                  
+                  
+
+
+
+<li class="resource-item" data-id="089bcf9e-140e-4ea3-bf93-03c6260ba0f5">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/089bcf9e-140e-4ea3-bf93-03c6260ba0f5" title="obres_espai_public.json" rel="dcat:distribution">
+    obres_espai_public.json<span class="format-label" property="dcat:mediaType" data-format="json" content="application/json">JSON</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/089bcf9e-140e-4ea3-bf93-03c6260ba0f5/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/089bcf9e-140e-4ea3-bf93-03c6260ba0f5">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+                  
+                  
+
+
+
+<li class="resource-item" data-id="4e6b3bfe-2f47-4d35-aa7d-3e4bcc930cea">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/4e6b3bfe-2f47-4d35-aa7d-3e4bcc930cea" title="obres_espai_public.csv" rel="dcat:distribution">
+    obres_espai_public.csv<span class="format-label" property="dcat:mediaType" data-format="csv" content="text/csv">CSV</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/4e6b3bfe-2f47-4d35-aa7d-3e4bcc930cea/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/4e6b3bfe-2f47-4d35-aa7d-3e4bcc930cea">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+                
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#historic-series" href="#series-0">
+                            <i class="bcn-icon-baix-medium"></i> 2025
+                          </a>
+                        </div>
+                       <div id="series-0" class="accordion-body collapse in">
+                         <div class="accordion-inner">
+                      
+                    
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="fb919246-cb72-4842-901c-0445e476da9f">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/fb919246-cb72-4842-901c-0445e476da9f" title="2025_4T_obres_espai_public.json.zip" rel="dcat:distribution">
+    2025_4T_obres_espai_public.json.zip<span class="format-label" property="dcat:mediaType" data-format="zip" content="application/zip">ZIP</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/fb919246-cb72-4842-901c-0445e476da9f/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/fb919246-cb72-4842-901c-0445e476da9f">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="540ca8e0-c8d3-42f4-b821-5259786f910e">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/540ca8e0-c8d3-42f4-b821-5259786f910e" title="2025_4T_obres_espai_public.csv.zip" rel="dcat:distribution">
+    2025_4T_obres_espai_public.csv.zip<span class="format-label" property="dcat:mediaType" data-format="zip" content="application/zip">ZIP</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/540ca8e0-c8d3-42f4-b821-5259786f910e/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/540ca8e0-c8d3-42f4-b821-5259786f910e">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+                
+                  </div></div></div>
+                
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#historic-series" href="#series-1">
+                            <i class="bcn-icon-baix-medium"></i> 2023
+                          </a>
+                        </div>
+                       <div id="series-1" class="accordion-body collapse ">
+                         <div class="accordion-inner">
+                      
+                    
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="762fea42-4d98-40b0-a346-2097104e389c">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/762fea42-4d98-40b0-a346-2097104e389c" title="2023_1T_Afectacions mobilitat .geojson" rel="dcat:distribution">
+    2023_1T_Afectacions mobilitat .geojson<span class="format-label" property="dcat:mediaType" data-format="geojson" content="application/json">GeoJSON</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/762fea42-4d98-40b0-a346-2097104e389c/download/2023_1t_afectacions-mobilitat-.geojson" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/762fea42-4d98-40b0-a346-2097104e389c">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+                
+                  </div></div></div>
+                
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#historic-series" href="#series-2">
+                            <i class="bcn-icon-baix-medium"></i> 2022
+                          </a>
+                        </div>
+                       <div id="series-2" class="accordion-body collapse ">
+                         <div class="accordion-inner">
+                      
+                    
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="5eb1fe08-6906-46dc-be7c-c050d811bc07">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/5eb1fe08-6906-46dc-be7c-c050d811bc07" title="2022_1T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2022_1T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/5eb1fe08-6906-46dc-be7c-c050d811bc07/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/5eb1fe08-6906-46dc-be7c-c050d811bc07">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+                
+                  </div></div></div>
+                
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#historic-series" href="#series-3">
+                            <i class="bcn-icon-baix-medium"></i> 2021
+                          </a>
+                        </div>
+                       <div id="series-3" class="accordion-body collapse ">
+                         <div class="accordion-inner">
+                      
+                    
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="14d83cef-46b0-43e6-bd81-717612a9344e">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/14d83cef-46b0-43e6-bd81-717612a9344e" title="2021_4T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2021_4T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/14d83cef-46b0-43e6-bd81-717612a9344e/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/14d83cef-46b0-43e6-bd81-717612a9344e">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="f063703c-4c9a-42c2-9a4c-aa8f191bd6df">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/f063703c-4c9a-42c2-9a4c-aa8f191bd6df" title="2021_3T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2021_3T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/f063703c-4c9a-42c2-9a4c-aa8f191bd6df/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/f063703c-4c9a-42c2-9a4c-aa8f191bd6df">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="ed001368-20c4-4643-b42d-2ca949b3c084">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/ed001368-20c4-4643-b42d-2ca949b3c084" title="2021_2T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2021_2T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/ed001368-20c4-4643-b42d-2ca949b3c084/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/ed001368-20c4-4643-b42d-2ca949b3c084">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="670ca72f-a92b-4f61-841f-91c5fa41fff5">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/670ca72f-a92b-4f61-841f-91c5fa41fff5" title="2021_1T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2021_1T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/670ca72f-a92b-4f61-841f-91c5fa41fff5/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/670ca72f-a92b-4f61-841f-91c5fa41fff5">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+                
+                  </div></div></div>
+                
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#historic-series" href="#series-4">
+                            <i class="bcn-icon-baix-medium"></i> 2020
+                          </a>
+                        </div>
+                       <div id="series-4" class="accordion-body collapse ">
+                         <div class="accordion-inner">
+                      
+                    
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="092ada97-7546-4e33-87dd-0d01c60c940c">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/092ada97-7546-4e33-87dd-0d01c60c940c" title="2020_4T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2020_4T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/092ada97-7546-4e33-87dd-0d01c60c940c/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/092ada97-7546-4e33-87dd-0d01c60c940c">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="a345a10a-21d1-4536-a5f8-54d68d6f3e38">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/a345a10a-21d1-4536-a5f8-54d68d6f3e38" title="2020_3T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2020_3T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/a345a10a-21d1-4536-a5f8-54d68d6f3e38/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/a345a10a-21d1-4536-a5f8-54d68d6f3e38">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="20c0cb41-d0b9-4d04-a8e0-8f89ea10ce04">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/20c0cb41-d0b9-4d04-a8e0-8f89ea10ce04" title="2020_2T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2020_2T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/20c0cb41-d0b9-4d04-a8e0-8f89ea10ce04/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/20c0cb41-d0b9-4d04-a8e0-8f89ea10ce04">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="7f8418d3-7f6b-4283-a9d3-dd6594fe059f">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/7f8418d3-7f6b-4283-a9d3-dd6594fe059f" title="2020_1T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2020_1T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/7f8418d3-7f6b-4283-a9d3-dd6594fe059f/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/7f8418d3-7f6b-4283-a9d3-dd6594fe059f">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+                
+                  </div></div></div>
+                
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#historic-series" href="#series-5">
+                            <i class="bcn-icon-baix-medium"></i> 2019
+                          </a>
+                        </div>
+                       <div id="series-5" class="accordion-body collapse ">
+                         <div class="accordion-inner">
+                      
+                    
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="38be8eb6-8767-41c8-8c9c-bd5d7321d615">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/38be8eb6-8767-41c8-8c9c-bd5d7321d615" title="2019_4T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2019_4T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/38be8eb6-8767-41c8-8c9c-bd5d7321d615/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/38be8eb6-8767-41c8-8c9c-bd5d7321d615">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="64ac93e5-a6f5-4ae5-91b0-36a4a7ed8d56">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/64ac93e5-a6f5-4ae5-91b0-36a4a7ed8d56" title="2019_3T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2019_3T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/64ac93e5-a6f5-4ae5-91b0-36a4a7ed8d56/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/64ac93e5-a6f5-4ae5-91b0-36a4a7ed8d56">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="c400e4a3-0b85-4415-a8e4-99bc6ece44e6">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/c400e4a3-0b85-4415-a8e4-99bc6ece44e6" title="2019_2T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2019_2T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/c400e4a3-0b85-4415-a8e4-99bc6ece44e6/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/c400e4a3-0b85-4415-a8e4-99bc6ece44e6">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="65c65030-c95c-4889-b0cf-2c2d8a707650">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/65c65030-c95c-4889-b0cf-2c2d8a707650" title="2019_1T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2019_1T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/65c65030-c95c-4889-b0cf-2c2d8a707650/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/65c65030-c95c-4889-b0cf-2c2d8a707650">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+                
+                  </div></div></div>
+                
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#historic-series" href="#series-6">
+                            <i class="bcn-icon-baix-medium"></i> 2018
+                          </a>
+                        </div>
+                       <div id="series-6" class="accordion-body collapse ">
+                         <div class="accordion-inner">
+                      
+                    
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="458b93f1-1f63-4678-88a7-b2114d7fbfdc">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/458b93f1-1f63-4678-88a7-b2114d7fbfdc" title="2018_4T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2018_4T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/458b93f1-1f63-4678-88a7-b2114d7fbfdc/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/458b93f1-1f63-4678-88a7-b2114d7fbfdc">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="9a841603-b358-48b7-8029-c8b31150d96e">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/9a841603-b358-48b7-8029-c8b31150d96e" title="2018_3T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2018_3T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+        Les dades d'aquest recurs històric han sigut recollides a data 22/11/2018
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/9a841603-b358-48b7-8029-c8b31150d96e/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/9a841603-b358-48b7-8029-c8b31150d96e">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="cbf9dcc3-921c-4a0a-8d04-506b68cc8ad1">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/cbf9dcc3-921c-4a0a-8d04-506b68cc8ad1" title="2018_2T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2018_2T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/cbf9dcc3-921c-4a0a-8d04-506b68cc8ad1/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/cbf9dcc3-921c-4a0a-8d04-506b68cc8ad1">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+            
+            
+              
+              
+                  
+                  
+
+
+
+<li class="resource-item" data-id="f684fd55-b4f8-4a70-ac94-0e1eae8cc258">
+  
+  <a class="heading" href="/data/ca/dataset/obres/resource/f684fd55-b4f8-4a70-ac94-0e1eae8cc258" title="2018_1T_XMLOPENDATA.XML" rel="dcat:distribution">
+    2018_1T_XMLOPENDATA.XML<span class="format-label" property="dcat:mediaType" data-format="xml" content="application/xml">XML</span>
+  </a>
+
+  
+    <p class="description">
+      
+    </p>
+  
+  
+  
+  <div class="resource-actions-small">
+    <ul>
+      
+        
+        
+        <li>
+          <a href="https://opendata-ajuntament.barcelona.cat/data/dataset/fd9f355f-2160-4f89-96a1-6ece3924e3bd/resource/f684fd55-b4f8-4a70-ac94-0e1eae8cc258/download" target="_blank">
+            
+              <i class="icon-download"></i> Descarregar
+            
+          </a>
+        </li>
+        <li>
+          <a href="/data/ca/dataset/obres/resource/f684fd55-b4f8-4a70-ac94-0e1eae8cc258">
+            
+              <i class="icon-info-sign"></i>
+              Més informació
+            
+          </a>
+        </li>
+        
+      
+    </ul>
+  </div>
+  
+
+</li>
+                
+              
+            </ul>
+            
+    
+
+    
+  </div>
+</section>
+  
+
+  
+    
+  <section class="tags" id="tags">
+	<h2>Etiquetes</h2>
+    <div class="tag-content">
+      
+
+
+  <ul class="tag-list">
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Any+2018">Any 2018</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Any+2019">Any 2019</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Any+2020">Any 2020</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Any+2021">Any 2021</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Any+2022">Any 2022</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Any+2023">Any 2023</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Any+2025">Any 2025</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Espai+p%C3%BAblic">Espai públic</a>
+      </li>
+    
+      <li>
+        <a class="tag" href="/data/ca/dataset?tags=Obres">Obres</a>
+      </li>
+    
+  </ul>
+
+    </div>
+    <div id="show-more-tags"><span id="view-more"><i class="bcn-icon-mes-bold"></i> Mostra més</span> <span id="view-less"><i class="bcn-icon-menys-bold"></i> Oculta</span></div>
+  </section>
+
+  
+
+  
+  <section class="additional-info">
+  <h3>Informació addicional</h3>
+  <table class="table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th scope="col">Camp</th>
+        <th scope="col">Descripció</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="dataset-label">Títol</th>
+        <td class="dataset-details">Obres a l&#39;espai públic de la ciutat de Barcelona</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Més informació</th>
+        <td class="dataset-details"><a href="http://www.bcn.cat/obres" rel="" target="_blank">http://www.bcn.cat/obres</a></td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Dades d&#39;Alt Valor</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Agenda 2030. ODS Principal</th>
+        <td class="dataset-details">ODS 11: Ciutats i comunitats sostenibles</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Agenda 2030. ODS Colateral 1</th>
+        <td class="dataset-details">N/A</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Agenda 2030. ODS Colateral 2</th>
+        <td class="dataset-details">N/A</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Font</th>
+        <td class="dataset-details" property="foaf:homepage">Gestió Integrada d&#39;Actuacions de Transformació (GIAT)</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Geolocalització</th>
+        <td class="dataset-details">Sí, amb visualització a plànol</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Format Long disponible</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Informació històrica</th>
+        <td class="dataset-details">Sí</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">API CKAN disponible</th>
+        <td class="dataset-details">Sí</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Token requerit</th>
+        <td class="dataset-details">No</td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Gerència</th>
+        <td class="dataset-details" property="dc:creator">Gerència de Mobilitat, Infraestructures i Serveis Urbans </td>
+      </tr><tr>
+        <th scope="row" class="dataset-label">Departament</th>
+        <td class="dataset-details">Departament de Serveis Digitals de Mobilitat i Serveis Urbans</td>
+      </tr><tr>
+            <th scope="row" class="dataset-label">Data primera publicació</th>
+            <td class="dataset-details">30/09/2014</td>
+          </tr>
+    <tr>
+      <th scope="row" class="dataset-label">Freqüència actualització</th>
+      <td class="dataset-details">Diària</td>
+    </tr>
+
+	
+	
+
+	<tr>
+	  <th scope="row" class="dataset-label">Visites recents (últimes 2 setmanes)</th>
+	  <td class="dataset-details">55</td>
+	</tr>
+	<tr>
+	  <th scope="row" class="dataset-label">Visites totals</th>
+	  <td class="dataset-details">3224</td>
+	</tr>
+	<tr>
+	  <th scope="row" class="dataset-label">Nombre de recursos</th>
+	  <td class="dataset-details">22</td>
+	</tr>
+  
+
+      
+      
+  
+
+    </tbody>
+  </table>
+</section>
+
+  
+			</div>
+		</div>
+	</div>
+	
+	<div id="resource-additional-info">
+		<div id="content" class="container">
+			<div class="dataset-comments" id="obres" lang="ca"></div>
+
+
+
+            
+              
+            
+
+            
+              
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <footer class="site-footer">
+  <div class="container">
+    
+
+	
+
+
+    <div class="row">
+      <div class="span12 footer-links">
+        <span class="footer-logo"></span>
+        
+          <ul class="unstyled">
+            
+			  
+              <li>Ajuntament de Barcelona</li>
+			  <li><a href="/ca/user">El meu compte</a></li>
+			  
+              <li><a href="http://www.bcn.cat/cgi-bin/consultesIRIS?id=239">Contacteu-nos</a></li>
+			  
+			  
+			  
+			  
+			  <li><a href="http://ajuntament.barcelona.cat/accessibilitat/ca/">Accessibilitat</a></li>
+			  
+			  
+			  
+			  <li><a href="/ca/avis-legal">Avís legal</a></li>
+			  <li><a href="/ca/condicions-us">Condicions d&#39;ús<img src="/sites/all/themes/bcn_bootstrap/img/common/cc-by.png" alt="" style="height: 30px;" /></a></li>
+            
+          </ul>
+        
+      </div>
+    </div>
+</div>
+
+
+  </div>
+
+  
+    
+  
+</footer>
+  
+    
+    
+    
+      
+    
+  
+    
+
+      
+  <script>document.getElementsByTagName('html')[0].className += ' js';</script>
+<script type="text/javascript" src="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/jquery.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/vendor/:version:2022-01-27T09:22:25.86/:bundle:bootstrap/js/bootstrap.min.js;jed.min.js;moment-with-locales.js;select2/select2.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/base/:version:2022-01-27T09:22:25.82/:bundle:plugins/jquery.inherit.min.js;plugins/jquery.proxy-all.min.js;plugins/jquery.url-helpers.min.js;plugins/jquery.date-helpers.min.js;plugins/jquery.slug.min.js;plugins/jquery.slug-preview.min.js;plugins/jquery.truncator.min.js;plugins/jquery.masonry.min.js;plugins/jquery.form-warning.min.js;sandbox.min.js;module.min.js;pubsub.min.js;client.min.js;notify.min.js;i18n.min.js;main.min.js;modules/select-switch.min.js;modules/slug-preview.min.js;modules/basic-form.min.js;modules/confirm-action.min.js;modules/api-info.min.js;modules/autocomplete.min.js;modules/custom-fields.min.js;modules/data-viewer.min.js;modules/table-selectable-rows.min.js;modules/resource-form.min.js;modules/resource-upload-field.min.js;modules/resource-reorder.min.js;modules/resource-view-reorder.min.js;modules/follow.min.js;modules/activity-stream.min.js;modules/dashboard.min.js;modules/resource-view-embed.min.js;view-filters.min.js;modules/resource-view-filters-form.min.js;modules/resource-view-filters.min.js;modules/table-toggle-more.min.js;modules/dataset-visibility.min.js;modules/media-grid.min.js;modules/image-upload.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/base/:version:2022-01-27T09:22:25.82/tracking.min.js"></script>
+<script type="text/javascript" src="/data/fanstatic/odatabcn/:version:2026-02-04T10:58:13.30/odatabcn_theme_hierarchy.js"></script></body>
+</html>
