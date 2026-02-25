@@ -1,0 +1,461 @@
+TRANSCRIPTION
+============================================================
+Language: en
+============================================================
+
+[00:00] One of international and I don't think that it's a Spanish legislation.
+[00:09] So I mean, Vilex they have everything and it's a very good system and they have an amazing
+[00:14] AIS system in the right.
+[00:17] So Vilex it's the most recommended one for both probably legal regulation and building
+[00:25] and safety standards because this is a global problem.
+[00:30] You are going to find it there I believe.
+[00:33] Okay.
+[00:34] And regarding the discussion regarding the maintenance, like maintenance of the public spaces.
+[00:43] So where do you can't have the dates out because the belief that the AIS is way in the case of Barcelona is from the general budget of the city.
+[00:53] It's a public document that is public every year and there you can see all the expenditures related with maintenance of parts, maintenance of different squares, maintenance of phone time.
+[01:06] So this data should be in the budget.
+[01:09] If you go to Barcelona, Barcelona has one webpage that it's called Barcelona. Can I do it here?
+[01:17] No, sorry.
+[01:20] So you have open data, data, data, data, data.
+[01:29] And here in these web dates you can download directly the data sets in different formats, CDAs, etc. etc.
+[01:39] So here you have to go to the data set catalog.
+[01:43] This is divided by the different responsibilities of the city hall.
+[01:49] Okay.
+[01:50] But here in the area of economics it should be data set related with that.
+[01:57] And also if you have a broader view on the Catalan perspective, we have the same from the Catalan government that it's open data jankar.
+[02:05] But here if you go to administration, city services, here in city services on economics, but most probably it will be in city services.
+[02:15] The data sets.
+[02:23] But if you have any other government, French cultural, lasers, more, no, maybe it's an economy.
+[02:28] I mean just have a look but it should be here somewhere, economy and business maybe.
+[02:33] Okay.
+[02:35] So how can we link it to the maintenance?
+[02:41] It should be data about my finance data.
+[02:45] Let me check in my phone that I'm going to be.
+[02:52] Can you open it?
+[02:55] Open it a bit.
+[02:57] Okay.
+[02:59] So that you can conduct some.
+[03:01] If you don't have a volume, you can go to administration.
+[03:05] Okay.
+[03:21] Here you have this data set that it's from the Catalan government.
+[03:27] And here you have maintenance activities.
+[03:31] It doesn't mean that it's from the Catalan government.
+[03:35] It's from the Catalan government.
+[03:39] All of these data sets, this is the maintenance of Barcelona.
+[03:45] And all the actuation that has to play science the last decade.
+[03:49] Yeah.
+[03:51] Okay.
+[03:53] It's this data set that it's called Actuations Brigada.
+[03:57] So here are all the data related with maintenance activities of the city.
+[04:05] Oh, yes.
+[04:07] This is the last decade that's where the system in the Toronto-Saturday, in Africa.
+[04:11] The problem this is more than Barcelona.
+[04:15] This is many cities in Catalonia because this is the Catalan government.
+[04:21] So yeah.
+[04:25] It's really like sugar.
+[04:29] It's getting agent.
+[04:33] Okay.
+[04:35] Sorry.
+[04:37] I can't explain this.
+[04:39] Keep the presentation open.
+[04:41] Where is the presentation?
+[04:43] The urban hall for this.
+[04:45] This one.
+[04:47] Like the Google.
+[04:49] Okay.
+[04:51] This is the first time.
+[05:01] Thank you.
+[05:03] Thank you.
+[05:05] Thank you.
+[05:07] The computer is correct now.
+[05:09] The computer is correct.
+[05:11] Nothing is wrong.
+[05:13] Yeah?
+[05:15] Okay.
+[05:17] The computer is correct now.
+[05:19] Yeah.
+[05:23] Yeah.
+[05:25] Yeah.
+[05:27] The problem that we're going to find is that there is many data.
+[05:29] For example, the Hub is a specific report from the Barcelona City Hall that it's maintenance of parks, public spaces, public mobility areas.
+[05:37] The only thing is that everything is in Catalonia.
+[05:39] Everything is in Catalonia.
+[05:41] Yeah.
+[05:43] Everything is in Catalonia.
+[05:45] Yeah.
+[05:47] It's a little bit tricky.
+[05:49] Okay.
+[05:51] Like what if you translate using a translator?
+[05:53] Will the meaning changes?
+[05:55] No.
+[05:57] I think it's trying to work well.
+[05:59] There is no between Catalonia and English.
+[06:01] It shouldn't be any problem.
+[06:03] Okay.
+[06:05] Like, for example, like, yeah, I'll just look.
+[06:07] There's a half the tables.
+[06:09] The tables with the salaries of the people.
+[06:13] Yeah, it's funny.
+[06:15] Oh, so many.
+[06:19] Okay.
+[06:21] Yeah.
+[06:23] I mean, you're going to find, because we have a very open administration to the data sets shouldn't be a problem.
+[06:27] Probably here.
+[06:29] They have a little bit better organized.
+[06:31] I'm beyond here that it's the data sets from Barcelona.
+[06:35] You have...
+[06:37] ...the data sets from the Catalan government.
+[06:57] And here you will find also a lot of things.
+[07:01] And the good thing in this page is that everything should be in English.
+[07:05] So here you can look for different.
+[07:07] I imagine that they have something related with minds and answers or municipal data.
+[07:13] But if you are going specifically for Barcelona, just go to open data.
+[07:19] Now, what's that called?
+[07:21] Yeah, especially as we are focusing on public spaces.
+[07:25] We don't need a broader context.
+[07:27] Yes.
+[07:29] I believe that important things to have something in our hands.
+[07:33] It doesn't matter how much, a specific or worse.
+[07:37] So I believe that the key point is understanding that per one square meter of greenery to pay X per year.
+[07:45] And if you have a part that has 200 square meters, you only have to move it like this.
+[07:51] Oh, yeah.
+[07:53] So it's this kind of amount of water, first per square meter electricity, this kind of inputs and then do the calculations and things.
+[08:03] Because it's for the sake of the exercise and for the people to interact.
+[08:07] So I mean, I appreciate it's important, but you should then lose your sleep for the exercise.
+[08:15] Yeah, I think it's exercise.
+[08:17] You don't know what we're talking about.
+[08:19] And it's just a technique we need to apply for an agent to have a better result.
+[08:25] Yes.
+[08:27] So that's the format of all the knowledge spaces because you know, to make it more relevant.
+[08:34] Yes, I know that Barcelona and Catalonia are principle, they publish everything in CDS.
+[08:39] Yeah.
+[08:41] The most CDS.
+[08:43] So it's a translatable and it's easy to play with I4 and I don't know the book.
+[08:49] You can do it easily, but yes, water.
+[08:55] Sorry, I didn't expect my computer to be hacked.
+[08:59] Oh, okay.
+[09:01] So like we're just also continue to work on the UI based on the other days recommendation.
+[09:08] We're still trying to figure out if we're going to go more of like you said either.
+[09:16] And I imagine that you and I can also have data states.
+[09:20] No, I'm very sorry.
+[09:22] All the project that you have about the superiors, you have to have all these data.
+[09:26] Should be there, I'm not too aware of it.
+[09:28] Because the cost of it, because in the application to design that was the CD,
+[09:32] not the CD, the word that I'm listening to.
+[09:35] So, somehow, it's in me personally, maybe not.
+[09:37] I mean, so much from here.
+[09:39] Yes, so they should have, or this way in the sense, somehow here is one.
+[09:45] I believe as a security, because for sure it will be weird if I act they don't have.
+[09:51] I can't imagine that.
+[09:53] It should be here somehow.
+[09:55] Okay.
+[09:59] So, actually we discussed last class, we discussed regarding two things.
+[10:05] Whether it's an open co-creasing platform or education or PC3D2.
+[10:11] So, now actually we are trying to co-creation.
+[10:17] Yeah.
+[10:19] And I'm trying to bring this.
+[10:25] Yes, I mean, if you are able to materialize this scoring or impact mapping,
+[10:31] this will be extremely powerful.
+[10:33] No, that you can't generate a winner of a reality and this is the score.
+[10:37] I will try to trace this notion of accessibility, gender equality,
+[10:43] the things that now are more cooking up when we talk about the public space
+[10:47] and the design of the buildup form.
+[10:51] For example, here in Spain we have a huge organization that it's called ONFET.
+[10:57] And ONFET, it's like a number 11.
+[11:01] And this is the acronym of the organization, nothing other than the FESOS,
+[11:07] that it's the national organization of light people.
+[11:11] And the Arab Powerful organization in the world of disabilities.
+[11:17] And the design of public space, they have guidelines, they have many many data and documents.
+[11:23] So ONFET can be a good place also to a strike, for example,
+[11:27] this vision of the expert in accessibility or inclusion for people with disabilities.
+[11:35] And the other thought I had is like a V-plan of integrating guardrails.
+[11:41] Yes.
+[11:43] So could you explain how it could make it better, how people could make it more relevant to our use case?
+[11:53] You know, in the first part of the day, when we talk about the public environment
+[11:57] or what's organic kind of semantic based system, we always include a lot of cards.
+[12:03] Yes.
+[12:04] But it's not for people like you ask to take it to tell you how to produce a bomb.
+[12:08] It's not going to tell you how to produce a bomb.
+[12:11] So when we talk about the public environment, what are our red lines?
+[12:17] No, this is our card place, for example, a sedution for the public space that not include the elderly.
+[12:25] This can be a card place.
+[12:27] No, if you have elements in the built up environment that clearly are not adapted for the elderly or for the kid,
+[12:37] or whatever group you want to exclude, to come to sign a specific card.
+[12:41] So in the age knowledge based, if it's a certain keyword should be like a cardrails for the agent to understand
+[12:50] and is this specifically fine related using a semantic source?
+[12:55] That can be a power group, for example, that you enter a prompt.
+[12:59] And if you haven't taken to account some specific groups, the system is going to tell you
+[13:05] to have engaged in a group for the elderly or for the kids or for the people with disabilities.
+[13:13] So just to make you think about that people, every time, for example, that they may be wrong,
+[13:19] for a public space, that the system makes you think, you haven't signed up in 40 schools or 40 schools.
+[13:26] That can be a visual solution for the sake of the exhibit.
+[13:31] And that it will be a part, no, the card trail will tell you a certain answer.
+[13:37] Yes, exactly.
+[13:39] The answer of the image you are doing is generating the context also, parts,
+[13:45] it becomes more part space, the context becomes more relevant.
+[13:49] Yes, and so that also the user gets the assurance that it's not just simply an AI responding.
+[13:59] There are certain categories, this is human and human, the exact being as a link,
+[14:06] being as peace-finding as a person.
+[14:08] Yes, it is.
+[14:10] And the reflection that maybe can be for a dataset or how you are crafting an narrative.
+[14:17] It's not an anti-democratic society, God would really, in theory, should be agreeing upon the community.
+[14:24] Nowadays, 99% of AI systems, these card trails have been elaborated in dark rooms without transparency.
+[14:33] Yes, people hope for the better, but without any kind of real democratic control.
+[14:38] So, at the end of the day, this is something that we are going to do as well.
+[14:42] Can you do a democratic control?
+[14:45] Yes, I mean that, for example, a guard trail is going to determine how some information is going to be portrayed,
+[14:52] so it's going to be shaping the public knowledge, it's going to affect our epistemological and ontological system.
+[14:59] In a democratic society, we have rules to shape public opinion, we have things related with freedom of expression,
+[15:08] to access of knowledge, public science, etc., etc.
+[15:12] But at the end of the day, when you are crafting a system that is probatory,
+[15:16] or even when you are doing it in open-court, then in an open-court community, of course,
+[15:21] that whole open-court community will have reason how, in a baseline of action.
+[15:26] But when you are just developing this kind of system in the university or in an office,
+[15:30] when a private company are going to be embedding card trails that you believe are the good ones.
+[15:36] Yes, but there is no real democratic control around that.
+[15:40] And it's just your vision, I mean, it's like, for example, when Apple launched the first time, the Face ID,
+[15:46] the Face ID wasn't working with black people.
+[15:49] It was only with the white people, why?
+[15:51] Because they didn't train the AI with an all-that-a-sense of these people,
+[15:55] because they didn't take these people into account.
+[15:58] And this is the generic part when we make card trails.
+[16:01] Exactly, we make it for our community, for the people that we feel close and we relate with them.
+[16:07] But this is not inclusive.
+[16:10] So when you are really designing card trails for an AI for the community and other democratic performance state,
+[16:17] you need to include the most tactful, the most stake holders in the discussion around the market rights.
+[16:23] But now it's not happening, of course, because it's how it happens normally.
+[16:27] So can this be like a guard really for each knowledge base?
+[16:31] They are the guard trails.
+[16:34] But when you say people want that to be a complex part, you feel it's involved too many...
+[16:42] No, no, no, no, no, no, no, no, it's simple.
+[16:44] Of course, it's just don't over-complicate.
+[16:47] It's just how you portrayed the narrative when you are explaining to the people.
+[16:51] So you are going to interact with your system.
+[16:53] And there is going to be a set of people that are going to tell you,
+[16:58] I'm not doing this because if a person with a bike wanna go here,
+[17:02] it cannot go in a wheelchair or because a person that is colorblind,
+[17:07] it's going to struggle with design.
+[17:09] All these things are going to program for the system to craft it in a close environment,
+[17:16] not excessive, not going well because it's a limited exercise.
+[17:20] So how do you portray in the narrative of this terrible picking of card trails?
+[17:27] At the end, you are going to do it believing that it's the best option.
+[17:32] Yeah, that could be a best option, right?
+[17:36] Yes, that could be a best option.
+[17:39] But this is a very patronizing society.
+[17:42] At the end of the day, you find that a group of people think what is best for the rest and they apply it.
+[17:49] But this is not how the progress is over.
+[17:52] The ever user knows what kind of person is here.
+[17:56] What kind of knowledge base we are using it for?
+[18:01] It's a set of them.
+[18:03] Yes, it is, but knowledge is never neutral.
+[18:06] And information is never neutral.
+[18:09] It can be easily weaponized by anybody with a little bit.
+[18:13] So it's just for taking into account the vegan narrative of the詞.
+[18:18] It's interesting to take into account the limitations.
+[18:21] And even when we take that over, for example, when I teach a lot to my students,
+[18:25] low it's about interpretation of interpretation.
+[18:29] It's a very human thing.
+[18:31] When we think about the treaties of the European Union that they were crafted after World War II,
+[18:36] they were crafted with a specific mindset of post-war, of family, of violence.
+[18:43] And now the Europeans, we don't think like that.
+[18:46] But when we are trying to interpret the treaties and the rotation,
+[18:51] we have to go back to what the founding fathers try to do.
+[18:55] I mean, interpret it today.
+[18:57] LLM's semantic systems, they interpret things.
+[19:03] But this interpretation, it's never neutral.
+[19:06] Like my interpretation, it's not neutral.
+[19:08] I have an ideology, I have a backpack of life experiences that make me see reality in a way.
+[19:15] So the myth of neutrality is just that.
+[19:19] It's neutrality does not exist.
+[19:21] Therefore, every time that you are crafting a card,
+[19:24] or you are crafting an limitation, this limitation, it's embedded by your own bias,
+[19:30] by your own prejudice, plus the bias of the dataset, plus the prejudice of the people
+[19:35] that create the dataset.
+[19:37] That's why when you work, for example, with very low dataset,
+[19:41] you found, for example, a women opinion,
+[19:44] it's completely underrated, it's not there.
+[19:47] We have so many opinion polls in Spain for the dictatorship.
+[19:51] Who was asked, it was asked why to mail it's made a law, it's only a glass, an upperclass,
+[19:59] and all the other people they weren't even asked.
+[20:02] So all our datasets for the moment of the dictatorship are tainted by the philosophy
+[20:08] and the mentality of the dictatorship.
+[20:11] And every time that now we try to use these datasets,
+[20:14] we have to implement many measures to correct the output.
+[20:19] Yeah, so put it our last.
+[20:22] One of the, I think, I feel like the knowledge base should have,
+[20:27] with the cartridge, it should have a very semantic search.
+[20:32] No, the philosophy should be,
+[20:35] from our point of view, designing how to pick the keywords and find it together and...
+[20:43] Yeah, and you have to realize that this could be more focused based on what's local regulation,
+[20:52] local regulations, experts.
+[20:54] It's in us people here, what's what they think, that itself.
+[20:59] But even with which of our regulation, if you are taking a separate role here,
+[21:04] if you are taking us a public lawyer, if you are taking us a lawyer of an NGO or a civic association,
+[21:10] their interpretation of the law, it's different because they are trying to protect us,
+[21:15] they call us, they represent somebody's going to be trying to protect the corporate.
+[21:19] The other is going to be trying to protect the public,
+[21:22] other immigrant communities, other LGBTQ groups.
+[21:26] So at the end of the day, none of them is neutral.
+[21:30] And this is the hard-core part, when we try to embed this kind of cartridge,
+[21:37] we have to depart from the idea that neutrality doesn't exist,
+[21:41] and we are going to be embedding always some part of our ideology,
+[21:46] of our cosmologic framework in the technology.
+[21:50] So the technology is just an amplifier of human will and of human experience.
+[21:55] It's never a third external neutral attitude that so many times we try to depict it like that.
+[22:02] No, this is better because it doesn't have my bias,
+[22:05] well it has your bias, past the bias of the designer and the bias of the engineer,
+[22:09] and it's an accumulation of bias.
+[22:12] So this is a conversation, when we talk about these things,
+[22:16] and you can't have this lawyer and this lawyer can be a shark for the real estate company
+[22:22] that wants to privatize everything, and it wants to play the law in a way that just benefit the real estate companies,
+[22:30] or the people that owns a lot of properties.
+[22:34] Now it's this thing about the guards, how to manage to establish something that it's fair,
+[22:39] that it's equal without the supervision of a democratic process.
+[22:43] This is the huge, huge challenge for the democratic society.
+[22:48] So what if, okay, this is an idea, what if we keep this as five personas,
+[22:53] it's a participatory tool, and then add another persona,
+[22:57] because each in-game is played with our tool.
+[23:01] So we get an information, what are they doing, what are they searching,
+[23:05] and each persona gets updated so that the whole system is democratized.
+[23:11] No, no, democracy doesn't work like that.
+[23:14] It's a participatory concept, five of them,
+[23:19] like each and every time the tool is used by a person,
+[23:23] we can get biased, we get to know what are the major opinions of the community.
+[23:30] You're not very complicated, it's much more simple.
+[23:33] It's much more simple because everything is violence.
+[23:36] Everything is Jew, myself, everything is fucking violence,
+[23:41] because we have this pattern in our life that has put lenses in our eyes.
+[23:47] No, it's a level C-seg explaining that ideology,
+[23:50] it's the glasses that we put every day before we went into the street.
+[23:54] AI, it's just another set of glasses.
+[23:57] We are putting another set of glasses that it's conditioned in our interpretation
+[24:00] of the public environment, of the public narrative, etc. etc.
+[24:04] This is a baseline philosophical for the overall project,
+[24:09] but you don't have to think about how we are going to translate it into the character.
+[24:14] This is going to translate it.
+[24:16] Yeah, if you just have to worry how you are going to translate this into the public
+[24:20] that it's going to be interactive with the exhibition,
+[24:23] but I believe that what you have right now and how you are planning it,
+[24:27] it's solid.
+[24:29] Just think this overall narrative in the back office of everything.
+[24:35] Yes, I am explaining myself, I don't know if I am a superhero.
+[24:38] No, no, no, I think it was good.
+[24:40] Yes, it was perfect.
+[24:41] So I don't believe that you will have to worry.
+[24:44] Every time that you generate this kind of character
+[24:47] is the more radical you make them.
+[24:49] The easiest for the people is to analyze the more radical.
+[24:53] The more radical it is, the lower it's a lower of the cook's class.
+[24:56] This is the level of radicality.
+[24:59] Everything is going to interpret in a way that if this thing about interpretation,
+[25:04] you take the second amendment of the United States,
+[25:07] that is the right to bear arms.
+[25:09] The right to bear arms originally only applied to white males.
+[25:13] When this was passed, white women were not able to have guns.
+[25:19] And they stayed less.
+[25:22] So it has been a sedimentation of interpretation
+[25:25] that says no, not a right to bear arms.
+[25:27] Nowadays, it's for everybody.
+[25:29] But originally, it was nothing close to that.
+[25:33] And this is the thing with the legal one.
+[25:36] To have an AI extracting legal information,
+[25:40] I mean, if you take a Spanish civil code,
+[25:43] it's very difficult to justify gay marriage around the Spanish civil law.
+[25:47] Because the Spanish civil law says to them another woman.
+[25:50] Then we make another interpretation, and now we have gay marriage.
+[25:54] But we have built a porn interpreting things in a way that AI
+[26:00] cannot interpret things.
+[26:02] Because it's much more context,
+[26:03] to have much more nuances.
+[26:05] So that's why at the end of the day,
+[26:07] AI cannot replace humanist attitudes.
+[26:10] Because we never say everything.
+[26:12] And the AI is not good enough to save the Earth.
+[26:15] We have to never say between malinterest, during interest.
+[26:18] So we can't twist the words.
+[26:21] And this is something that humans will constantly.
+[26:23] We twist the meaning of words to serve our interests in the best way.
+[26:28] AI does it.
+[26:31] But with that fake cover of your body.
+[26:35] Or is nothing new to you.
+[26:40] I believe I have more than half of you now.
+[26:44] I'm so sorry for that.
+[26:46] Because I believe that you are going in the good direction.
+[26:49] This thing with different cultural instruments.
+[26:53] You can't live without the more radical you go with the character.
+[26:57] The easiest is for the people to see the body.
+[27:00] She also has bias.
+[27:03] She really could propose a random,
+[27:06] I don't know if she would be functional or not.
+[27:09] But what if we also give an experience of your expertise.
+[27:15] We should be very much radical.
+[27:19] How bias is?
+[27:22] That can be, I mean, it has to be very well-frained.
+[27:25] Because of course you can go radical.
+[27:28] And you say yes, we have a lot of ideas.
+[27:31] It's a legal expert and it creates juice.
+[27:34] No, that can be her bias.
+[27:36] That's very, very radical.
+[27:39] But this is how AI plays as many domains.
+[27:43] So how is your craft?
+[27:46] It's part of the experience that we are designing for the user.
+[27:50] I know in the user.
+[27:53] With the user it's one you truly are all.
+[27:56] One you touch something that is deep and related.
+[27:59] Our user is mostly your planner and architects.
+[28:04] But this is going to be general population.
+[28:07] Yes, general population.
+[28:09] People don't know anything either about it.
+[28:11] Neither about our planning or architecture or whatever.
+[28:14] I was thinking like the exhibition experience,
+[28:18] if you are presenting it to them,
+[28:20] it's a very emotional, universal experience.
+[28:23] The thing that can annoy more, I mean,
+[28:26] it's dependent on you have one of these characters
+[28:29] that the right time that you put on the robot set
+[28:32] and says something really bias in one direction.
+[28:37] That can make the people think about who is programming things for us.
+[28:41] Because this is the key thing.
+[28:43] And algorithm that is nowadays being crafted in Silicon Valley tomorrow
+[28:48] is going to be fragmenting a community in some stage.
+[28:52] This is the reality.
+[28:54] Algorithms are a role in the social power of the public.
+[28:59] Because personalization plays a factor role
+[29:04] that makes your thinking.
+[29:06] We put this that is more personalized for the user.
+[29:09] You're not going to be able to understand it.
+[29:12] Yes, I mean, sorry.
+[29:15] Because I know that it's super advanced, what I have said.
+[29:19] And the correlation with the materiality,
+[29:22] it's complex, but I believe that mostly you are in the
+[29:26] just pieces of music.
+[29:29] That's the problem.
+[29:32] But that you got my...
+[29:34] Yeah, I got the opinion of the...
+[29:36] I mean, the myth of neutrality is the worst thing
+[29:39] that we have associated with technology.
+[29:42] Because it's a tool.
+[29:43] And a tool is an amplifier of human beings.
+[29:46] And you can use AI for curing cancer
+[29:49] or you can use AI to develop weapons and destroy communities.
+[29:54] It's how we use the technology.
+[29:56] And how we are using it right now is that we have allowed huge corporations
+[30:01] to establish guard buildings without democratic participation.
+[30:05] And this for democratic societies should be our butterfly
+[30:09] and should be a big low.
+[30:11] IBM and my culture, they have nobody.
+[30:14] Just establish guard buildings.
+[30:16] The guard buildings should be established by the community.
+[30:19] But this is...
+[30:20] This is the...
+[30:21] Him point.
+[30:29] So I will be discussing the other domains and comments.
+[30:32] Yes.
+[30:33] Thank you, boys.
+[30:34] Yes.
+[30:35] I hope that it has been useful.
+[30:38] So now we will see.
+[30:41] Thank you so much.
+[30:42] Thank you so much.
+[30:43] Thank you so much.
+[30:44] Thank you.
