@@ -7,6 +7,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import type { AgentFeedback } from '../../types';
+import { useTranslation } from 'react-i18next';
 import { AgentCard } from './AgentCard';
 import { theme } from '../../styles/theme';
 import './AgentPanel.css';
@@ -16,6 +17,8 @@ interface Props {
 }
 
 export function AgentPanel({ feedback }: Props) {
+  const { t } = useTranslation();
+
   // Prepare radar chart data
   const radarData = feedback.map((f) => ({
     agent: f.name,
@@ -29,7 +32,7 @@ export function AgentPanel({ feedback }: Props) {
   return (
     <div className="agent-panel">
       <div className="agent-panel-header">
-        <h3>Expert Analysis</h3>
+        <h3>{t('agents.title')}</h3>
         <div className="avg-score">
           <span className="avg-score-value">{avgScore}</span>
           <span className="avg-score-label">/ 5</span>

@@ -1,92 +1,111 @@
+import { useTranslation } from 'react-i18next';
 import { useAppStore } from '../../store/useAppStore';
+import { spaces } from '../../data/spaces';
 import { AgentPanel } from '../agents/AgentPanel';
 import { ImageComparison } from './ImageComparison';
-import { PromptInput } from './PromptInput';
 import './ProposalPanel.css';
 
-export function ProposalPanel() {
-  const { selectedHotspot, selectedProposal, showProposalPanel, clearSelection } = useAppStore();
+function formatTimestamp(iso: string): string {
+  return new Date(iso).toLocaleString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
 
-  if (!showProposalPanel || !selectedHotspot) return null;
+/**
+ * Read-only proposal detail shown when clicking a card in the browse list.
+ */
+export function ProposalPanel() {
+  const { t } = useTranslation();
+  const { browseProposal, setBrowseProposal } = useAppStore();
+
+  if (!browseProposal) return null;
+
+  const space = spaces.find((s) => s.id === browseProposal.spaceId);
+
+  // Author line
+  let authorLine: string;
+  if (browseProposal.participantName && browseProposal.participantAge) {
+    authorLine = t('proposal.byLine', {
+      name: browseProposal.participantName,
+      age: browseProposal.participantAge,
+    });
+  } else if (browseProposal.participantName) {
+    authorLine = t('proposal.byName', { name: browseProposal.participantName });
+  } else {
+    authorLine = t('proposal.anonymous');
+  }
+
+  const handleClose = () => {
+    // Go back to the list (browseSpaceId stays set)
+    setBrowseProposal(null);
+  };
 
   return (
     <div className="proposal-panel-overlay">
       <div className="proposal-panel">
-        {/* Close button */}
-        <button className="panel-close" onClick={clearSelection} aria-label="Close">
-          ✕
-        </button>
-
         {/* Left side: Location + Images */}
         <div className="panel-left">
           {/* Location header */}
           <div className="panel-header">
-            <div className="location-badge">{selectedHotspot.type}</div>
-            <h2>{selectedHotspot.name}</h2>
-            <p className="text-secondary text-sm">{selectedHotspot.neighborhood}</p>
+            {space && <div className="location-badge">{space.type}</div>}
+            <h2>
+              {space
+                ? t(`spaces.${space.id}.name`, { defaultValue: space.name })
+                : ''}
+            </h2>
+            {space && (
+              <p className="text-secondary text-sm">
+                {t(`spaces.${space.id}.neighborhood`, {
+                  defaultValue: space.neighborhood,
+                })}
+              </p>
+            )}
           </div>
 
           {/* User info */}
-          {selectedProposal && (
-            <div className="user-info">
-              <div className="user-avatar">
-                {selectedProposal.userName.charAt(0)}
-              </div>
-              <div>
-                <span className="user-name">{selectedProposal.userName}</span>
-                <span className="user-age">{selectedProposal.userAge} years old</span>
-              </div>
+          <div className="user-info">
+            <div className="user-avatar">
+              {(browseProposal.participantName ?? t('proposal.anonymous')).charAt(0)}
             </div>
-          )}
-
-          {/* Proposal prompt */}
-          {selectedProposal && (
-            <div className="proposal-prompt">
-              <span className="prompt-label">Proposed change</span>
-              <p>"{selectedProposal.prompt}"</p>
-            </div>
-          )}
-
-          {/* Image comparison */}
-          {selectedProposal ? (
-            <ImageComparison
-              originalImage={selectedProposal.originalImage}
-              generatedImage={selectedProposal.generatedImage}
-              locationName={selectedHotspot.name}
-            />
-          ) : (
-            <div className="no-proposal">
-              <p className="text-secondary">No proposals yet for this location.</p>
-            </div>
-          )}
-
-          {/* Prompt input (non-functional placeholder for PoC) */}
-          <PromptInput />
-
-          {/* Location metadata */}
-          <div className="location-meta">
-            <div className="meta-item">
-              <span className="meta-label">Area</span>
-              <span className="meta-value">{selectedHotspot.area}</span>
-            </div>
-            <div className="meta-item">
-              <span className="meta-label">Climate</span>
-              <span className="meta-value">{selectedHotspot.yearlyWeather}</span>
+            <div>
+              <span className="user-name">{authorLine}</span>
+              <p className="proposal-timestamp">
+                {formatTimestamp(browseProposal.createdAt)}
+              </p>
             </div>
           </div>
+
+          {/* Proposal prompt */}
+          <div className="proposal-prompt">
+            <span className="prompt-label">{t('proposal.beforeLabel')}</span>
+            <p>&ldquo;{browseProposal.promptText}&rdquo;</p>
+          </div>
+
+          {/* Image comparison */}
+          <ImageComparison
+            originalImage={browseProposal.baseImagePath}
+            generatedImage={browseProposal.generatedImageUrl}
+            locationName={space?.name ?? ''}
+          />
         </div>
 
         {/* Right side: Agent feedback */}
         <div className="panel-right">
-          {selectedProposal ? (
-            <AgentPanel feedback={selectedProposal.agentFeedback} />
-          ) : (
-            <div className="no-agents">
-              <p className="text-secondary text-sm">
-                Agent analysis will appear here after a proposal is submitted.
-              </p>
-            </div>
-          )}
+          {/* Close button — positioned inside right panel to avoid overlapping score */}
+          <div className="panel-right-header">
+            <button
+              className="panel-close"
+              onClick={handleClose}
+              aria-label={t('common.close')}
+            >
+              ✕
+            </button>
+          </div>
+          <AgentPanel feedback={browseProposal.agentFeedback} />
         </div>
       </div>
     </div>
