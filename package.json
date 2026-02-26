@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:server": "cd server && npm run dev",
+    "dev:all": "npx concurrently \"npm run dev\" \"npm run dev:server\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "setup": "npm install && cd server && npm install"
   },
   "dependencies": {
     "mapbox-gl": "^3.18.1",
