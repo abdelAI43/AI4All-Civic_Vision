@@ -1,0 +1,38 @@
+/* ---- Waveform Visualizer ---- */
+
+.waveform {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 100px;
+  position: relative;
+}
+
+.waveform-bar {
+  width: 4px;
+  min-height: 4px;
+  background: var(--color-accent);
+  border-radius: 2px;
+  transition: height 0.08s ease-out;
+  animation: waveform-idle 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes waveform-idle {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.waveform-label {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}

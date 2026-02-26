@@ -3,6 +3,7 @@ import './index.css';
 import { MapView } from './components/map/MapView';
 import { ProposalPanel } from './components/proposal/ProposalPanel';
 import { Header } from './components/ui/Header';
+import { VoiceOverlay } from './components/voice/VoiceOverlay';
 
 export default function App() {
   return (
@@ -12,6 +13,9 @@ export default function App() {
         <MapView />
       </main>
       <ProposalPanel />
+
+      {/* Voice-first exhibition interaction layer */}
+      <VoiceOverlay />
     </div>
   );
 }
