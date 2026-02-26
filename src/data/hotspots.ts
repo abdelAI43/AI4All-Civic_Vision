@@ -1,4 +1,15 @@
-import type { Hotspot } from '../types';
+// Legacy PoC file — kept for reference only. Use src/data/spaces.ts instead.
+interface Hotspot {
+  id: string;
+  name: string;
+  description: string;
+  lat: number;
+  lng: number;
+  type: string;
+  neighborhood: string;
+  area: string;
+  yearlyWeather: string;
+}
 
 export const hotspots: Hotspot[] = [
   {

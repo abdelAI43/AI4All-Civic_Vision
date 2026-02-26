@@ -1,0 +1,127 @@
+{
+  "header": {
+    "title": "BCN Civic Vision",
+    "tagline": "Dale forma a tu ciudad",
+    "nav": {
+      "barcelona": "Barcelona"
+    }
+  },
+  "map": {
+    "suggestBtn": "Sugerir un Cambio",
+    "browseHint": "Haz clic en un marcador para explorar propuestas"
+  },
+  "flow": {
+    "step1": {
+      "title": "Elige un espacio",
+      "subtitle": "¿Qué lugar de Barcelona te gustaría transformar?"
+    },
+    "step2": {
+      "title": "Elige tu punto de vista",
+      "subtitle": "Selecciona la perspectiva que quieres cambiar"
+    },
+    "step3": {
+      "title": "Describe tu cambio",
+      "subtitle": "¿Qué te gustaría ver aquí?",
+      "placeholder": "p. ej. Reemplazar los carriles de coches por un paseo verde con terrazas de cafés…",
+      "micHint": "Habla tu idea",
+      "charCount": "{{current}} / {{max}}",
+      "errorEmpty": "Por favor, describe el cambio que te gustaría ver",
+      "errorBlocked": "Este contenido no es adecuado para esta plataforma. Por favor, prueba con otra idea."
+    },
+    "step4": {
+      "title": "Revisa tu propuesta",
+      "subtitle": "Comprueba tu idea y, opcionalmente, comparte quién eres",
+      "nameLabel": "Tu nombre",
+      "nameOptional": "(opcional)",
+      "namePlaceholder": "p. ej. María",
+      "ageLabel": "Tu edad",
+      "ageOptional": "(opcional)",
+      "agePlaceholder": "p. ej. 28",
+      "consentLabel": "Acepto que mi propuesta se muestre públicamente en esta plataforma",
+      "privacyNote": "Solo se almacenan tu nombre, edad y texto de la propuesta. No se recogen otros datos personales.",
+      "submitBtn": "Enviar y generar"
+    },
+    "step5": {
+      "title": "Creando tu visión…",
+      "progress1": "Validando tu propuesta…",
+      "progress2": "Generando tu visión…",
+      "progress3": "Consultando a los especialistas…",
+      "estimated": "Esto tarda unos 15–30 segundos",
+      "carouselTitle": "Mientras esperas — mira lo que otros han imaginado aquí",
+      "carouselFallbackTitle": "Explora este espacio mientras esperas"
+    },
+    "step6": {
+      "title": "Tu visión cívica",
+      "sharedBadge": "Visible en el mapa",
+      "startOver": "Sugerir otro cambio",
+      "closeBtn": "Volver al mapa"
+    }
+  },
+  "proposal": {
+    "beforeLabel": "Antes",
+    "afterLabel": "Después",
+    "agentTitle": "Evaluación de especialistas",
+    "agentSubtitle": "Cinco expertos en urbanismo evalúan tu propuesta",
+    "avgScore": "Puntuación media",
+    "byLine": "Propuesto por {{name}}, {{age}} años",
+    "byName": "Propuesto por {{name}}",
+    "anonymous": "Propuesta anónima",
+    "placeholderText": "Foto próximamente"
+  },
+  "agents": {
+    "title": "Evaluación de especialistas",
+    "budget": "Presupuesto",
+    "heritage": "Patrimonio",
+    "safety": "Seguridad",
+    "sociologist": "Sociólogo",
+    "regulations": "Normativa",
+    "pending": "Evaluación pendiente…"
+  },
+  "common": {
+    "continue": "Continuar",
+    "back": "Atrás",
+    "close": "Cerrar",
+    "loading": "Cargando…",
+    "error": "Algo ha ido mal",
+    "retry": "Reintentar",
+    "score": "Puntuación",
+    "placeholder": "Próximamente"
+  },
+  "errors": {
+    "voiceNotSupported": "La entrada de voz no está disponible en este navegador. Por favor, escribe tu idea.",
+    "generationFailed": "La generación de imagen ha fallado. Por favor, inténtalo de nuevo.",
+    "networkError": "Error de conexión. Por favor, comprueba la conexión WiFi."
+  },
+  "spaces": {
+    "placa-catalunya": {
+      "name": "Plaça Catalunya",
+      "neighborhood": "Eixample / Barri Gòtic",
+      "description": "El corazón simbólico de Barcelona"
+    },
+    "la-rambla": {
+      "name": "La Rambla",
+      "neighborhood": "Barri Gòtic / El Raval",
+      "description": "El paseo más famoso de Barcelona"
+    },
+    "passeig-de-gracia": {
+      "name": "Passeig de Gràcia",
+      "neighborhood": "Eixample",
+      "description": "La gran avenida modernista"
+    },
+    "barceloneta-beach": {
+      "name": "Playa de la Barceloneta",
+      "neighborhood": "Barceloneta",
+      "description": "La icónica playa urbana de la ciudad"
+    },
+    "park-guell": {
+      "name": "Park Güell",
+      "neighborhood": "Gràcia / Carmel",
+      "description": "El parque monumental de Gaudí"
+    },
+    "mnac-esplanade": {
+      "name": "Explanada del MNAC",
+      "neighborhood": "Montjuïc",
+      "description": "Desde la Plaça d'Espanya hasta el MNAC"
+    }
+  }
+}

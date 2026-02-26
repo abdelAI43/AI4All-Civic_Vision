@@ -11,6 +11,8 @@
 
 ---
 
+*This README file is not up to date*
+
 ## 🎯 Project Vision
 
 **Barcelona Civic Vision** reimagines civic participation by combining immersive 3D mapping, AI-generated visualizations, and expert-level feedback systems. Citizens can:

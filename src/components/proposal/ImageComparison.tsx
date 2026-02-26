@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './ImageComparison.css';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
  * Uses placeholder gradients when actual images are not available.
  */
 export function ImageComparison({ originalImage, generatedImage, locationName }: Props) {
+  const { t } = useTranslation();
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [imgError, setImgError] = useState({ original: false, generated: false });
@@ -49,8 +51,8 @@ export function ImageComparison({ originalImage, generatedImage, locationName }:
   return (
     <div className="image-comparison">
       <div className="comparison-labels">
-        <span className="label-original">Before</span>
-        <span className="label-generated">After (AI Generated)</span>
+        <span className="label-original">{t('proposal.beforeLabel')}</span>
+        <span className="label-generated">{t('proposal.afterLabel')}</span>
       </div>
       <div
         ref={containerRef}
@@ -70,8 +72,8 @@ export function ImageComparison({ originalImage, generatedImage, locationName }:
             />
           ) : (
             <div className="placeholder-image" style={{ background: placeholderGenerated }}>
-              <span>AI Generated Image</span>
-              <span className="placeholder-hint">Place your image in public/images/</span>
+              <span>{t('proposal.afterLabel')}</span>
+              <span className="placeholder-hint">{t('proposal.placeholderText')}</span>
             </div>
           )}
         </div>
@@ -89,8 +91,8 @@ export function ImageComparison({ originalImage, generatedImage, locationName }:
             />
           ) : (
             <div className="placeholder-image" style={{ background: placeholderOriginal }}>
-              <span>Original Street View</span>
-              <span className="placeholder-hint">Place your image in public/images/</span>
+              <span>{t('proposal.beforeLabel')}</span>
+              <span className="placeholder-hint">{t('proposal.placeholderText')}</span>
             </div>
           )}
         </div>
