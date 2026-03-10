@@ -241,34 +241,49 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ success: false, error: `Image fetch failed: ${err instanceof Error ? err.message : 'unknown'}` });
   }
 
-  // ── Step 3: Generate image with Gemini 2.5 Flash Image ───────────────────
+  // ── Step 3: Generate image with Gemini 2.5 Flash Image (retry on 429) ────
   let generatedBase64: string;
   let generatedMime: string;
+  const MAX_IMAGE_RETRIES = 4;
+  // Wait times: 15s, 30s, 45s, 60s — enough for RPM window to reset
+  const RETRY_WAIT_SECONDS = [15, 30, 45, 60];
   try {
     const wrappedPrompt = buildWrappedPrompt(String(spaceName), String(povId), String(promptText));
-    const genResp = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image',
-      contents: [{ role: 'user', parts: [
-        { text: wrappedPrompt },
-        { inlineData: { mimeType, data: base64Image } },
-      ]}],
-      config: {
-        responseModalities: ['IMAGE', 'TEXT'],
-        safetySettings: [
-          { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-        ],
-      },
-    });
 
-    const part = genResp.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data);
-    if (!part?.inlineData?.data) {
-      return res.status(500).json({ success: false, error: 'Image generation produced no image' });
+    let lastError: unknown = null;
+    let imagePart: { data: string; mimeType?: string } | null = null;
+
+    for (let attempt = 0; attempt < MAX_IMAGE_RETRIES; attempt++) {
+      try {
+        const genResp = await ai.models.generateContent({
+          model: 'gemini-3.1-flash-image-preview',
+          contents: [
+            { text: wrappedPrompt },
+            { inlineData: { mimeType, data: base64Image } },
+          ],
+        });
+
+        const part = genResp.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data);
+        if (part?.inlineData?.data) {
+          imagePart = { data: part.inlineData.data, mimeType: part.inlineData.mimeType };
+          break;
+        }
+        lastError = new Error('Image generation produced no image');
+      } catch (err) {
+        lastError = err;
+        const msg = err instanceof Error ? err.message : '';
+        if (!msg.includes('429') && !msg.includes('RESOURCE_EXHAUSTED')) throw err;
+        const waitSec = RETRY_WAIT_SECONDS[attempt] ?? 60;
+        console.warn(`[image] Rate limited (attempt ${attempt + 1}/${MAX_IMAGE_RETRIES}), retrying in ${waitSec}s...`);
+        await new Promise((r) => setTimeout(r, waitSec * 1000));
+      }
     }
-    generatedBase64 = part.inlineData.data;
-    generatedMime   = part.inlineData.mimeType ?? 'image/png';
+
+    if (!imagePart) {
+      return res.status(500).json({ success: false, error: `Image generation failed: ${lastError instanceof Error ? lastError.message : 'unknown'}` });
+    }
+    generatedBase64 = imagePart.data;
+    generatedMime   = imagePart.mimeType ?? 'image/png';
   } catch (err) {
     return res.status(500).json({ success: false, error: `Image generation failed: ${err instanceof Error ? err.message : 'unknown'}` });
   }

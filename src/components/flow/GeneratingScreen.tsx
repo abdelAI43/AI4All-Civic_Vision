@@ -6,9 +6,9 @@ import { supabase } from '../../lib/supabase';
 import type { Proposal, FlowStep } from '../../types';
 
 const PROGRESS_STEPS = [
-  { key: 'flow.step5.progress1', duration: 3000 },
-  { key: 'flow.step5.progress2', duration: 5000 },
-  { key: 'flow.step5.progress3', duration: 3000 },
+  { key: 'flow.step5.progress1', duration: 15000 },
+  { key: 'flow.step5.progress2', duration: 25000 },
+  { key: 'flow.step5.progress3', duration: 15000 },
 ] as const;
 
 /** Slim carousel item — we only need image + label + optional score */
@@ -34,7 +34,7 @@ interface CarouselItem {
  */
 export function GeneratingScreen() {
   const { t, i18n } = useTranslation();
-  const { flow, setFlowStep, setCurrentProposal, setPromptRejectionReason } = useAppStore();
+  const { flow, setFlowStep, setCurrentProposal, setPromptRejectionReason, resetFlow } = useAppStore();
 
   const space = spaces.find((s) => s.id === flow.selectedSpaceId);
   const pov = space?.povImages.find((p) => p.id === flow.selectedPovId);
@@ -44,6 +44,8 @@ export function GeneratingScreen() {
   // 'animating' → 'waiting' (API not yet done) → 'done' | 'error'
   const [phase, setPhase] = useState<'animating' | 'waiting' | 'done' | 'error'>('animating');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  // When an error has a specific fix, this is the step to navigate back to
+  const [errorRedirectStep, setErrorRedirectStep] = useState<number | null>(null);
 
   // Refs so closures always see the latest value without re-running effects
   const proposalRef = useRef<Proposal | null>(null);
@@ -138,6 +140,7 @@ export function GeneratingScreen() {
       }
 
       proposalRef.current = json.data ?? null;
+      console.log('[generate] API returned. data:', !!json.data, 'animDone:', animationDoneRef.current, 'mounted:', mountedRef.current);
 
       // If animation already finished, advance immediately
       if (animationDoneRef.current) {
@@ -147,13 +150,25 @@ export function GeneratingScreen() {
     } catch (err) {
       if (!mountedRef.current) return;
       errorRef.current = true; // tell animation closure not to overwrite this
+
+      const msg = err instanceof Error ? err.message : '';
+
+      // Known DB constraint: age out of range — send user back to Step 4 to correct it
+      if (msg.includes('participant_age_check')) {
+        setErrorMsg(t('flow.step5.ageError', { defaultValue: 'The age you entered is not valid (must be 1–99). Please go back and correct it.' }));
+        setErrorRedirectStep(4);
+        setPhase('error');
+        return;
+      }
+
       setPhase('error');
-      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setErrorMsg(msg || t('flow.step5.genericError', { defaultValue: 'Something went wrong. Please try again.' }));
     }
   };
 
   const finalize = () => {
     if (proposalRef.current) {
+      console.log('[generate] Finalizing → step 6');
       setCurrentProposal(proposalRef.current);
       setFlowStep(6 as FlowStep);
     }
@@ -196,6 +211,18 @@ export function GeneratingScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // ── Safety net: poll for proposal in case the callback path missed it ────
+  useEffect(() => {
+    if (phase !== 'waiting') return;
+    const interval = window.setInterval(() => {
+      if (proposalRef.current && mountedRef.current) {
+        finalize();
+      }
+    }, 1000);
+    return () => window.clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase]);
+
   // ── Render ────────────────────────────────────────────────────────────────
   const allDone = phase === 'waiting';
 
@@ -219,20 +246,38 @@ export function GeneratingScreen() {
           <>
             <h2 className="generating-title">{t('flow.step5.errorTitle', { defaultValue: 'Something went wrong' })}</h2>
             <p className="generating-error-msg">{errorMsg}</p>
-            <button
-              className="btn-primary"
-              onClick={() => {
-                errorRef.current = false;
-                proposalRef.current = null;
-                animationDoneRef.current = true; // skip animation on retry, go straight to waiting
-                setActiveStep(PROGRESS_STEPS.length - 1);
-                setErrorMsg(null);
-                setPhase('waiting');
-                runPipeline();
-              }}
-            >
-              {t('flow.step5.retry', { defaultValue: 'Try again' })}
-            </button>
+            <div className="generating-error-actions">
+              {errorRedirectStep ? (
+                /* Known issue with a specific fix — go back to that step */
+                <button
+                  className="flow-btn flow-btn-primary"
+                  onClick={() => setFlowStep(errorRedirectStep as FlowStep)}
+                >
+                  {t('flow.step5.goBack', { defaultValue: '← Fix it' })}
+                </button>
+              ) : (
+                /* Generic error — offer retry */
+                <button
+                  className="flow-btn flow-btn-primary"
+                  onClick={() => {
+                    errorRef.current = false;
+                    proposalRef.current = null;
+                    setErrorRedirectStep(null);
+                    animationDoneRef.current = true;
+                    setActiveStep(PROGRESS_STEPS.length - 1);
+                    setErrorMsg(null);
+                    setPhase('waiting');
+                    runPipeline();
+                  }}
+                >
+                  {t('flow.step5.retry', { defaultValue: 'Try again' })}
+                </button>
+              )}
+              {/* Always show an escape hatch so the user is never truly stuck */}
+              <button className="generating-btn-ghost" onClick={resetFlow}>
+                {t('flow.step5.backToMap', { defaultValue: '↩ Back to map' })}
+              </button>
+            </div>
           </>
         ) : (
           <>

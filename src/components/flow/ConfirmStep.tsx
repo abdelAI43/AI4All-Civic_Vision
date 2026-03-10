@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { spaces } from '../../data/spaces';
 import { useAppStore } from '../../store/useAppStore';
+import { useVoiceStore } from '../../store/useVoiceStore';
+import { VoiceIndicator } from '../voice/VoiceIndicator';
 
 export function ConfirmStep() {
   const { t } = useTranslation();
@@ -10,13 +13,26 @@ export function ConfirmStep() {
     setParticipantAge,
     setConsentGiven,
   } = useAppStore();
+  const setUserIsTyping = useVoiceStore((state) => state.setUserIsTyping);
+
+  const [ageError, setAgeError] = useState('');
 
   const space = spaces.find((s) => s.id === flow.selectedSpaceId);
   const pov = space?.povImages.find((p) => p.id === flow.selectedPovId);
 
+  const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setUserIsTyping(true);
+    setParticipantAge(val);
+    if (val !== '' && (parseInt(val, 10) > 99 || parseInt(val, 10) < 1)) {
+      setAgeError(t('flow.step4.ageError', { defaultValue: 'Please enter an age between 1 and 99.' }));
+    } else {
+      setAgeError('');
+    }
+  };
+
   return (
     <div className="confirm-form">
-      {/* Summary: image + prompt */}
       {space && pov && (
         <div className="confirm-summary">
           <img
@@ -27,14 +43,15 @@ export function ConfirmStep() {
           />
           <div>
             <p className="confirm-summary-meta">
-              {t(`spaces.${space.id}.name`, { defaultValue: space.name })} · {pov.label}
+              {t(`spaces.${space.id}.name`, { defaultValue: space.name })} � {pov.label}
             </p>
-            <p className="confirm-prompt-text">&ldquo;{flow.promptText}&rdquo;</p>
+            <p className="confirm-prompt-text">�{flow.promptText}�</p>
           </div>
         </div>
       )}
 
-      {/* Optional name + age */}
+      <VoiceIndicator />
+
       <div className="confirm-row">
         <div className="form-field">
           <label className="form-label" htmlFor="participant-name">
@@ -47,7 +64,7 @@ export function ConfirmStep() {
             className="form-input"
             placeholder={t('flow.step4.namePlaceholder')}
             value={flow.participantName}
-            onChange={(e) => setParticipantName(e.target.value)}
+            onChange={(e) => { setUserIsTyping(true); setParticipantName(e.target.value); }}
             maxLength={60}
             autoComplete="given-name"
           />
@@ -61,17 +78,19 @@ export function ConfirmStep() {
           <input
             id="participant-age"
             type="number"
-            className="form-input"
+            className={`form-input${ageError ? ' has-error' : ''}`}
             placeholder={t('flow.step4.agePlaceholder')}
             value={flow.participantAge}
-            onChange={(e) => setParticipantAge(e.target.value)}
-            min={5}
-            max={120}
+            onChange={handleAgeChange}
+            min={1}
+            max={99}
           />
+          {ageError && (
+            <p className="form-field-error">{ageError}</p>
+          )}
         </div>
       </div>
 
-      {/* Consent checkbox — only required when personal info is provided */}
       {((flow.participantName?.trim() || '') !== '' ||
         (flow.participantAge?.trim() || '') !== '') && (
         <div className={`consent-area${flow.consentGiven ? ' checked' : ''}`}>

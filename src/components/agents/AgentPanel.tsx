@@ -16,6 +16,39 @@ interface Props {
   feedback: AgentFeedback[];
 }
 
+/** Custom SVG tick for the radar chart — wraps 2-word names to two lines
+ *  and pushes the topmost label further away from the chart. */
+function RadarTick(props: {
+  x: number;
+  y: number;
+  cy: number;
+  payload: { value: string };
+  textAnchor: string;
+}) {
+  const { x, y, cy, payload, textAnchor } = props;
+  const words = payload.value.split(' ');
+  const line1 = words[0] ?? '';
+  const line2 = words.slice(1).join(' ');
+
+  // Extra upward nudge for the label sitting above the chart centre
+  const isTop = y < cy - 10;
+  const yBase = y + (isTop ? -10 : 0);
+
+  return (
+    <text
+      x={x}
+      y={yBase}
+      textAnchor={textAnchor}
+      fill={theme.colors.textSecondary}
+      fontSize={10}
+      fontFamily={theme.fonts.primary}
+    >
+      <tspan x={x} dy="-7">{line1}</tspan>
+      {line2 && <tspan x={x} dy="14">{line2}</tspan>}
+    </text>
+  );
+}
+
 export function AgentPanel({ feedback }: Props) {
   const { t } = useTranslation();
 
@@ -41,16 +74,12 @@ export function AgentPanel({ feedback }: Props) {
 
       {/* Radar Chart */}
       <div className="radar-chart-wrapper">
-        <ResponsiveContainer width="100%" height={220}>
-          <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="70%">
+        <ResponsiveContainer width="100%" height={250}>
+          <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="60%">
             <PolarGrid stroke={theme.radar.gridStroke} strokeOpacity={0.3} />
             <PolarAngleAxis
               dataKey="agent"
-              tick={{
-                fontSize: 11,
-                fill: theme.colors.textSecondary,
-                fontFamily: theme.fonts.primary,
-              }}
+              tick={(props) => <RadarTick {...(props as Parameters<typeof RadarTick>[0])} />}
             />
             <PolarRadiusAxis
               angle={90}
