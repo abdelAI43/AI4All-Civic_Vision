@@ -33,3 +33,9 @@ DEVELOPMENT.md
 IMPLEMENTATION_PLAN.md
 **/images/README.md
 
+# Knowledge base (large corpus, exclude from Vite scanning)
+Knwlodge base/
+backend/trees/
+backend/__pycache__/
+backend/.venv/
+

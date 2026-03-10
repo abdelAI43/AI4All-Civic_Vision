@@ -18,6 +18,9 @@ export interface AgentFeedback {
   icon: string;
   score: number; // 1 to 5
   feedback: string;
+  risks?: string[];
+  recommendations?: string[];
+  references?: string[];
 }
 
 export interface Proposal {
@@ -37,8 +40,12 @@ export interface AppState {
   selectedProposal: Proposal | null;
   showProposalPanel: boolean;
   mapResetTrigger: number;
+  isEvaluating: boolean;
+  evaluationError: string | null;
   setSelectedHotspot: (hotspot: Hotspot | null) => void;
   setSelectedProposal: (proposal: Proposal | null) => void;
   setShowProposalPanel: (show: boolean) => void;
+  setIsEvaluating: (loading: boolean) => void;
+  setEvaluationError: (error: string | null) => void;
   clearSelection: () => void;
 }
