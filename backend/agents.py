@@ -53,7 +53,13 @@ async def call_ollama(prompt: str, model: str = RUNTIME_LLM_MODEL) -> str:
     async with httpx.AsyncClient(timeout=120.0) as client:
         resp = await client.post(
             OLLAMA_GENERATE_URL,
-            json={"model": model, "prompt": prompt, "stream": False},
+            json={
+                "model": model,
+                "prompt": prompt,
+                "stream": False,
+                "format": "json",
+                "options": {"temperature": 0.3, "num_predict": 1024},
+            },
         )
         resp.raise_for_status()
         return resp.json().get("response", "")
@@ -84,12 +90,17 @@ def _build_prompt(
         f"PROPOSAL: {proposal}\n"
         f"LOCATION: {location}\n\n"
         f"Evaluate this proposal from your expert perspective. "
-        f"Respond ONLY with a valid JSON object."
+        f"Base your evaluation ONLY on the retrieved documents above. "
+        f"Do not invent or assume document names — cite only sources shown in the [CONTEXT] blocks.\n\n"
+        f"Respond ONLY with a JSON object using EXACTLY these keys:\n"
+        f'{{"score": <integer 1-5>, "summary": "<2-3 sentences>", '
+        f'"risks": ["<risk>", ...], "recommendations": ["<rec>", ...], '
+        f'"references": ["<source_file.pdf p.XX>", ...]}}'
     )
 
 
 def _parse_agent_json(raw: str, agent_id: str) -> dict:
-    """Best-effort parse of the LLM's JSON response."""
+    """Best-effort parse of the LLM's JSON response, normalizing variant key names."""
     cleaned = raw.strip()
 
     # Strip markdown code fences
@@ -100,7 +111,7 @@ def _parse_agent_json(raw: str, agent_id: str) -> dict:
     cleaned = cleaned.strip()
 
     try:
-        return json.loads(cleaned)
+        data = json.loads(cleaned)
     except json.JSONDecodeError:
         logger.warning("Agent '%s' returned unparseable JSON: %s", agent_id, raw[:300])
         return {
@@ -110,6 +121,16 @@ def _parse_agent_json(raw: str, agent_id: str) -> dict:
             "recommendations": [],
             "references": [],
         }
+
+    # Normalize: the LLM sometimes uses variant keys like "evaluation", "feedback",
+    # "assessment" instead of "summary". Map them to the expected schema.
+    if "summary" not in data:
+        for alt_key in ("evaluation", "feedback", "assessment", "analysis", "description"):
+            if alt_key in data:
+                data["summary"] = data.pop(alt_key)
+                break
+
+    return data
 
 
 # ── Single agent evaluation ──────────────────────────────
