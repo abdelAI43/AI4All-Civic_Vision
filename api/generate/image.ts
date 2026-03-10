@@ -87,30 +87,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       String(promptText),
     );
 
-    // 3. Call Nano Banana Pro (gemini-3-pro-image-preview)
+    // 3. Call Nano Banana (Gemini 2.5 Flash Preview Image Generation)
     const ai = new GoogleGenAI({ apiKey });
-
-    // MODEL: use gemini-2.5-flash-image for testing; swap to gemini-3-pro-image-preview for production
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image',
+      model: 'gemini-3.1-flash-image-preview',
       contents: [
-        {
-          role: 'user',
-          parts: [
-            { text: wrappedPrompt },
-            { inlineData: { mimeType, data: base64Image } },
-          ],
-        },
+        { text: wrappedPrompt },
+        { inlineData: { mimeType, data: base64Image } },
       ],
-      config: {
-        responseModalities: ['IMAGE', 'TEXT'],
-        safetySettings: [
-          { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-        ],
-      },
     });
 
     // 4. Extract the generated image from the response

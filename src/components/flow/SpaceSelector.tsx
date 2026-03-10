@@ -1,26 +1,29 @@
 import { useTranslation } from 'react-i18next';
 import { spaces } from '../../data/spaces';
 import { useAppStore } from '../../store/useAppStore';
+import { useVoiceStore } from '../../store/useVoiceStore';
 
 export function SpaceSelector() {
   const { t } = useTranslation();
   const { flow, setSelectedSpace } = useAppStore();
+  const autoSelectedSpaceId = useVoiceStore((state) => state.autoSelectedSpaceId);
 
   return (
     <div className="space-grid">
       {spaces.map((space) => {
         const thumbnail = space.povImages[0];
         const isSelected = flow.selectedSpaceId === space.id;
+        const isAutoSelected = autoSelectedSpaceId === space.id;
 
         return (
           <button
             key={space.id}
-            className={`space-card${isSelected ? ' selected' : ''}`}
+            className={`space-card${isSelected ? ' selected' : ''}${isAutoSelected ? ' voice-auto-pulse' : ''}`}
             onClick={() => setSelectedSpace(space.id)}
             aria-pressed={isSelected}
             aria-label={t(`spaces.${space.id}.name`, { defaultValue: space.name })}
           >
-            <span className="space-card-check" aria-hidden="true">✓</span>
+            <span className="space-card-check" aria-hidden="true">?</span>
 
             <img
               className="space-card-image"

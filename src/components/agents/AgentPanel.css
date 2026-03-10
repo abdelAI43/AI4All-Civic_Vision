@@ -39,6 +39,11 @@
   padding: var(--space-2) 0;
 }
 
+/* Allow radar labels to extend beyond the SVG viewport without clipping */
+.radar-chart-wrapper svg {
+  overflow: visible;
+}
+
 .agent-cards {
   display: flex;
   flex-direction: column;

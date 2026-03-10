@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '../../store/useAppStore';
 import { SpaceSelector } from './SpaceSelector';
@@ -7,6 +7,8 @@ import { PromptStep } from './PromptStep';
 import { ConfirmStep } from './ConfirmStep';
 import { GeneratingScreen } from './GeneratingScreen';
 import { ResultsView } from './ResultsView';
+import { ChatTranscript } from '../voice/ChatTranscript';
+import { useVoiceFlow } from '../../hooks/useVoiceFlow';
 import type { FlowStep } from '../../types';
 
 const STEP_TITLES: Record<number, string> = {
@@ -23,7 +25,6 @@ const STEP_SUBTITLES: Record<number, string> = {
   4: 'flow.step4.subtitle',
 };
 
-/** Can the user proceed from the current step? */
 function useCanProceed(): boolean {
   const { flow } = useAppStore();
   switch (flow.step) {
@@ -31,6 +32,10 @@ function useCanProceed(): boolean {
     case 2: return flow.selectedPovId !== null;
     case 3: return flow.promptText.trim().length > 0;
     case 4: {
+      if (flow.participantAge.trim()) {
+        const age = parseInt(flow.participantAge, 10);
+        if (Number.isNaN(age) || age < 1 || age > 99) return false;
+      }
       const hasPersonalInfo = (flow.participantName?.trim() || '') !== '' ||
                               (flow.participantAge?.trim() || '') !== '';
       return hasPersonalInfo ? flow.consentGiven : true;
@@ -39,7 +44,6 @@ function useCanProceed(): boolean {
   }
 }
 
-/** Map step → extra panel class for sizing */
 function panelSizeClass(step: FlowStep): string {
   if (step <= 2) return 'flow-panel-wide';
   if (step <= 4) return 'flow-panel-narrow';
@@ -49,25 +53,39 @@ function panelSizeClass(step: FlowStep): string {
 
 export function SuggestFlow() {
   const { t } = useTranslation();
-  const { mode, flow, setFlowStep, resetFlow } = useAppStore();
+  const { mode, flow, setFlowStep, resetFlow, setSelectedSpace, setSelectedPov, setMode } = useAppStore();
   const canProceed = useCanProceed();
 
-  // Escape key: go back one step, or close if at step 1
+  useVoiceFlow();
+
   useEffect(() => {
     if (mode !== 'suggest') return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.stopPropagation();
-        if (flow.step === 1) {
+        if (flow.step === 5) {
+          // Don't close during generation
+          return;
+        }
+        if (flow.step === 1 || flow.step === 6) {
           resetFlow();
         } else if (flow.step <= 4) {
+          if (flow.step === 2) setSelectedSpace(null);
+          else if (flow.step === 3) setSelectedPov(null);
           setFlowStep((flow.step - 1) as FlowStep);
         }
       }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [mode, flow.step, resetFlow, setFlowStep]);
+  }, [mode, flow.step, resetFlow, setFlowStep, setSelectedSpace, setSelectedPov]);
+
+  // Close when clicking the backdrop (not the panel itself)
+  const handleBackdropClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget && flow.step !== 5) {
+      resetFlow();
+    }
+  }, [flow.step, resetFlow]);
 
   if (mode !== 'suggest') return null;
 
@@ -78,42 +96,62 @@ export function SuggestFlow() {
   };
 
   const handleBack = () => {
+    if (flow.step === 2) {
+      // Clear space (and POV) so the user can re-pick without auto-advance
+      setSelectedSpace(null);
+    } else if (flow.step === 3) {
+      // Clear POV so the user can re-pick
+      setSelectedPov(null);
+    }
     if (flow.step > 1) {
       setFlowStep((flow.step - 1) as FlowStep);
     }
   };
 
   const handleSubmit = () => {
-    // In Phase 1 this goes straight to the mock generating screen
     setFlowStep(5);
   };
 
-  // Steps 5 & 6 are fullscreen — they manage their own layout
   if (flow.step === 5) {
     return (
-      <div className="flow-backdrop" role="dialog" aria-modal="true">
+      <div className="flow-backdrop" role="dialog" aria-modal="true" onClick={handleBackdropClick}>
         <div className={`flow-panel ${panelSizeClass(5)}`}>
-          <GeneratingScreen />
+          <div className="flow-panel-full-content">
+            <GeneratingScreen />
+          </div>
+          <ChatTranscript />
         </div>
       </div>
     );
   }
 
   if (flow.step === 6) {
+    const handleClose = () => resetFlow();
+    const handleStartOver = () => { resetFlow(); setMode('suggest'); };
+
     return (
-      <div className="flow-backdrop" role="dialog" aria-modal="true">
+      <div className="flow-backdrop" role="dialog" aria-modal="true" onClick={handleBackdropClick}>
         <div className={`flow-panel ${panelSizeClass(6)}`}>
-          <ResultsView />
+          <div className="flow-panel-full-content">
+            <ResultsView hideFooter />
+          </div>
+          <ChatTranscript />
+          <div className="results-footer">
+            <button className="flow-btn flow-btn-secondary" onClick={handleClose}>
+              {t('flow.step6.closeBtn')}
+            </button>
+            <button className="flow-btn flow-btn-primary" onClick={handleStartOver}>
+              {t('flow.step6.startOver')}
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
-  // Steps 1–4: standard panel layout with header, scrollable content, footer
   return (
     <div className="flow-backdrop" role="dialog" aria-modal="true">
       <div className={`flow-panel ${panelSizeClass(flow.step)}`}>
-        {/* Header */}
         <div className="flow-panel-header">
           <div className="flow-panel-header-row">
             <div>
@@ -125,11 +163,10 @@ export function SuggestFlow() {
               onClick={resetFlow}
               aria-label={t('common.close')}
             >
-              ✕
+              x
             </button>
           </div>
 
-          {/* Progress dots */}
           <div className="flow-progress" aria-hidden="true">
             {[1, 2, 3, 4].map((s) => (
               <div
@@ -142,7 +179,6 @@ export function SuggestFlow() {
           </div>
         </div>
 
-        {/* Scrollable content */}
         <div className="flow-panel-content">
           {flow.step === 1 && <SpaceSelector />}
           {flow.step === 2 && <POVSelector />}
@@ -150,7 +186,6 @@ export function SuggestFlow() {
           {flow.step === 4 && <ConfirmStep />}
         </div>
 
-        {/* Footer */}
         <div className="flow-panel-footer">
           {flow.step > 1 && (
             <button className="flow-btn flow-btn-secondary" onClick={handleBack}>
@@ -176,6 +211,8 @@ export function SuggestFlow() {
             </button>
           )}
         </div>
+
+        <ChatTranscript />
       </div>
     </div>
   );

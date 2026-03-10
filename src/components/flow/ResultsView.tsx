@@ -9,7 +9,7 @@ import { AgentPanel } from '../agents/AgentPanel';
  * Shows the before/after image comparison, prompt text, author info,
  * agent evaluation (radar + cards), and action buttons.
  */
-export function ResultsView() {
+export function ResultsView({ hideFooter = false }: { hideFooter?: boolean }) {
   const { t } = useTranslation();
   const { flow, resetFlow, setMode } = useAppStore();
   const proposal = flow.currentProposal;
@@ -80,15 +80,17 @@ export function ResultsView() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="results-footer">
-        <button className="flow-btn flow-btn-secondary" onClick={handleClose}>
-          {t('flow.step6.closeBtn')}
-        </button>
-        <button className="flow-btn flow-btn-primary" onClick={handleStartOver}>
-          {t('flow.step6.startOver')}
-        </button>
-      </div>
+      {/* Footer — hidden when parent renders its own */}
+      {!hideFooter && (
+        <div className="results-footer">
+          <button className="flow-btn flow-btn-secondary" onClick={handleClose}>
+            {t('flow.step6.closeBtn')}
+          </button>
+          <button className="flow-btn flow-btn-primary" onClick={handleStartOver}>
+            {t('flow.step6.startOver')}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
