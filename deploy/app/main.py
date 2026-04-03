@@ -95,18 +95,20 @@ class RetrieveResponse(BaseModel):
 
 @app.post("/api/evaluate", response_model=EvaluateResponse)
 async def evaluate(req: EvaluateRequest):
-    """Run all 5 agents in parallel and return their evaluations."""
+    """Run agents sequentially to stay within Groq free-tier rate limits."""
     if not req.proposal.strip():
         raise HTTPException(status_code=400, detail="Proposal text is required")
 
     agent_ids = list(AGENT_CATEGORY.keys())
 
-    tasks = [
-        evaluate_single(aid, req.proposal, req.location)
-        for aid in agent_ids
-    ]
-
-    results: list[AgentResult] = await asyncio.gather(*tasks, return_exceptions=True)
+    results: list[AgentResult | Exception] = []
+    for aid in agent_ids:
+        try:
+            result = await evaluate_single(aid, req.proposal, req.location)
+            results.append(result)
+        except Exception as e:
+            results.append(e)
+        await asyncio.sleep(2)  # 2s pause between agents to avoid rate limits
 
     agents: list[dict] = []
     for aid, result in zip(agent_ids, results):
