@@ -39,3 +39,10 @@ backend/trees/
 backend/__pycache__/
 backend/.venv/
 
+# Deploy data (vectorstores + trees copied at build time)
+deploy/data/
+deploy/app/trees/
+deploy/__pycache__/
+deploy/app/__pycache__/
+deploy/.env
+
