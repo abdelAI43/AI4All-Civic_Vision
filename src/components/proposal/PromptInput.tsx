@@ -1,42 +1,57 @@
 import { useState } from 'react';
 import './PromptInput.css';
+import { spaces } from '../../data/spaces';
 import { useAppStore } from '../../store/useAppStore';
 import { evaluateProposal } from '../../services/api';
 
 /**
- * Prompt input — submits proposal to the backend for live agent evaluation.
+ * Legacy prompt input kept type-safe with the current app store shape.
+ * The main suggest flow now uses the guided modal pipeline instead.
  */
 export function PromptInput() {
   const [value, setValue] = useState('');
 
-  const selectedHotspot = useAppStore((s) => s.selectedHotspot);
+  const flow = useAppStore((s) => s.flow);
   const isEvaluating = useAppStore((s) => s.isEvaluating);
   const evaluationError = useAppStore((s) => s.evaluationError);
   const setIsEvaluating = useAppStore((s) => s.setIsEvaluating);
   const setEvaluationError = useAppStore((s) => s.setEvaluationError);
-  const setSelectedProposal = useAppStore((s) => s.setSelectedProposal);
+  const setCurrentProposal = useAppStore((s) => s.setCurrentProposal);
+  const setFlowStep = useAppStore((s) => s.setFlowStep);
+
+  const selectedSpace = spaces.find((space) => space.id === flow.selectedSpaceId);
+  const selectedPov = selectedSpace?.povImages.find((pov) => pov.id === flow.selectedPovId)
+    ?? selectedSpace?.povImages[0];
 
   const handleSubmit = async () => {
-    if (!value.trim() || !selectedHotspot || isEvaluating) return;
+    if (!value.trim() || !selectedSpace || isEvaluating) return;
 
     setIsEvaluating(true);
     setEvaluationError(null);
 
     try {
-      const location = `${selectedHotspot.name}, ${selectedHotspot.neighborhood}`;
-      const agents = await evaluateProposal(value, location, selectedHotspot.id);
+      const location = `${selectedSpace.name}, ${selectedSpace.neighborhood}`;
+      const agents = await evaluateProposal(value, location, selectedSpace.id);
+      const avgAgentScore = agents.length
+        ? agents.reduce((sum, agent) => sum + agent.score, 0) / agents.length
+        : 0;
 
-      setSelectedProposal({
+      setCurrentProposal({
         id: `live-${Date.now()}`,
-        hotspotId: selectedHotspot.id,
-        userName: 'You',
-        userAge: 0,
-        prompt: value,
-        originalImage: '',
-        generatedImage: '',
+        spaceId: selectedSpace.id,
+        povId: selectedPov?.id ?? 'unknown',
+        promptText: value,
+        language: 'en',
+        baseImagePath: selectedPov?.path ?? '',
+        generatedImageUrl: '',
         agentFeedback: agents,
+        avgAgentScore,
+        participantName: 'You',
+        consentGiven: true,
+        status: 'complete',
         createdAt: new Date().toISOString(),
       });
+      setFlowStep(6);
       setValue('');
     } catch (err) {
       setEvaluationError(err instanceof Error ? err.message : 'Evaluation failed');
@@ -49,13 +64,13 @@ export function PromptInput() {
     <div className="prompt-input-wrapper">
       <label className="prompt-input-label">
         Suggest a change
-        <span className="voice-hint">🎤 Voice input coming soon</span>
+        <span className="voice-hint">Voice-guided flow available in the modal</span>
       </label>
       <div className="prompt-input-row">
         <input
           type="text"
           className="prompt-input"
-          placeholder="Describe the change you'd like to see…"
+          placeholder="Describe the change you would like to see..."
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
@@ -64,19 +79,19 @@ export function PromptInput() {
         <button
           className="prompt-submit"
           onClick={handleSubmit}
-          disabled={!value.trim() || !selectedHotspot || isEvaluating}
+          disabled={!value.trim() || !selectedSpace || isEvaluating}
         >
-          {isEvaluating ? 'Evaluating…' : 'Submit'}
+          {isEvaluating ? 'Evaluating...' : 'Submit'}
         </button>
       </div>
       {isEvaluating && (
         <div className="prompt-toast">
-          ⏳ Running 5 agent evaluations — this may take a moment…
+          Running 5 agent evaluations - this may take a moment...
         </div>
       )}
       {evaluationError && (
         <div className="prompt-toast" style={{ color: '#b33' }}>
-          ✗ {evaluationError}
+          {evaluationError}
         </div>
       )}
     </div>
