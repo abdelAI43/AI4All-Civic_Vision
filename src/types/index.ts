@@ -28,6 +28,9 @@ export interface AgentFeedback {
   icon: string;
   score: number; // 1 to 5
   feedback: string;
+  risks?: string[];
+  recommendations?: string[];
+  references?: string[];
 }
 
 export type ProposalStatus = 'pending' | 'generating' | 'complete' | 'failed';
@@ -98,4 +101,10 @@ export interface AppState {
   // ── Map
   mapResetTrigger: number;
   triggerMapReset: () => void;
+
+  // ── Evaluation
+  isEvaluating: boolean;
+  evaluationError: string | null;
+  setIsEvaluating: (loading: boolean) => void;
+  setEvaluationError: (error: string | null) => void;
 }

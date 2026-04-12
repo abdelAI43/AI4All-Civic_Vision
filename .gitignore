@@ -36,3 +36,15 @@ Material/
 .claude/
 .vercel
 scripts/
+
+# Knowledge base (large corpus, exclude from Vite scanning)
+Knwlodge base/
+backend/trees/
+backend/__pycache__/
+backend/.venv/
+
+# Deploy runtime caches
+deploy/__pycache__/
+deploy/app/__pycache__/
+deploy/.env
+deploy/app/trees/

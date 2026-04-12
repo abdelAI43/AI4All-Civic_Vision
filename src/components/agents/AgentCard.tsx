@@ -30,6 +30,30 @@ export function AgentCard({ agent }: Props) {
         <div className="score-dots">{getScoreDots(agent.score)}</div>
       </div>
       <p className="agent-feedback">{agent.feedback}</p>
+      {agent.risks && agent.risks.length > 0 && (
+        <div className="agent-section">
+          <span className="agent-section-label">Risks</span>
+          <ul className="agent-list agent-risks">
+            {agent.risks.map((r, i) => <li key={i}>{r}</li>)}
+          </ul>
+        </div>
+      )}
+      {agent.recommendations && agent.recommendations.length > 0 && (
+        <div className="agent-section">
+          <span className="agent-section-label">Recommendations</span>
+          <ul className="agent-list">
+            {agent.recommendations.map((r, i) => <li key={i}>{r}</li>)}
+          </ul>
+        </div>
+      )}
+      {agent.references && agent.references.length > 0 && (
+        <div className="agent-section">
+          <span className="agent-section-label">Sources</span>
+          <ul className="agent-list agent-references">
+            {agent.references.map((r, i) => <li key={i}>{r}</li>)}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

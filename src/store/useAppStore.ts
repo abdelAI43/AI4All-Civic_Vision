@@ -59,4 +59,10 @@ export const useAppStore = create<AppState>((set) => ({
   // ── Map ───────────────────────────────────────────────────────────────────
   mapResetTrigger: 0,
   triggerMapReset: () => set((s) => ({ mapResetTrigger: s.mapResetTrigger + 1 })),
+
+  // ── Evaluation ─────────────────────────────────────────────────────────────
+  isEvaluating: false,
+  evaluationError: null,
+  setIsEvaluating: (loading: boolean) => set({ isEvaluating: loading }),
+  setEvaluationError: (error: string | null) => set({ evaluationError: error }),
 }));
