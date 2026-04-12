@@ -21,6 +21,40 @@ export class AudioPlayer {
     });
   }
 
+  /** Play a static audio file by URL. Returns true if played, false on error/404. */
+  async playUrl(url: string): Promise<boolean> {
+    const gen = this.generation;
+    return new Promise<boolean>((resolve) => {
+      if (gen !== this.generation) {
+        resolve(false);
+        return;
+      }
+
+      const audio = new Audio(url);
+      this.currentAudio = audio;
+
+      const cleanup = () => {
+        audio.onended = null;
+        audio.onerror = null;
+        if (this.currentAudio === audio) this.currentAudio = null;
+      };
+
+      audio.onended = () => {
+        cleanup();
+        resolve(true);
+      };
+      audio.onerror = () => {
+        cleanup();
+        resolve(false);
+      };
+
+      audio.play().catch(() => {
+        cleanup();
+        resolve(false);
+      });
+    });
+  }
+
   stopAll(): void {
     this.generation += 1;
     this.queue.forEach((item) => item.resolve());

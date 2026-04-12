@@ -41,15 +41,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const lang = typeof language === 'string' ? language : 'en';
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.5-flash-lite',
       contents: [
         {
           role: 'user',
           parts: [
             {
               text:
-                `Transcribe this speech to text in language "${lang}". ` +
-                'Return JSON only: {"transcript":"..."}',
+                `Transcribe this audio to text verbatim. Language hint: "${lang}". ` +
+                'Return JSON only: {"transcript":""}',
             },
             {
               inlineData: {

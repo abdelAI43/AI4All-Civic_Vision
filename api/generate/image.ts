@@ -90,7 +90,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // 3. Call Nano Banana (Gemini 2.5 Flash Preview Image Generation)
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
-      model: 'gemini-3.1-flash-image-preview',
+      model: 'gemini-2.5-flash-image',
       contents: [
         { text: wrappedPrompt },
         { inlineData: { mimeType, data: base64Image } },

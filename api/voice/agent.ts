@@ -139,13 +139,19 @@ function normalizePovOptions(raw: unknown): PovOption[] {
 function buildAreaPrompt(userText: string, language: string): { system: string; user: string } {
   return {
     system:
-      'You match informal spoken references to one of these 6 Barcelona spaces: ' +
-      `${SPACE_IDS.join(', ')}. ` +
+      'Match spoken text to one of these 6 Barcelona spaces. ' +
+      'Space IDs and ALL accepted name variants:\n' +
+      '- placa-catalunya: Plaça Catalunya, Plaza Catalunya, Plaza Cataluña, Catalonia Square, Catalunya, Cataluña, la plaça\n' +
+      '- la-rambla: La Rambla, Las Ramblas, the Ramblas, Rambla, Rambles\n' +
+      '- passeig-de-gracia: Passeig de Gràcia, Passeig de Gracia, Paseo de Gracia, Paseo Gracia, Gràcia, Gracia, the boulevard\n' +
+      '- barceloneta-beach: Barceloneta, Barceloneta Beach, la barceloneta, the beach, platja, playa barceloneta\n' +
+      '- park-guell: Park Güell, Parc Güell, Parc Guell, Park Guell, Güell, Guell, Gaudí park, Gaudi park\n' +
+      '- mnac-esplanade: MNAC, Montjuïc, Montjuic, Museu Nacional, Palau Nacional, esplanade, Plaça Espanya, Espanya\n' +
       'Output JSON only: {"matchedSpaceId": string|null, "confidence": number, "clarificationMessage": string}.',
     user:
       `Language: ${LANGUAGE_NAME[language] ?? LANGUAGE_NAME.en}\n` +
-      `Spoken user text: "${userText}"\n` +
-      'Find the best space id match. If unsure, return null with a short clarification question.',
+      `Spoken text: "${userText}"\n` +
+      'Match to a space id. If no match, return null and ask which of the 6 spaces they want.',
   };
 }
 
@@ -265,12 +271,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.5-flash-lite',
       contents: userPrompt,
       config: {
         systemInstruction: systemPrompt,
         responseMimeType: 'application/json',
-        temperature: 0.2,
+        temperature: 0.1,
       },
     });
 

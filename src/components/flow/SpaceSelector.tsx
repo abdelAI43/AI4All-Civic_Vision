@@ -23,7 +23,7 @@ export function SpaceSelector() {
             aria-pressed={isSelected}
             aria-label={t(`spaces.${space.id}.name`, { defaultValue: space.name })}
           >
-            <span className="space-card-check" aria-hidden="true">?</span>
+            <span className="space-card-check" aria-hidden="true">✓</span>
 
             <img
               className="space-card-image"

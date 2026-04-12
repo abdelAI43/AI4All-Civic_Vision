@@ -11,10 +11,9 @@ import {
   type AreaMatcherResult,
   type InputExtractorResult,
   type PovMatcherResult,
-  type ResponseComposerResult,
   type VoiceLanguage,
 } from '../services/voice/apiClient';
-import { getPromptSet, isAffirmative, isNegative } from '../services/voice/agents';
+import { getPromptSet, isNegative } from '../services/voice/agents';
 import { AudioPlayer } from '../services/voice/audioPlayer';
 import { recordAudioOnce } from '../services/voice/audioRecorder';
 import { shouldCollapseTranscript, shouldAutoAdvanceFromSelection } from '../services/voice/stateMachine';
@@ -30,11 +29,11 @@ function toVoiceLanguage(): VoiceLanguage {
   return 'en';
 }
 
-function getSummarySeed(proposal: Proposal): string {
-  const first = proposal.agentFeedback[0]?.feedback?.split('. ')?.[0] ?? '';
-  const keyPoint = first.trim();
+function buildResultsSummary(proposal: Proposal, lang: VoiceLanguage): string {
   const score = Number.isFinite(proposal.avgAgentScore) ? proposal.avgAgentScore.toFixed(1) : '0.0';
-  return `Average score ${score}. Key point: ${keyPoint}`;
+  if (lang === 'ca') return `La teva proposta ha obtingut ${score} sobre 5. Revisa el feedback a la pantalla.`;
+  if (lang === 'es') return `Tu propuesta obtuvo ${score} sobre 5. Revisa la evaluacion en pantalla.`;
+  return `Your proposal scored ${score} out of 5. Check the expert feedback on screen.`;
 }
 
 export function useVoiceFlow() {
@@ -80,7 +79,12 @@ export function useVoiceFlow() {
     setVolumeLevel(0);
   }, [setVolumeLevel]);
 
-  const speakAssistant = useCallback(async (text: string, runId: number, withAudio = true) => {
+  const speakAssistant = useCallback(async (
+    text: string,
+    runId: number,
+    withAudio = true,
+    audioKey?: string,
+  ) => {
     const trimmed = text.trim();
     if (!trimmed || isStale(runId)) return;
 
@@ -92,6 +96,15 @@ export function useVoiceFlow() {
     setError(null);
 
     try {
+      // Try pre-recorded static file first (zero API cost)
+      if (audioKey) {
+        const url = `/audio/${toVoiceLanguage()}/${audioKey}.wav`;
+        const played = await playerRef.current.playUrl(url);
+        if (played && !isStale(runId)) return;
+        // File missing or failed — fall through to live TTS
+      }
+
+      // Fall back to Gemini TTS API
       const speech = await generateSpeech({
         text: trimmed,
         language: toVoiceLanguage(),
@@ -171,20 +184,6 @@ export function useVoiceFlow() {
     }
   }, [addMessage, isStale, setActivity, setError, setVolumeLevel]);
 
-  const composeResponse = useCallback(async (runId: number, context: Record<string, unknown>, fallback: string) => {
-    try {
-      const data = await agentCall<ResponseComposerResult>({
-        agentType: 'responseComposer',
-        language: toVoiceLanguage(),
-        messages: [{ role: 'user', content: fallback }],
-        context,
-      });
-      if (isStale(runId)) return fallback;
-      return data.spokenText || fallback;
-    } catch {
-      return fallback;
-    }
-  }, [isStale]);
 
   const runStep = useCallback(async (step: FlowStep, runId: number) => {
     const lang = toVoiceLanguage();
@@ -197,12 +196,12 @@ export function useVoiceFlow() {
     if (step === 1) {
       if (currentFlow.selectedSpaceId) return;
 
-      await speakAssistant(prompts.step1Greeting, runId);
+      await speakAssistant(prompts.step1Greeting, runId, true, 'step1-greeting');
       for (let attempt = 0; attempt < 2; attempt += 1) {
         const transcript = await listenOnce(runId);
         if (isStale(runId)) return;
         if (!transcript) {
-          await speakAssistant(prompts.retrySpace, runId);
+          await speakAssistant(prompts.retrySpace, runId, true, 'retry-space');
           continue;
         }
 
@@ -223,9 +222,10 @@ export function useVoiceFlow() {
             return;
           }
 
+          // Clarification from LLM is dynamic — no audioKey
           await speakAssistant(data.clarificationMessage || prompts.retrySpace, runId);
         } catch {
-          await speakAssistant(prompts.retrySpace, runId);
+          await speakAssistant(prompts.retrySpace, runId, true, 'retry-space');
         }
       }
       return;
@@ -236,12 +236,12 @@ export function useVoiceFlow() {
       const space = spaces.find((item) => item.id === now.selectedSpaceId);
       if (!space || now.selectedPovId) return;
 
-      await speakAssistant(prompts.step2Guidance, runId);
+      await speakAssistant(prompts.step2Guidance, runId, true, 'step2-guidance');
       for (let attempt = 0; attempt < 2; attempt += 1) {
         const transcript = await listenOnce(runId);
         if (isStale(runId)) return;
         if (!transcript) {
-          await speakAssistant(prompts.retryPov, runId);
+          await speakAssistant(prompts.retryPov, runId, true, 'retry-pov');
           continue;
         }
 
@@ -267,7 +267,7 @@ export function useVoiceFlow() {
 
           await speakAssistant(data.clarificationMessage || prompts.retryPov, runId);
         } catch {
-          await speakAssistant(prompts.retryPov, runId);
+          await speakAssistant(prompts.retryPov, runId, true, 'retry-pov');
         }
       }
       return;
@@ -279,7 +279,7 @@ export function useVoiceFlow() {
       if (useVoiceStore.getState().userIsTyping || now.promptText.trim()) {
         // User typed a prompt — skip voice input, go straight to confirmation
       } else {
-        await speakAssistant(prompts.step3Guidance, runId);
+        await speakAssistant(prompts.step3Guidance, runId, true, 'step3-guidance');
         if (isStale(runId)) return;
         const transcript = await listenOnce(runId);
         if (isStale(runId)) return;
@@ -290,7 +290,7 @@ export function useVoiceFlow() {
         } else if (transcript) {
           setPromptText(transcript);
         } else {
-          await speakAssistant(prompts.retryPrompt, runId);
+          await speakAssistant(prompts.retryPrompt, runId, true, 'retry-prompt');
           return;
         }
       }
@@ -314,7 +314,7 @@ export function useVoiceFlow() {
         if (!confirmation) {
           // No response — ask again once, then accept
           if (confirmAttempt === 0) {
-            await speakAssistant(confirmQuestion, runId);
+            await speakAssistant(confirmQuestion, runId, true, 'step3-confirm-question');
             if (isStale(runId)) return;
             continue;
           }
@@ -327,7 +327,7 @@ export function useVoiceFlow() {
           if (!useVoiceStore.getState().userIsTyping) {
             setPromptText('');
           }
-          await speakAssistant(prompts.step3Guidance, runId);
+          await speakAssistant(prompts.step3Guidance, runId, true, 'step3-guidance');
           if (isStale(runId)) return;
           const retryTranscript = await listenOnce(runId);
           if (retryTranscript && !isStale(runId) && !useVoiceStore.getState().userIsTyping) {
@@ -346,7 +346,7 @@ export function useVoiceFlow() {
 
     if (step === 4) {
       step4ReadyRef.current = false;
-      await speakAssistant(prompts.step4Guidance, runId);
+      await speakAssistant(prompts.step4Guidance, runId, true, 'step4-guidance');
 
       // If user is already typing name/age, skip voice input for this step
       if (useVoiceStore.getState().userIsTyping) {
@@ -388,7 +388,7 @@ export function useVoiceFlow() {
       const hasPersonalInfo = updated.participantName.trim() !== '' || updated.participantAge.trim() !== '';
 
       if (hasPersonalInfo && !updated.consentGiven) {
-        await speakAssistant(prompts.step4ConsentReminder, runId);
+        await speakAssistant(prompts.step4ConsentReminder, runId, true, 'step4-consent');
         return;
       }
 
@@ -399,7 +399,7 @@ export function useVoiceFlow() {
     if (step === 5) {
       if (!step5MessageShownRef.current) {
         step5MessageShownRef.current = true;
-        addMessage('assistant', prompts.step5Generating);
+        await speakAssistant(prompts.step5Generating, runId, true, 'step5-generating');
       }
       return;
     }
@@ -410,21 +410,11 @@ export function useVoiceFlow() {
       if (step6SummaryForProposalRef.current === proposal.id) return;
       step6SummaryForProposalRef.current = proposal.id;
 
-      const summary = await composeResponse(
-        runId,
-        {
-          scenario: 'results_summary',
-          avgAgentScore: proposal.avgAgentScore,
-          keyPoint: getSummarySeed(proposal),
-          language: lang,
-        },
-        prompts.step6FallbackSummary,
-      );
+      const summary = buildResultsSummary(proposal, lang);
       await speakAssistant(summary, runId);
     }
   }, [
     addMessage,
-    composeResponse,
     isStale,
     listenOnce,
     setAutoSelectedPovId,

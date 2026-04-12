@@ -13,11 +13,11 @@ export interface RecordAudioOptions {
 
 const DEFAULTS = {
   silenceThreshold: 0.025,
-  silenceDurationMs: 1400,
-  maxDurationMs: 10000,
+  silenceDurationMs: 1200,
+  maxDurationMs: 7000,
   /** Silence detection is ignored for this long after recording starts,
    *  giving the user time to begin speaking. */
-  gracePeriodMs: 2000,
+  gracePeriodMs: 1000,
 };
 
 function chooseMimeType(): string | undefined {

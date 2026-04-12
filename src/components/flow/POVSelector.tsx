@@ -25,7 +25,7 @@ export function POVSelector() {
             aria-pressed={isSelected}
             aria-label={pov.label}
           >
-            <span className="pov-card-selected-icon" aria-hidden="true">?</span>
+            <span className="pov-card-selected-icon" aria-hidden="true">✓</span>
 
             <img
               className="pov-card-image"

@@ -1050,24 +1050,37 @@
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
   gap: var(--space-4);
   padding: var(--space-4) var(--space-5);
   overflow: hidden;
   min-height: 0;
 }
 
-.results-left,
-.results-right {
+.results-left {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: var(--space-3);
   min-height: 0;
   overflow: hidden;
 }
 
+.results-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-surface-alt) transparent;
+  padding-right: var(--space-1);
+}
+
 /* Ensure image comparison doesn't stretch too tall */
 .results-left .image-comparison-container {
-  max-height: 50vh;
+  max-height: 48vh;
 }
 
 .results-prompt-box {
@@ -1101,11 +1114,10 @@
   margin: var(--space-1) 0 0 0;
 }
 
-/* Agent panel inside results: compact */
+/* Agent panel inside results: let parent column handle scroll */
 .results-right .agent-panel {
-  overflow-y: auto;
-  max-height: 100%;
-  scrollbar-width: thin;
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 .results-footer {
