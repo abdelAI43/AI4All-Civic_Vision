@@ -305,38 +305,37 @@ async def _persist_proposal(proposal: dict, agent_feedback: list[dict]) -> str:
     return proposal["createdAt"]
 
 
+async def _evaluate_agents_parallel(proposal_text: str, location: str) -> list[dict]:
+    """Run all agents concurrently and normalize failures into fallback cards."""
+    agent_ids = list(AGENT_CATEGORY.keys())
+    tasks = [evaluate_single(aid, proposal_text, location) for aid in agent_ids]
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+
+    agent_feedback: list[dict] = []
+    for aid, result in zip(agent_ids, results):
+        if isinstance(result, Exception):
+            logger.exception("Agent '%s' failed", aid)
+            agent_feedback.append(
+                AgentResult(
+                    agent_id=aid,
+                    name=aid.title(),
+                    icon="⚠️",
+                    score=3,
+                    feedback="Evaluation could not be completed at this time.",
+                ).to_dict()
+            )
+        else:
+            agent_feedback.append(result.to_dict())
+
+    return agent_feedback
+
+
 @app.post("/api/evaluate", response_model=EvaluateResponse)
 async def evaluate(req: EvaluateRequest):
     if not req.proposal.strip():
         raise HTTPException(status_code=400, detail="Proposal text is required")
 
-    agent_ids = list(AGENT_CATEGORY.keys())
-
-    results: list[AgentResult | Exception] = []
-    for aid in agent_ids:
-        try:
-            result = await evaluate_single(aid, req.proposal, req.location)
-            results.append(result)
-        except Exception as e:
-            results.append(e)
-        await asyncio.sleep(2)
-
-    agents: list[dict] = []
-    for aid, result in zip(agent_ids, results):
-        if isinstance(result, Exception):
-            logger.error("Agent '%s' failed: %s", aid, result)
-            agents.append(
-                AgentResult(
-                    agent_id=aid,
-                    name=aid.title(),
-                    icon="⚠️",
-                    score=0,
-                    feedback=f"Agent error: {result}",
-                ).to_dict()
-            )
-        else:
-            agents.append(result.to_dict())
-
+    agents = await _evaluate_agents_parallel(req.proposal, req.location)
     return EvaluateResponse(agents=agents)
 
 
@@ -353,33 +352,10 @@ async def create_proposal(req: ProposalCreateRequest):
         return JSONResponse(status_code=400, content={"success": False, "error": "participant_age_check"})
 
     proposal_id = str(uuid.uuid4())
-    generated_image_url = await _generate_image(req, proposal_id)
-
-    agent_ids = list(AGENT_CATEGORY.keys())
-    results: list[AgentResult | Exception] = []
-    for aid in agent_ids:
-        try:
-            result = await evaluate_single(aid, req.promptText, req.spaceName)
-            results.append(result)
-        except Exception as e:
-            logger.exception("Agent '%s' failed during create_proposal", aid)
-            results.append(e)
-        await asyncio.sleep(2)
-
-    agent_feedback: list[dict] = []
-    for aid, result in zip(agent_ids, results):
-        if isinstance(result, Exception):
-            agent_feedback.append(
-                AgentResult(
-                    agent_id=aid,
-                    name=aid.title(),
-                    icon="⚠️",
-                    score=3,
-                    feedback="Evaluation could not be completed at this time.",
-                ).to_dict()
-            )
-        else:
-            agent_feedback.append(result.to_dict())
+    generated_image_url, agent_feedback = await asyncio.gather(
+        _generate_image(req, proposal_id),
+        _evaluate_agents_parallel(req.promptText, req.spaceName),
+    )
 
     scores = [float(item["score"]) for item in agent_feedback if isinstance(item.get("score"), (int, float))]
     avg_score = round(sum(scores) / len(scores), 2) if scores else 0.0
