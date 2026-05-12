@@ -48,106 +48,72 @@ const POV_MODIFIERS: Record<string, string> = {
   'placa-puig':      'from the Plaça Puig i Cadafalch centre',
 };
 
-// ── Specialist AI agents — Gemini Flash parallel evaluation ──────────────────
-const DISCLAIMER = ' (This is an AI simulation — not a certified expert assessment.)';
+// ── RAG backend agent evaluation ─────────────────────────────────────────────
 
-const AGENTS = [
-  {
-    agentId: 'budget',
-    name: 'Budget Analyst',
-    icon: '💰',
-    systemPrompt:
-      'You are a municipal budget analyst for Barcelona City Council. ' +
-      'Evaluate civic proposals for financial feasibility. Consider: typical implementation ' +
-      'costs for Barcelona, available EU and municipal funding streams, annual maintenance costs, ' +
-      'and cost-benefit ratio over a 10-year horizon. ' +
-      'Score 1–5: 1 = extremely costly or financially unfeasible, 5 = excellent value for public money.',
-  },
-  {
-    agentId: 'heritage',
-    name: 'Heritage Expert',
-    icon: '🏛️',
-    systemPrompt:
-      'You are a heritage conservation specialist for Barcelona City Council, with deep knowledge ' +
-      'of Catalan Modernisme, the Gothic Quarter, and UNESCO World Heritage obligations. ' +
-      'Evaluate civic proposals for compatibility with Barcelona\'s cultural and architectural heritage. ' +
-      'Score 1–5: 1 = serious heritage risk, 5 = fully compatible or actively enhances heritage character.',
-  },
-  {
-    agentId: 'safety',
-    name: 'Safety Officer',
-    icon: '🛡️',
-    systemPrompt:
-      'You are a public safety officer and urban engineer for Barcelona City Council. ' +
-      'Evaluate civic proposals for safety implications: pedestrian flow, emergency vehicle access, ' +
-      'structural integrity, lighting, accessibility for people with disabilities, and EU safety standards. ' +
-      'Score 1–5: 1 = serious safety concerns requiring major redesign, 5 = excellent safety outcome.',
-  },
-  {
-    agentId: 'sociologist',
-    name: 'Urban Sociologist',
-    icon: '👥',
-    systemPrompt:
-      'You are an urban sociologist specialising in Barcelona\'s communities and public space usage. ' +
-      'Evaluate civic proposals for social impact: inclusivity, benefit to different demographics ' +
-      '(elderly, children, tourists, long-term residents), effect on livelihoods, and contribution to ' +
-      'social cohesion and community identity. ' +
-      'Score 1–5: 1 = negative or exclusionary social impact, 5 = outstanding inclusive community benefit.',
-  },
-  {
-    agentId: 'regulations',
-    name: 'Regulations Dept',
-    icon: '📋',
-    systemPrompt:
-      'You are a municipal regulations officer for Barcelona, expert in urban planning law, ' +
-      'the Ordenança del Paisatge Urbà, environmental impact requirements, and licencing timelines. ' +
-      'Evaluate civic proposals for their regulatory and permitting feasibility in Barcelona. ' +
-      'Score 1–5: 1 = major legal barriers or multi-year approval process, 5 = straightforward to approve.',
-  },
-];
+// Display metadata for the 5 RAG agents (used only for fallback responses)
+const RAG_AGENT_META: Record<string, { name: string; icon: string }> = {
+  regulations: { name: 'Regulations Dept',  icon: '📋' },
+  safety:      { name: 'Safety Officer',    icon: '🛡️' },
+  sociologist: { name: 'Urban Sociologist', icon: '👥' },
+  heritage:    { name: 'Heritage Expert',   icon: '🏛️' },
+  mobility:    { name: 'Mobility Planner',  icon: '🚴' },
+};
 
 async function runAgentEvaluations(
   spaceName: string,
+  hotspotId: string,
   promptText: string,
-  ai: GoogleGenAI,
 ) {
-  return Promise.all(
-    AGENTS.map(async (agent) => {
-      try {
-        const resp = await ai.models.generateContent({
-          model: 'gemini-2.5-flash',
-          contents:
-            `Space: ${spaceName}, Barcelona\nCivic proposal: "${promptText}"\n\n` +
-            `Evaluate this proposal from your specialist perspective.`,
-          config: {
-            systemInstruction:
-              agent.systemPrompt +
-              '\n\nRespond with JSON only — no markdown: ' +
-              '{"score": <integer 1-5>, "feedback": "<2-3 concise sentences>"}',
-            responseMimeType: 'application/json',
-            temperature: 0.7,
-          },
-        });
+  const ragUrl = process.env.RAG_BACKEND_URL ?? 'https://ai4all-civic-vision.onrender.com';
 
-        let parsed: { score?: unknown; feedback?: unknown } = {};
-        try { parsed = JSON.parse(resp.text ?? '{}') as typeof parsed; } catch { /* fall through */ }
+  try {
+    const resp = await fetch(`${ragUrl}/api/evaluate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        proposal:   promptText,
+        location:   `${spaceName}, Barcelona`,
+        hotspot_id: hotspotId,
+      }),
+      signal: AbortSignal.timeout(120_000), // 2-min timeout for cold-start + 5 sequential agents
+    });
 
-        const score = Math.max(1, Math.min(5, Math.round(Number(parsed.score) || 3)));
-        const feedback = String(parsed.feedback || 'Evaluation completed.') + DISCLAIMER;
+    if (!resp.ok) {
+      throw new Error(`RAG backend returned ${resp.status}`);
+    }
 
-        return { agentId: agent.agentId, name: agent.name, icon: agent.icon, score, feedback };
-      } catch {
-        // If one agent fails, return a neutral score so the pipeline can continue
-        return {
-          agentId: agent.agentId,
-          name: agent.name,
-          icon: agent.icon,
-          score: 3,
-          feedback: 'Evaluation could not be completed at this time.' + DISCLAIMER,
-        };
-      }
-    })
-  );
+    const data = await resp.json() as { agents?: unknown[] };
+    const agents = Array.isArray(data.agents) ? data.agents : [];
+
+    return agents.map((a) => {
+      const agent = a as Record<string, unknown>;
+      const agentId = String(agent.agentId ?? agent.agent_id ?? '');
+      const meta = RAG_AGENT_META[agentId] ?? { name: agentId, icon: '🤖' };
+      return {
+        agentId,
+        name:            String(agent.name            ?? meta.name),
+        icon:            String(agent.icon            ?? meta.icon),
+        score:           Math.max(1, Math.min(5, Math.round(Number(agent.score) || 3))),
+        feedback:        String(agent.feedback        ?? agent.summary ?? 'Evaluation completed.'),
+        risks:           Array.isArray(agent.risks)           ? agent.risks as string[]           : [],
+        recommendations: Array.isArray(agent.recommendations) ? agent.recommendations as string[] : [],
+        references:      Array.isArray(agent.references)      ? agent.references as string[]      : [],
+      };
+    });
+  } catch (err) {
+    console.error('[agents] RAG backend call failed:', err instanceof Error ? err.message : err);
+    // Fallback: neutral scores so the rest of the pipeline can complete
+    return Object.entries(RAG_AGENT_META).map(([agentId, meta]) => ({
+      agentId,
+      name:            meta.name,
+      icon:            meta.icon,
+      score:           3,
+      feedback:        'Evaluation could not be completed at this time.',
+      risks:           [] as string[],
+      recommendations: [] as string[],
+      references:      [] as string[],
+    }));
+  }
 }
 
 // ── Prompt builder ────────────────────────────────────────────────────────────
@@ -313,8 +279,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ success: false, error: `Storage error: ${err instanceof Error ? err.message : 'unknown'}` });
   }
 
-  // ── Step 5: Specialist agent evaluations (5 Gemini Flash calls in parallel) ─
-  const evaluations = await runAgentEvaluations(String(spaceName), String(promptText), ai);
+  // ── Step 5: RAG backend agent evaluations (5 agents via Render) ─────────────
+  const evaluations = await runAgentEvaluations(String(spaceName), String(spaceId), String(promptText));
   const avgScore = parseFloat(
     (evaluations.reduce((s, e) => s + e.score, 0) / evaluations.length).toFixed(2)
   );
@@ -355,6 +321,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       agent_icon:  e.icon,
       score:       e.score,
       feedback:    e.feedback,
+      risks:           e.risks,
+      recommendations: e.recommendations,
+      references:      e.references,
     }))
   );
 
