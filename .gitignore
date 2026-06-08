@@ -48,3 +48,7 @@ deploy/__pycache__/
 deploy/app/__pycache__/
 deploy/.env
 deploy/app/trees/
+
+# Local presentation exports
+PRESENTAION/
+PRESENTATION/
