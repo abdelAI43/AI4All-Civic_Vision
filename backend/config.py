@@ -27,11 +27,18 @@ TREES_DIR = BACKEND_DIR / "trees"
 OLLAMA_URL: str = os.getenv("OLLAMA_URL", "http://localhost:11434")
 OLLAMA_EMBED_URL: str = OLLAMA_URL  # ChromaDB 1.x OllamaEmbeddingFunction needs base URL
 OLLAMA_GENERATE_URL: str = f"{OLLAMA_URL}/api/generate"
+LLM_BASE_URL: str = OLLAMA_URL
+EMBEDDING_BASE_URL: str = OLLAMA_EMBED_URL
 
 # ── Models ───────────────────────────────────────────────
 EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
 TREE_GENERATION_MODEL: str = os.getenv("TREE_GENERATION_MODEL", "gemma3:12b")
 RUNTIME_LLM_MODEL: str = os.getenv("RUNTIME_LLM_MODEL", "gemma3:4b")
+LLM_MODEL: str = RUNTIME_LLM_MODEL
+
+# ── Feature toggles / server metadata ────────────────────
+ENABLE_PAGEINDEX: bool = os.getenv("ENABLE_PAGEINDEX", "true").lower() in ("true", "1", "yes")
+FRONTEND_URL: str = os.getenv("FRONTEND_URL", "")
 
 # ── ChromaDB collection names per category ───────────────
 COLLECTION_NAMES: dict[int, str] = {
