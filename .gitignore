@@ -48,6 +48,8 @@ deploy/__pycache__/
 deploy/app/__pycache__/
 deploy/.env
 deploy/app/trees/
+**/__pycache__/
+tools/agent_console_last_response.json
 
 # Local presentation exports
 PRESENTAION/

@@ -11,13 +11,19 @@ services:
       - key: LLM_BASE_URL
         value: "https://api.groq.com/openai/v1"
       - key: LLM_MODEL
-        value: "llama-3.3-70b-versatile"
+        value: "llama-3.1-8b-instant"
+      - key: LLM_MAX_TOKENS
+        value: "600"
       - key: EMBEDDING_API_KEY
         sync: false
       - key: EMBEDDING_BASE_URL
         value: "https://api.jina.ai/v1"
       - key: EMBEDDING_MODEL
         value: "jina-embeddings-v3"
+      - key: CHROMA_N_RESULTS
+        value: "8"
+      - key: FINAL_CONTEXT_CHUNKS
+        value: "3"
       - key: ENABLE_PAGEINDEX
         value: "false"
       - key: FRONTEND_URL

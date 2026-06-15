@@ -339,6 +339,28 @@ async def evaluate(req: EvaluateRequest):
     return EvaluateResponse(agents=agents)
 
 
+@app.post("/api/evaluate/{agent_id}", response_model=EvaluateResponse)
+async def evaluate_agent(agent_id: str, req: EvaluateRequest):
+    if not req.proposal.strip():
+        raise HTTPException(status_code=400, detail="Proposal text is required")
+    if agent_id not in AGENT_CATEGORY:
+        raise HTTPException(status_code=404, detail=f"Unknown agent: {agent_id}")
+
+    try:
+        result = await evaluate_single(agent_id, req.proposal, req.location)
+    except Exception as exc:
+        logger.exception("Agent '%s' failed", agent_id)
+        result = AgentResult(
+            agent_id=agent_id,
+            name=agent_id.title(),
+            icon="⚠️",
+            score=3,
+            feedback=f"Agent error: {exc}",
+        )
+
+    return EvaluateResponse(agents=[result.to_dict()])
+
+
 @app.post("/api/proposals/create")
 async def create_proposal(req: ProposalCreateRequest):
     if not all([req.spaceId, req.spaceName, req.povId, req.baseImagePath, req.promptText.strip()]):

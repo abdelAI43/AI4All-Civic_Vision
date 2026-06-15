@@ -13,7 +13,7 @@ import logging
 
 from openai import AsyncOpenAI
 
-from config import LLM_API_KEY, LLM_BASE_URL, LLM_MODEL
+from config import LLM_API_KEY, LLM_BASE_URL, LLM_MAX_TOKENS, LLM_MODEL
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ async def call_llm(
             model=model or LLM_MODEL,
             messages=messages,
             temperature=0.3,
-            max_tokens=1024,
+            max_tokens=LLM_MAX_TOKENS,
             response_format={"type": "json_object"},
         )
         return response.choices[0].message.content or ""
