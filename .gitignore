@@ -35,7 +35,7 @@ IMPLEMENTATION_PLAN.md
 Material/
 .claude/
 .vercel
-scripts/
+backend/scripts/
 .playwright-cli
 
 # Knowledge base (large corpus, exclude from Vite scanning)
