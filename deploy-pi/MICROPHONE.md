@@ -193,6 +193,9 @@ This is the only test that matches production.
 
 1. Open Chromium on the Pi and go to: **`chrome://settings/content/microphone`**
    → confirm the USB mic is the selected default and the site is allowed.
+   (The **kiosk** auto-grants mic permission via `--use-fake-ui-for-media-stream`
+   in `start-kiosk.sh`, so this manual "allow" only matters for ad-hoc testing in
+   a normal Chromium window.)
 2. Visit a mic test page (e.g. an online "mic test") **or** the kiosk app itself
    and use the voice feature. Confirm:
    - the level meter moves when you speak,

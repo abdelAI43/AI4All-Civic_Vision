@@ -24,4 +24,6 @@ exec "$BROWSER" \
   --disable-session-crashed-bubble \
   --disable-features=Translate \
   --check-for-update-interval=31536000 \
+  --autoplay-policy=no-user-gesture-required \
+  --use-fake-ui-for-media-stream \
   "$URL"
