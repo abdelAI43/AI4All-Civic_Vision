@@ -36,6 +36,7 @@ Material/
 .claude/
 .vercel
 scripts/
+.playwright-cli
 
 # Knowledge base (large corpus, exclude from Vite scanning)
 Knwlodge base/

@@ -11,7 +11,8 @@ import { useAppStore } from './store/useAppStore';
 
 export default function App() {
   const { t } = useTranslation();
-  const { mode, setMode, setFlowStep } = useAppStore();
+  const { mode, browseSpaceId, browseProposal, setMode, setFlowStep } = useAppStore();
+  const showSuggestFab = mode === 'browse' && !browseSpaceId && !browseProposal;
 
   const handleSuggestClick = () => {
     setMode('suggest');
@@ -33,7 +34,7 @@ export default function App() {
       <SuggestFlow />
 
       {/* Floating action button — visible only in browse mode */}
-      {mode === 'browse' && (
+      {showSuggestFab && (
         <button className="suggest-fab" onClick={handleSuggestClick}>
           <span className="suggest-fab-icon">✦</span>
           {t('map.suggestBtn')}

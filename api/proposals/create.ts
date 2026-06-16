@@ -23,6 +23,12 @@ import { createClient } from '@supabase/supabase-js';
 import { GoogleGenAI } from '@google/genai';
 import { randomUUID } from 'node:crypto';
 import type { VercelRequest, VercelResponse } from '../_types';
+import {
+  assertConsentForParticipantInfo,
+  type NormalizedParticipantInput,
+  type ParticipantGender,
+  type PromptSource,
+} from '../_proposalUtils';
 
 // ── POV prompt modifiers ──────────────────────────────────────────────────────
 const POV_MODIFIERS: Record<string, string> = {
@@ -59,11 +65,147 @@ const RAG_AGENT_META: Record<string, { name: string; icon: string }> = {
   mobility:    { name: 'Mobility Planner',  icon: '🚴' },
 };
 
+type Evaluation = {
+  agentId: string;
+  name: string;
+  icon: string;
+  score: number;
+  feedback: string;
+  risks: string[];
+  recommendations: string[];
+  references: string[];
+};
+
+// The RAG backend can return per-agent error strings (e.g. a Groq 429 token-limit
+// message) inside the feedback field. Never surface raw provider errors to users —
+// swap them for a calm fallback so the UI stays clean.
+const AGENT_ERROR_MARKERS = ['agent error', 'error code', 'rate_limit', 'rate limit', 'resource_exhausted'];
+function isErrorFeedback(feedback: string): boolean {
+  const lower = feedback.toLowerCase();
+  return AGENT_ERROR_MARKERS.some((m) => lower.includes(m));
+}
+function cleanAgentFeedback(feedback: string): string {
+  return isErrorFeedback(feedback) ? 'Evaluation is temporarily unavailable for this specialist.' : feedback;
+}
+
+// Persona briefs for the Gemini fallback panel. Order is canonical (5 agents,
+// no "budget" agent — replaced by mobility). Kept in sync with RAG_AGENT_META.
+const RAG_AGENT_PERSONAS: Array<{ agentId: string; brief: string }> = [
+  { agentId: 'regulations', brief: 'Regulations Dept — municipal urban-planning rules, permits, and legal feasibility in Barcelona.' },
+  { agentId: 'safety',      brief: 'Safety Officer — public safety, accident risk, and construction/operational safety.' },
+  { agentId: 'sociologist', brief: 'Urban Sociologist — social inclusion, community impact, and effects on diverse residents.' },
+  { agentId: 'heritage',    brief: 'Heritage Expert — architectural and cultural heritage and the historic character of the space.' },
+  { agentId: 'mobility',    brief: 'Mobility Planner — pedestrian, cyclist, and public-transport flow plus accessibility.' },
+];
+
+// Silent fallback: when the RAG backend is down or rate-limited, run the five
+// specialists directly through Gemini with persona system prompts. Output looks
+// the same EXCEPT it carries no document `references` — that empty Sources list
+// is the (intentional) tell that this was the lighter Gemini panel, not full RAG.
+async function runGeminiAgentFallback(
+  ai: GoogleGenAI,
+  spaceName: string,
+  promptText: string,
+  language: string,
+): Promise<Evaluation[]> {
+  const personaList = RAG_AGENT_PERSONAS.map((p, i) => `${i + 1}. ${p.brief}`).join('\n');
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents:
+        `Location: ${spaceName}, Barcelona\n` +
+        `Citizen proposal: "${promptText}"\n` +
+        `Write all feedback in this language: ${language}.`,
+      config: {
+        systemInstruction:
+          'You are a panel of five Barcelona urban-planning specialists evaluating a citizen proposal. ' +
+          `The specialists are:\n${personaList}\n` +
+          'For each specialist, from their own domain, give: a score from 1 to 5, one or two sentences of ' +
+          'concrete feedback, up to two short risks, and up to two short recommendations. ' +
+          'Return JSON only: {"agents":[{"agentId":"regulations|safety|sociologist|heritage|mobility",' +
+          '"score":3,"feedback":"","risks":[],"recommendations":[]}]}',
+        responseMimeType: 'application/json',
+        temperature: 0.4,
+      },
+    });
+
+    const parsed = JSON.parse(response.text ?? '{}') as { agents?: Array<Record<string, unknown>> };
+    const byId = new Map((Array.isArray(parsed.agents) ? parsed.agents : []).map((a) => [String(a.agentId ?? ''), a]));
+
+    return RAG_AGENT_PERSONAS.map(({ agentId }) => {
+      const a = byId.get(agentId) ?? {};
+      const meta = RAG_AGENT_META[agentId];
+      const toStringArray = (v: unknown) => (Array.isArray(v) ? v.map(String).slice(0, 2) : []);
+      return {
+        agentId,
+        name:            meta.name,
+        icon:            meta.icon,
+        score:           Math.max(1, Math.min(5, Math.round(Number(a.score) || 3))),
+        feedback:        cleanAgentFeedback(String(a.feedback ?? 'Evaluation completed.')),
+        risks:           toStringArray(a.risks),
+        recommendations: toStringArray(a.recommendations),
+        references:      [], // no document sources in the Gemini fallback
+      };
+    });
+  } catch (err) {
+    console.error('[agents] Gemini fallback failed:', err instanceof Error ? err.message : err);
+    // Last resort: neutral scores so the rest of the pipeline can still complete.
+    return Object.entries(RAG_AGENT_META).map(([agentId, meta]) => ({
+      agentId,
+      name:            meta.name,
+      icon:            meta.icon,
+      score:           3,
+      feedback:        'Evaluation could not be completed at this time.',
+      risks:           [] as string[],
+      recommendations: [] as string[],
+      references:      [] as string[],
+    }));
+  }
+}
+
+type ProposalResponse = {
+  id: string;
+  spaceId: string;
+  povId: string;
+  promptText: string;
+  language: string;
+  baseImagePath: string;
+  generatedImageUrl: string;
+  agentFeedback: Evaluation[];
+  avgAgentScore: number;
+  communityScore: number;
+  voteCount: number;
+  participantName?: string;
+  participantAge?: number;
+  participantGender?: ParticipantGender;
+  hasChildren?: boolean;
+  hasPets?: boolean;
+  hasRestrictedMobility?: boolean;
+  consentGiven: boolean;
+  status: 'complete';
+  createdAt: string;
+  originalPromptText?: string;
+  expertSuggestedPrompt?: string;
+  promptSource: PromptSource;
+  isDraft?: boolean;
+};
+
+function averageScore(evaluations: Evaluation[]): number {
+  if (evaluations.length === 0) return 0;
+  return parseFloat((evaluations.reduce((s, e) => s + e.score, 0) / evaluations.length).toFixed(2));
+}
+
+function optional<T>(value: T | null): T | undefined {
+  return value === null ? undefined : value;
+}
+
 async function runAgentEvaluations(
+  ai: GoogleGenAI,
   spaceName: string,
   hotspotId: string,
   promptText: string,
-) {
+  language: string,
+): Promise<Evaluation[]> {
   const ragUrl = process.env.RAG_BACKEND_URL ?? 'https://ai4all-civic-vision.onrender.com';
 
   try {
@@ -84,8 +226,11 @@ async function runAgentEvaluations(
 
     const data = await resp.json() as { agents?: unknown[] };
     const agents = Array.isArray(data.agents) ? data.agents : [];
+    if (agents.length === 0) {
+      throw new Error('RAG backend returned no agents');
+    }
 
-    return agents.map((a) => {
+    const mapped = agents.map((a) => {
       const agent = a as Record<string, unknown>;
       const agentId = String(agent.agentId ?? agent.agent_id ?? '');
       const meta = RAG_AGENT_META[agentId] ?? { name: agentId, icon: '🤖' };
@@ -94,25 +239,45 @@ async function runAgentEvaluations(
         name:            String(agent.name            ?? meta.name),
         icon:            String(agent.icon            ?? meta.icon),
         score:           Math.max(1, Math.min(5, Math.round(Number(agent.score) || 3))),
-        feedback:        String(agent.feedback        ?? agent.summary ?? 'Evaluation completed.'),
+        rawFeedback:     String(agent.feedback ?? agent.summary ?? 'Evaluation completed.'),
         risks:           Array.isArray(agent.risks)           ? agent.risks as string[]           : [],
         recommendations: Array.isArray(agent.recommendations) ? agent.recommendations as string[] : [],
         references:      Array.isArray(agent.references)      ? agent.references as string[]      : [],
       };
     });
-  } catch (err) {
-    console.error('[agents] RAG backend call failed:', err instanceof Error ? err.message : err);
-    // Fallback: neutral scores so the rest of the pipeline can complete
-    return Object.entries(RAG_AGENT_META).map(([agentId, meta]) => ({
+
+    const finalize = ({ rawFeedback, ...rest }: typeof mapped[number]): Evaluation => ({ ...rest, feedback: rawFeedback });
+    const goodById = new Map(mapped.filter((m) => !isErrorFeedback(m.rawFeedback)).map((m) => [m.agentId, finalize(m)]));
+
+    // All agents errored (e.g. provider fully rate-limited) → full Gemini panel.
+    if (goodById.size === 0) {
+      throw new Error('RAG agents all errored (provider rate-limited)');
+    }
+
+    // All good → return RAG as-is (in canonical order so the radar axes line up).
+    if (goodById.size === RAG_AGENT_PERSONAS.length) {
+      return RAG_AGENT_PERSONAS.map(({ agentId }) => goodById.get(agentId)).filter((e): e is Evaluation => e !== undefined);
+    }
+
+    // PARTIAL failure: keep the good RAG agents (with their real sources) and fill
+    // ONLY the failed specialists from Gemini, so the panel is always complete.
+    console.warn(`[agents] ${RAG_AGENT_PERSONAS.length - goodById.size} RAG agent(s) errored — filling the rest from Gemini.`);
+    const gemini = await runGeminiAgentFallback(ai, spaceName, promptText, language);
+    const geminiById = new Map(gemini.map((g) => [g.agentId, g]));
+
+    return RAG_AGENT_PERSONAS.map(({ agentId }): Evaluation => goodById.get(agentId) ?? geminiById.get(agentId) ?? {
       agentId,
-      name:            meta.name,
-      icon:            meta.icon,
+      name:            RAG_AGENT_META[agentId].name,
+      icon:            RAG_AGENT_META[agentId].icon,
       score:           3,
       feedback:        'Evaluation could not be completed at this time.',
-      risks:           [] as string[],
-      recommendations: [] as string[],
-      references:      [] as string[],
-    }));
+      risks:           [],
+      recommendations: [],
+      references:      [],
+    });
+  } catch (err) {
+    console.warn('[agents] RAG unavailable — using Gemini fallback panel:', err instanceof Error ? err.message : err);
+    return runGeminiAgentFallback(ai, spaceName, promptText, language);
   }
 }
 
@@ -129,6 +294,50 @@ function buildWrappedPrompt(spaceName: string, povId: string, userPrompt: string
 }
 
 // ── Main handler ──────────────────────────────────────────────────────────────
+async function generateSuggestedPrompt(params: {
+  ai: GoogleGenAI;
+  spaceName: string;
+  promptText: string;
+  language: string;
+  evaluations: Evaluation[];
+}): Promise<string | undefined> {
+  try {
+    const agentBrief = params.evaluations.map((agent) => ({
+      agent: agent.name,
+      score: agent.score,
+      feedback: agent.feedback,
+      risks: agent.risks,
+      recommendations: agent.recommendations,
+    }));
+
+    const response = await params.ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents:
+        `Location: ${params.spaceName}, Barcelona\n` +
+        `Language: ${params.language}\n` +
+        `Original citizen proposal: "${params.promptText}"\n` +
+        `Expert agent feedback JSON: ${JSON.stringify(agentBrief)}\n\n` +
+        'Rewrite the proposal as one improved citizen-facing prompt for image generation. ' +
+        'Keep the citizen intention, make it more specific, feasible, inclusive, and responsive to the expert feedback. ' +
+        'Do not add agent scores or explanations.',
+      config: {
+        systemInstruction:
+          'You improve civic design prompts. Return JSON only: {"suggestedPromptText":"one clear improved proposal, max 70 words"}',
+        responseMimeType: 'application/json',
+        temperature: 0.35,
+      },
+    });
+
+    const parsed = JSON.parse(response.text ?? '{}') as { suggestedPromptText?: string };
+    const suggested = parsed.suggestedPromptText?.trim();
+    if (!suggested || suggested === params.promptText.trim()) return undefined;
+    return suggested.slice(0, 700);
+  } catch (err) {
+    console.warn('[prompt] Suggested prompt generation failed:', err instanceof Error ? err.message : err);
+    return undefined;
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
@@ -137,14 +346,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const {
     spaceId, spaceName, povId, baseImagePath, promptText,
     language, consentGiven, participantName, participantAge,
+    participantGender, hasChildren, hasPets, hasRestrictedMobility,
+    originalPromptText, promptSource, persist = true,
   } = req.body ?? {};
 
   // Validate required fields
   if (!spaceId || !spaceName || !povId || !baseImagePath || !promptText) {
     return res.status(400).json({ success: false, error: 'Missing required fields' });
   }
-  if (!consentGiven) {
-    return res.status(400).json({ success: false, error: 'consent_given is required' });
+  let participant: NormalizedParticipantInput;
+  try {
+    participant = assertConsentForParticipantInfo({
+      participantName,
+      participantAge,
+      participantGender,
+      hasChildren,
+      hasPets,
+      hasRestrictedMobility,
+    }, consentGiven);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'participant_info_check';
+    return res.status(400).json({ success: false, error: message });
   }
 
   // Check env vars
@@ -254,40 +476,90 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ success: false, error: `Image generation failed: ${err instanceof Error ? err.message : 'unknown'}` });
   }
 
-  // ── Step 4: Upload image to Supabase Storage ──────────────────────────────
+  // ── Step 4: Image handling — draft vs. publish ────────────────────────────
+  // In draft mode (persist === false) we DON'T touch permanent storage: the
+  // image rides along as a data URL and is only uploaded by /publish when the
+  // user actually keeps it. This avoids orphaned storage objects every time a
+  // user cancels or regenerates. Direct-persist still uploads immediately.
   const proposalId = randomUUID();
   const ext = generatedMime === 'image/png' ? 'png' : 'jpg';
   const fileName = `${proposalId}.${ext}`;
   let generatedImageUrl: string;
 
-  try {
-    const imgBuffer = Buffer.from(generatedBase64, 'base64');
-    const { error: uploadErr } = await supabase.storage
-      .from('generated-images')
-      .upload(fileName, imgBuffer, { contentType: generatedMime, upsert: false });
+  if (persist === false) {
+    generatedImageUrl = `data:${generatedMime};base64,${generatedBase64}`;
+  } else {
+    try {
+      const imgBuffer = Buffer.from(generatedBase64, 'base64');
+      const { error: uploadErr } = await supabase.storage
+        .from('generated-images')
+        .upload(fileName, imgBuffer, { contentType: generatedMime, upsert: false });
 
-    if (uploadErr) {
-      return res.status(500).json({ success: false, error: `Storage upload failed: ${uploadErr.message}` });
+      if (uploadErr) {
+        return res.status(500).json({ success: false, error: `Storage upload failed: ${uploadErr.message}` });
+      }
+
+      const { data: urlData } = supabase.storage
+        .from('generated-images')
+        .getPublicUrl(fileName);
+
+      generatedImageUrl = urlData.publicUrl;
+    } catch (err) {
+      return res.status(500).json({ success: false, error: `Storage error: ${err instanceof Error ? err.message : 'unknown'}` });
     }
-
-    const { data: urlData } = supabase.storage
-      .from('generated-images')
-      .getPublicUrl(fileName);
-
-    generatedImageUrl = urlData.publicUrl;
-  } catch (err) {
-    return res.status(500).json({ success: false, error: `Storage error: ${err instanceof Error ? err.message : 'unknown'}` });
   }
 
-  // ── Step 5: RAG backend agent evaluations (5 agents via Render) ─────────────
-  const evaluations = await runAgentEvaluations(String(spaceName), String(spaceId), String(promptText));
-  const avgScore = parseFloat(
-    (evaluations.reduce((s, e) => s + e.score, 0) / evaluations.length).toFixed(2)
-  );
+  // ── Step 5: Agent evaluations — RAG backend, with a Gemini fallback panel ────
+  const evaluations = await runAgentEvaluations(ai, String(spaceName), String(spaceId), String(promptText), String(language));
+  const avgScore = averageScore(evaluations);
 
   // ── Step 6: Persist to Supabase ───────────────────────────────────────────
   const lang = ['en', 'ca', 'es'].includes(String(language)) ? String(language) : 'en';
-  const age  = participantAge ? parseInt(String(participantAge), 10) : null;
+  const finalPromptSource: PromptSource = promptSource === 'expert_suggested' ? 'expert_suggested' : 'original';
+  const finalOriginalPrompt = String(originalPromptText || promptText);
+  // Only offer an expert-suggested improvement on the ORIGINAL generation.
+  // A regenerated proposal (already expert-suggested) gets no further suggestion,
+  // which caps regeneration at one round and avoids a wasted Gemini call.
+  const expertSuggestedPrompt = finalPromptSource === 'original'
+    ? await generateSuggestedPrompt({
+        ai,
+        spaceName: String(spaceName),
+        promptText: String(promptText),
+        language: lang,
+        evaluations,
+      })
+    : undefined;
+
+  const draft: ProposalResponse = {
+    id: proposalId,
+    spaceId: String(spaceId),
+    povId: String(povId),
+    promptText: String(promptText),
+    language: lang,
+    baseImagePath: String(baseImagePath),
+    generatedImageUrl,
+    agentFeedback: evaluations,
+    avgAgentScore: avgScore,
+    communityScore: 0,
+    voteCount: 0,
+    participantName: optional(participant.participantName),
+    participantAge: optional(participant.participantAge),
+    participantGender: optional(participant.participantGender),
+    hasChildren: optional(participant.hasChildren),
+    hasPets: optional(participant.hasPets),
+    hasRestrictedMobility: optional(participant.hasRestrictedMobility),
+    consentGiven: consentGiven === true,
+    status: 'complete',
+    createdAt: new Date().toISOString(),
+    originalPromptText: finalOriginalPrompt,
+    expertSuggestedPrompt,
+    promptSource: finalPromptSource,
+    isDraft: persist === false,
+  };
+
+  if (persist === false) {
+    return res.status(200).json({ success: true, data: draft });
+  }
 
   const { data: proposal, error: insertErr } = await supabase
     .from('proposals')
@@ -300,10 +572,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       base_image_path:      String(baseImagePath),
       generated_image_url:  generatedImageUrl,
       avg_agent_score:      avgScore,
-      participant_name:     participantName ? String(participantName) : null,
-      participant_age:      age && !isNaN(age) ? age : null,
-      consent_given:        true,
+      participant_name:     participant.participantName,
+      participant_age:      participant.participantAge,
+      participant_gender:   participant.participantGender,
+      has_children:         participant.hasChildren,
+      has_pets:             participant.hasPets,
+      has_restricted_mobility: participant.hasRestrictedMobility,
+      consent_given:        consentGiven === true,
       status:               'complete',
+      original_prompt_text: finalOriginalPrompt,
+      expert_suggested_prompt: expertSuggestedPrompt ?? null,
+      prompt_source:        finalPromptSource,
     })
     .select()
     .single();
@@ -312,8 +591,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ success: false, error: `DB insert failed: ${insertErr?.message ?? 'unknown'}` });
   }
 
-  // Insert agent evaluations (non-fatal if this fails)
-  await supabase.from('agent_evaluations').insert(
+  const { error: evalInsertErr } = await supabase.from('agent_evaluations').insert(
     evaluations.map((e) => ({
       proposal_id: proposalId,
       agent_id:    e.agentId,
@@ -326,6 +604,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       references:      e.references,
     }))
   );
+
+  if (evalInsertErr) {
+    return res.status(500).json({ success: false, error: `Agent evaluation insert failed: ${evalInsertErr.message}` });
+  }
 
   // ── Step 7: Return the full Proposal ─────────────────────────────────────
   return res.status(200).json({
@@ -340,11 +622,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       generatedImageUrl:   proposal.generated_image_url as string,
       agentFeedback:       evaluations,
       avgAgentScore:       avgScore,
+      communityScore:      Number(proposal.community_score ?? 0),
+      voteCount:           Number(proposal.vote_count ?? 0),
       participantName:     (proposal.participant_name as string | null) ?? undefined,
       participantAge:      (proposal.participant_age as number | null) ?? undefined,
-      consentGiven:        true,
+      participantGender:   (proposal.participant_gender as ParticipantGender | null) ?? undefined,
+      hasChildren:         (proposal.has_children as boolean | null) ?? undefined,
+      hasPets:             (proposal.has_pets as boolean | null) ?? undefined,
+      hasRestrictedMobility: (proposal.has_restricted_mobility as boolean | null) ?? undefined,
+      consentGiven:        proposal.consent_given as boolean,
       status:              'complete',
       createdAt:           proposal.created_at as string,
+      originalPromptText:  (proposal.original_prompt_text as string | null) ?? undefined,
+      expertSuggestedPrompt: (proposal.expert_suggested_prompt as string | null) ?? undefined,
+      promptSource:        ((proposal.prompt_source as PromptSource | null) ?? 'original'),
     },
   });
 }

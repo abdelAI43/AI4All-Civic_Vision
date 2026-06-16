@@ -28,6 +28,61 @@ const LANGUAGE_NAME: Record<string, string> = {
   es: 'Spanish',
 };
 
+// Localized fallback messages used when the model returns no clarification text.
+// Without these, a no-match in a Spanish/Catalan session would speak English.
+const DEFAULT_MESSAGES = {
+  space: {
+    en: 'Could you repeat the place name?',
+    es: '¿Podrías repetir el nombre del lugar?',
+    ca: 'Podries repetir el nom del lloc?',
+  },
+  pov: {
+    en: 'Could you describe the viewpoint again?',
+    es: '¿Podrías describir de nuevo el punto de vista?',
+    ca: 'Podries descriure de nou el punt de vista?',
+  },
+  composer: {
+    en: 'Great, let us continue.',
+    es: 'Genial, continuemos.',
+    ca: 'Genial, continuem.',
+  },
+} as const;
+
+function defaultMessage(kind: keyof typeof DEFAULT_MESSAGES, lang: string): string {
+  const set = DEFAULT_MESSAGES[kind];
+  return set[lang as keyof typeof set] ?? set.en;
+}
+
+function normalizeText(input: string): string {
+  return input.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+// Accepted spoken name variants per space (EN/ES/CA). Used for a deterministic
+// match so obvious names never depend on the LLM (which was intermittently
+// returning null for e.g. "Plaza Cataluña").
+const SPACE_VARIANTS: Record<(typeof SPACE_IDS)[number], string[]> = {
+  'placa-catalunya':   ['plaça catalunya', 'plaza catalunya', 'plaza cataluña', 'catalonia square', 'catalunya', 'cataluña', 'la plaça'],
+  'la-rambla':         ['la rambla', 'las ramblas', 'the ramblas', 'rambla', 'rambles'],
+  'passeig-de-gracia': ['passeig de gràcia', 'passeig de gracia', 'paseo de gracia', 'paseo gracia', 'gràcia', 'gracia', 'the boulevard'],
+  'barceloneta-beach': ['barceloneta beach', 'la barceloneta', 'barceloneta', 'playa barceloneta', 'the beach', 'platja', 'playa'],
+  'park-guell':        ['park güell', 'parc güell', 'parc guell', 'park guell', 'güell', 'guell', 'gaudí park', 'gaudi park'],
+  'mnac-esplanade':    ['mnac', 'montjuïc', 'montjuic', 'museu nacional', 'palau nacional', 'plaça espanya', 'espanya', 'esplanade'],
+};
+
+// Normalized variants, longest first so the most specific phrase wins.
+const NORMALIZED_VARIANTS = Object.entries(SPACE_VARIANTS)
+  .flatMap(([id, variants]) => variants.map((v) => ({ id, variant: normalizeText(v) })))
+  .sort((a, b) => b.variant.length - a.variant.length);
+
+function matchSpaceLocally(userText: string): string | null {
+  const text = normalizeText(userText);
+  if (!text) return null;
+  for (const { id, variant } of NORMALIZED_VARIANTS) {
+    if (variant.length >= 4 && text.includes(variant)) return id;
+  }
+  return null;
+}
+
 function clamp01(value: number): number {
   if (Number.isNaN(value)) return 0;
   return Math.max(0, Math.min(1, value));
@@ -70,7 +125,7 @@ function parseJson(text: string | undefined): Record<string, unknown> {
   }
 }
 
-function normalizeAreaResult(parsed: Record<string, unknown>) {
+function normalizeAreaResult(parsed: Record<string, unknown>, lang: string) {
   const matchedSpaceId =
     typeof parsed.matchedSpaceId === 'string' &&
     SPACE_IDS.includes(parsed.matchedSpaceId as (typeof SPACE_IDS)[number])
@@ -83,11 +138,11 @@ function normalizeAreaResult(parsed: Record<string, unknown>) {
     clarificationMessage:
       typeof parsed.clarificationMessage === 'string' && parsed.clarificationMessage.trim()
         ? parsed.clarificationMessage.trim()
-        : 'Could you repeat the place name?',
+        : defaultMessage('space', lang),
   };
 }
 
-function normalizePovResult(parsed: Record<string, unknown>, options: PovOption[]) {
+function normalizePovResult(parsed: Record<string, unknown>, options: PovOption[], lang: string) {
   const optionIds = new Set(options.map((opt) => opt.id));
   const matchedPovId =
     typeof parsed.matchedPovId === 'string' && optionIds.has(parsed.matchedPovId)
@@ -100,15 +155,15 @@ function normalizePovResult(parsed: Record<string, unknown>, options: PovOption[
     clarificationMessage:
       typeof parsed.clarificationMessage === 'string' && parsed.clarificationMessage.trim()
         ? parsed.clarificationMessage.trim()
-        : 'Could you describe the viewpoint again?',
+        : defaultMessage('pov', lang),
   };
 }
 
-function normalizeComposerResult(parsed: Record<string, unknown>) {
+function normalizeComposerResult(parsed: Record<string, unknown>, lang: string) {
   const spokenText =
     typeof parsed.spokenText === 'string' && parsed.spokenText.trim()
       ? parsed.spokenText.trim()
-      : 'Great, let us continue.';
+      : defaultMessage('composer', lang);
 
   return { spokenText: spokenText.slice(0, 320) };
 }
@@ -237,6 +292,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   switch (typedAgent) {
     case 'areaMatcher': {
+      // Deterministic match for known names — instant, free, and language-proof.
+      const localMatch = matchSpaceLocally(userText);
+      if (localMatch) {
+        return res.status(200).json({
+          success: true,
+          data: { matchedSpaceId: localMatch, confidence: 1, clarificationMessage: '' },
+        });
+      }
       const prompt = buildAreaPrompt(userText, lang);
       systemPrompt = prompt.system;
       userPrompt = prompt.user;
@@ -284,11 +347,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     switch (typedAgent) {
       case 'areaMatcher':
-        return res.status(200).json({ success: true, data: normalizeAreaResult(parsed) });
+        return res.status(200).json({ success: true, data: normalizeAreaResult(parsed, lang) });
       case 'povMatcher':
-        return res.status(200).json({ success: true, data: normalizePovResult(parsed, povOptions) });
+        return res.status(200).json({ success: true, data: normalizePovResult(parsed, povOptions, lang) });
       case 'responseComposer':
-        return res.status(200).json({ success: true, data: normalizeComposerResult(parsed) });
+        return res.status(200).json({ success: true, data: normalizeComposerResult(parsed, lang) });
       case 'inputExtractor':
         return res.status(200).json({ success: true, data: normalizeExtractorResult(parsed) });
       default:

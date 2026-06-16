@@ -11,6 +11,7 @@ export interface VoiceMessage {
 }
 
 interface VoiceState {
+  isEnabled: boolean;
   isActive: boolean;
   activity: VoiceActivity;
   messages: VoiceMessage[];
@@ -22,6 +23,7 @@ interface VoiceState {
   /** True when the user is actively typing in prompt/name/age inputs — voice should not overwrite */
   userIsTyping: boolean;
 
+  setEnabled: (enabled: boolean) => void;
   setIsActive: (active: boolean) => void;
   setActivity: (activity: VoiceActivity) => void;
   setVolumeLevel: (level: number) => void;
@@ -45,6 +47,7 @@ function createMessage(role: VoiceMessageRole, text: string): VoiceMessage {
 }
 
 export const useVoiceStore = create<VoiceState>((set) => ({
+  isEnabled: false,
   isActive: false,
   activity: 'idle',
   messages: [],
@@ -55,6 +58,7 @@ export const useVoiceStore = create<VoiceState>((set) => ({
   autoSelectedPovId: null,
   userIsTyping: false,
 
+  setEnabled: (enabled) => set({ isEnabled: enabled }),
   setIsActive: (active) => set({ isActive: active }),
   setActivity: (activity) => set({ activity }),
   setVolumeLevel: (level) => set({ volumeLevel: Math.max(0, Math.min(1, level)) }),

@@ -1,0 +1,22 @@
+# API layer for the Raspberry Pi kiosk.
+# Runs the same serverless handlers (api/*) as Vercel, wrapped by
+# scripts/api-server.ts, on a plain Node server. RAG stays on Render.
+FROM node:20-slim
+
+WORKDIR /app
+
+# Install deps first for layer caching.
+COPY package.json package-lock.json* ./
+RUN npm ci
+
+# Only the pieces the API server needs (no frontend build here).
+COPY tsconfig*.json ./
+COPY api/ ./api/
+COPY scripts/ ./scripts/
+
+ENV NODE_ENV=production
+ENV PORT=3001
+EXPOSE 3001
+
+# tsx runs the TypeScript handlers directly.
+CMD ["npm", "run", "api"]

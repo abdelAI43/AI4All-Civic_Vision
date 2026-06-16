@@ -25,6 +25,10 @@ export function ProposalPanel() {
   if (!browseProposal) return null;
 
   const space = spaces.find((s) => s.id === browseProposal.spaceId);
+  const voteCount = browseProposal.voteCount ?? 0;
+  const communityScoreText = voteCount > 0
+    ? `${(browseProposal.communityScore ?? 0).toFixed(1)} / 5 from ${voteCount} vote${voteCount === 1 ? '' : 's'}`
+    : 'No community votes yet';
 
   // Author line
   let authorLine: string;
@@ -83,6 +87,11 @@ export function ProposalPanel() {
           <div className="proposal-prompt">
             <span className="prompt-label">{t('proposal.beforeLabel')}</span>
             <p>&ldquo;{browseProposal.promptText}&rdquo;</p>
+          </div>
+
+          <div className="proposal-community-score">
+            <span className="prompt-label">Community score</span>
+            <p>{communityScoreText}</p>
           </div>
 
           {/* Image comparison */}

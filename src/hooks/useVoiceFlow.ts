@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import i18n from '../i18n';
-import { spaces } from '../data/spaces';
+import { spaces, povLabelKey } from '../data/spaces';
 import type { FlowStep, Proposal } from '../types';
 import { useAppStore } from '../store/useAppStore';
 import { useVoiceStore } from '../store/useVoiceStore';
@@ -17,11 +17,17 @@ import { getPromptSet, isNegative } from '../services/voice/agents';
 import { AudioPlayer } from '../services/voice/audioPlayer';
 import { recordAudioOnce } from '../services/voice/audioRecorder';
 import { shouldCollapseTranscript, shouldAutoAdvanceFromSelection } from '../services/voice/stateMachine';
+import { sanitizeVoiceTranscript } from '../services/voice/transcriptSanitizer';
 
 const SUGGEST_STEP_TWO = 2 as FlowStep;
 const SUGGEST_STEP_THREE = 3 as FlowStep;
 const SUGGEST_STEP_FOUR = 4 as FlowStep;
 const SUGGEST_STEP_FIVE = 5 as FlowStep;
+
+// Describing a proposal takes longer and includes natural pauses, so give the
+// prompt step a much longer recording window and a more forgiving silence cutoff
+// than the short single-answer steps (space, POV, name/age).
+const PROMPT_RECORD_OPTIONS = { maxDurationMs: 25_000, silenceDurationMs: 2_500 };
 
 function toVoiceLanguage(): VoiceLanguage {
   const base = i18n.language.split('-')[0];
@@ -49,6 +55,8 @@ export function useVoiceFlow() {
   } = useAppStore();
 
   const {
+    isEnabled,
+    setEnabled,
     setIsActive,
     setActivity,
     setError,
@@ -69,7 +77,9 @@ export function useVoiceFlow() {
   const step6SummaryForProposalRef = useRef<string | null>(null);
 
   const isStale = useCallback((runId: number): boolean => {
-    return runId !== runRef.current || useAppStore.getState().mode !== 'suggest';
+    return runId !== runRef.current ||
+      useAppStore.getState().mode !== 'suggest' ||
+      !useVoiceStore.getState().isEnabled;
   }, []);
 
   const cancelCurrentIO = useCallback(() => {
@@ -124,7 +134,10 @@ export function useVoiceFlow() {
     }
   }, [addMessage, isStale, setActivity, setError]);
 
-  const listenOnce = useCallback(async (runId: number): Promise<string> => {
+  const listenOnce = useCallback(async (
+    runId: number,
+    recordOptions?: { maxDurationMs?: number; silenceDurationMs?: number },
+  ): Promise<string> => {
     if (isStale(runId)) return '';
 
     const abortController = new AbortController();
@@ -136,6 +149,7 @@ export function useVoiceFlow() {
       const recorded = await recordAudioOnce({
         signal: abortController.signal,
         onVolume: setVolumeLevel,
+        ...recordOptions,
       });
 
       if (isStale(runId)) return '';
@@ -161,7 +175,7 @@ export function useVoiceFlow() {
       console.log('[voice] Transcription result:', JSON.stringify(transcript));
 
       if (isStale(runId)) return '';
-      const trimmed = transcript.trim();
+      const trimmed = sanitizeVoiceTranscript(transcript);
       if (trimmed) {
         addMessage('user', trimmed);
       }
@@ -252,7 +266,10 @@ export function useVoiceFlow() {
             messages: [{ role: 'user', content: transcript }],
             context: {
               spaceId: space.id,
-              povOptions: space.povImages.map((pov) => ({ id: pov.id, label: pov.label })),
+              povOptions: space.povImages.map((pov) => ({
+                id: pov.id,
+                label: i18n.t(povLabelKey(pov.id), { defaultValue: pov.label }),
+              })),
             },
           });
 
@@ -281,7 +298,7 @@ export function useVoiceFlow() {
       } else {
         await speakAssistant(prompts.step3Guidance, runId, true, 'step3-guidance');
         if (isStale(runId)) return;
-        const transcript = await listenOnce(runId);
+        const transcript = await listenOnce(runId, PROMPT_RECORD_OPTIONS);
         if (isStale(runId)) return;
 
         // Re-check: user may have typed while we were listening
@@ -329,7 +346,7 @@ export function useVoiceFlow() {
           }
           await speakAssistant(prompts.step3Guidance, runId, true, 'step3-guidance');
           if (isStale(runId)) return;
-          const retryTranscript = await listenOnce(runId);
+          const retryTranscript = await listenOnce(runId, PROMPT_RECORD_OPTIONS);
           if (retryTranscript && !isStale(runId) && !useVoiceStore.getState().userIsTyping) {
             setPromptText(retryTranscript);
           }
@@ -385,7 +402,13 @@ export function useVoiceFlow() {
       step4ReadyRef.current = true;
 
       const updated = useAppStore.getState().flow;
-      const hasPersonalInfo = updated.participantName.trim() !== '' || updated.participantAge.trim() !== '';
+      const hasPersonalInfo =
+        updated.participantName.trim() !== '' ||
+        updated.participantAge.trim() !== '' ||
+        updated.participantGender !== '' ||
+        updated.hasChildren !== null ||
+        updated.hasPets !== null ||
+        updated.hasRestrictedMobility !== null;
 
       if (hasPersonalInfo && !updated.consentGiven) {
         await speakAssistant(prompts.step4ConsentReminder, runId, true, 'step4-consent');
@@ -414,7 +437,6 @@ export function useVoiceFlow() {
       await speakAssistant(summary, runId);
     }
   }, [
-    addMessage,
     isStale,
     listenOnce,
     setAutoSelectedPovId,
@@ -437,13 +459,19 @@ export function useVoiceFlow() {
       step6SummaryForProposalRef.current = null;
       setAutoSelectedSpaceId(null);
       setAutoSelectedPovId(null);
+      // Voice is on by default whenever the suggest flow opens. The user can
+      // still turn it off with the toggle; leaving suggest mode disables it.
+      setEnabled(true);
     }
 
     previousModeRef.current = mode;
-  }, [clearMessages, mode, setAutoSelectedPovId, setAutoSelectedSpaceId, setError]);
+  }, [clearMessages, mode, setAutoSelectedPovId, setAutoSelectedSpaceId, setEnabled, setError]);
 
   useEffect(() => {
-    const active = mode === 'suggest';
+    if (mode !== 'suggest' && isEnabled) {
+      setEnabled(false);
+    }
+    const active = mode === 'suggest' && isEnabled;
     setIsActive(active);
 
     if (!active) {
@@ -453,15 +481,15 @@ export function useVoiceFlow() {
       setAutoSelectedPovId(null);
       step4ReadyRef.current = false;
     }
-  }, [cancelCurrentIO, mode, setActivity, setAutoSelectedPovId, setAutoSelectedSpaceId, setIsActive]);
+  }, [cancelCurrentIO, isEnabled, mode, setActivity, setAutoSelectedPovId, setAutoSelectedSpaceId, setEnabled, setIsActive]);
 
   useEffect(() => {
-    if (mode !== 'suggest') return;
+    if (mode !== 'suggest' || !isEnabled) return;
     setCollapsed(shouldCollapseTranscript(flow.step));
-  }, [flow.step, mode, setCollapsed]);
+  }, [flow.step, isEnabled, mode, setCollapsed]);
 
   useEffect(() => {
-    if (mode !== 'suggest') return;
+    if (mode !== 'suggest' || !isEnabled) return;
     if (!shouldAutoAdvanceFromSelection(flow.step)) return;
 
     if (flow.step === 1 && flow.selectedSpaceId) {
@@ -485,17 +513,35 @@ export function useVoiceFlow() {
       }, 550);
       return () => window.clearTimeout(timer);
     }
-  }, [cancelCurrentIO, flow.selectedPovId, flow.selectedSpaceId, flow.step, mode]);
+  }, [cancelCurrentIO, flow.selectedPovId, flow.selectedSpaceId, flow.step, isEnabled, mode]);
 
   useEffect(() => {
-    if (mode !== 'suggest' || flow.step !== 4 || !step4ReadyRef.current) return;
+    if (mode !== 'suggest' || !isEnabled || flow.step !== 4 || !step4ReadyRef.current) return;
 
-    const hasPersonalInfo = flow.participantName.trim() !== '' || flow.participantAge.trim() !== '';
+    const hasPersonalInfo =
+      flow.participantName.trim() !== '' ||
+      flow.participantAge.trim() !== '' ||
+      flow.participantGender !== '' ||
+      flow.hasChildren !== null ||
+      flow.hasPets !== null ||
+      flow.hasRestrictedMobility !== null;
     if (!hasPersonalInfo || flow.consentGiven) {
       step4ReadyRef.current = false;
       setFlowStep(SUGGEST_STEP_FIVE);
     }
-  }, [flow.consentGiven, flow.participantAge, flow.participantName, flow.step, mode, setFlowStep]);
+  }, [
+    flow.consentGiven,
+    flow.hasChildren,
+    flow.hasPets,
+    flow.hasRestrictedMobility,
+    flow.participantAge,
+    flow.participantGender,
+    flow.participantName,
+    flow.step,
+    isEnabled,
+    mode,
+    setFlowStep,
+  ]);
 
   // Reset userIsTyping flag when flow step changes
   useEffect(() => {
@@ -503,7 +549,7 @@ export function useVoiceFlow() {
   }, [flow.step]);
 
   useEffect(() => {
-    if (mode !== 'suggest') return;
+    if (mode !== 'suggest' || !isEnabled) return;
 
     runRef.current += 1;
     const runId = runRef.current;
@@ -513,7 +559,7 @@ export function useVoiceFlow() {
     return () => {
       cancelCurrentIO();
     };
-  }, [cancelCurrentIO, flow.step, mode, runStep]);
+  }, [cancelCurrentIO, flow.step, isEnabled, mode, runStep]);
 
   useEffect(() => {
     return () => {

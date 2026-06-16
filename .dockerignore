@@ -1,0 +1,12 @@
+# Keep the Docker build context small and reproducible.
+node_modules
+dist
+.git
+.claude
+.playwright-cli
+deploy/data/vectorstores
+*.log
+.env
+.env.*
+!deploy-pi/.env.example
+.DS_Store

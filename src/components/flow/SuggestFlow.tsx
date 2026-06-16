@@ -9,6 +9,7 @@ import { GeneratingScreen } from './GeneratingScreen';
 import { ResultsView } from './ResultsView';
 import { ChatTranscript } from '../voice/ChatTranscript';
 import { useVoiceFlow } from '../../hooks/useVoiceFlow';
+import { useVoiceStore } from '../../store/useVoiceStore';
 import type { FlowStep } from '../../types';
 
 const STEP_TITLES: Record<number, string> = {
@@ -33,11 +34,16 @@ function useCanProceed(): boolean {
     case 3: return flow.promptText.trim().length > 0;
     case 4: {
       if (flow.participantAge.trim()) {
-        const age = parseInt(flow.participantAge, 10);
+        if (!/^\d{1,2}$/.test(flow.participantAge)) return false;
+        const age = Number(flow.participantAge);
         if (Number.isNaN(age) || age < 1 || age > 99) return false;
       }
       const hasPersonalInfo = (flow.participantName?.trim() || '') !== '' ||
-                              (flow.participantAge?.trim() || '') !== '';
+                              (flow.participantAge?.trim() || '') !== '' ||
+                              flow.participantGender !== '' ||
+                              flow.hasChildren !== null ||
+                              flow.hasPets !== null ||
+                              flow.hasRestrictedMobility !== null;
       return hasPersonalInfo ? flow.consentGiven : true;
     }
     default: return false;
@@ -53,7 +59,8 @@ function panelSizeClass(step: FlowStep): string {
 
 export function SuggestFlow() {
   const { t } = useTranslation();
-  const { mode, flow, setFlowStep, resetFlow, setSelectedSpace, setSelectedPov, setMode } = useAppStore();
+  const { mode, flow, setFlowStep, resetFlow, setSelectedSpace, setSelectedPov, setOriginalPromptText } = useAppStore();
+  const { isEnabled: voiceEnabled, setEnabled: setVoiceEnabled } = useVoiceStore();
   const canProceed = useCanProceed();
 
   useVoiceFlow();
@@ -63,11 +70,12 @@ export function SuggestFlow() {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.stopPropagation();
-        if (flow.step === 5) {
-          // Don't close during generation
+        if (flow.step >= 5) {
+          // Never discard during generation (5) or results (6) — exiting must be
+          // a deliberate action so a generated proposal is saved, not lost.
           return;
         }
-        if (flow.step === 1 || flow.step === 6) {
+        if (flow.step === 1) {
           resetFlow();
         } else if (flow.step <= 4) {
           if (flow.step === 2) setSelectedSpace(null);
@@ -80,9 +88,12 @@ export function SuggestFlow() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [mode, flow.step, resetFlow, setFlowStep, setSelectedSpace, setSelectedPov]);
 
-  // Close when clicking the backdrop (not the panel itself)
+  // Close when clicking the backdrop (not the panel itself).
+  // Disabled for steps 5 (generating) and 6 (results) so a generated proposal
+  // is never lost by an accidental click-outside — those screens require an
+  // explicit Save & Exit / Cancel action.
   const handleBackdropClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget && flow.step !== 5) {
+    if (e.target === e.currentTarget && flow.step < 5) {
       resetFlow();
     }
   }, [flow.step, resetFlow]);
@@ -109,12 +120,22 @@ export function SuggestFlow() {
   };
 
   const handleSubmit = () => {
+    if (!flow.originalPromptText) {
+      setOriginalPromptText(flow.promptText);
+    }
     setFlowStep(5);
   };
 
   if (flow.step === 5) {
     return (
       <div className="flow-backdrop" role="dialog" aria-modal="true" onClick={handleBackdropClick}>
+        <button
+          className="flow-backdrop-close"
+          onClick={resetFlow}
+          aria-label={t('common.close')}
+        >
+          ✕
+        </button>
         <div className={`flow-panel ${panelSizeClass(5)}`}>
           <div className="flow-panel-full-content">
             <GeneratingScreen />
@@ -126,24 +147,13 @@ export function SuggestFlow() {
   }
 
   if (flow.step === 6) {
-    const handleClose = () => resetFlow();
-    const handleStartOver = () => { resetFlow(); setMode('suggest'); };
-
     return (
       <div className="flow-backdrop" role="dialog" aria-modal="true" onClick={handleBackdropClick}>
         <div className={`flow-panel ${panelSizeClass(6)}`}>
           <div className="flow-panel-full-content">
-            <ResultsView hideFooter />
+            <ResultsView />
           </div>
           <ChatTranscript />
-          <div className="results-footer">
-            <button className="flow-btn flow-btn-secondary" onClick={handleClose}>
-              {t('flow.step6.closeBtn')}
-            </button>
-            <button className="flow-btn flow-btn-primary" onClick={handleStartOver}>
-              {t('flow.step6.startOver')}
-            </button>
-          </div>
         </div>
       </div>
     );
@@ -158,6 +168,13 @@ export function SuggestFlow() {
               <h2 className="flow-panel-title">{t(STEP_TITLES[flow.step])}</h2>
               <p className="flow-panel-subtitle">{t(STEP_SUBTITLES[flow.step])}</p>
             </div>
+            <button
+              className={`flow-voice-toggle${voiceEnabled ? ' active' : ''}`}
+              type="button"
+              onClick={() => setVoiceEnabled(!voiceEnabled)}
+            >
+              {voiceEnabled ? t('flow.voice.on') : t('flow.voice.off')}
+            </button>
             <button
               className="flow-close-btn"
               onClick={resetFlow}

@@ -12,6 +12,7 @@ export class AudioPlayer {
   private queue: QueueItem[] = [];
   private isRunning = false;
   private currentAudio: HTMLAudioElement | null = null;
+  private currentResolve: (() => void) | null = null;
   private generation = 0;
 
   async enqueue(payload: PlayableAudio): Promise<void> {
@@ -31,26 +32,26 @@ export class AudioPlayer {
       }
 
       const audio = new Audio(url);
-      this.currentAudio = audio;
-
-      const cleanup = () => {
+      let settled = false;
+      const finish = (played: boolean) => {
+        if (settled) return;
+        settled = true;
         audio.onended = null;
         audio.onerror = null;
+        if (this.currentResolve === resolveCancel) this.currentResolve = null;
         if (this.currentAudio === audio) this.currentAudio = null;
+        resolve(played);
       };
 
-      audio.onended = () => {
-        cleanup();
-        resolve(true);
-      };
-      audio.onerror = () => {
-        cleanup();
-        resolve(false);
-      };
+      const resolveCancel = () => finish(false);
+      this.currentAudio = audio;
+      this.currentResolve = resolveCancel;
+
+      audio.onended = () => finish(true);
+      audio.onerror = () => finish(false);
 
       audio.play().catch(() => {
-        cleanup();
-        resolve(false);
+        finish(false);
       });
     });
   }
@@ -65,6 +66,8 @@ export class AudioPlayer {
       this.currentAudio.src = '';
       this.currentAudio = null;
     }
+    this.currentResolve?.();
+    this.currentResolve = null;
   }
 
   private async pump(): Promise<void> {
@@ -90,12 +93,17 @@ export class AudioPlayer {
     this.currentAudio = audio;
 
     await new Promise<void>((resolve) => {
+      let settled = false;
       const finish = () => {
+        if (settled) return;
+        settled = true;
         audio.onended = null;
         audio.onerror = null;
+        if (this.currentResolve === finish) this.currentResolve = null;
         resolve();
       };
 
+      this.currentResolve = finish;
       audio.onended = finish;
       audio.onerror = finish;
 

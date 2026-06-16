@@ -1,0 +1,54 @@
+# Raspberry Pi deployment — two self-healing containers.
+#   web : nginx serving the built frontend + proxying /api -> api
+#   api : Node running the serverless handlers (Gemini / Supabase / Render RAG)
+#
+# RAG stays on Render (set RAG_BACKEND_URL in .env).
+#
+# Usage on the Pi:
+#   cd deploy-pi
+#   cp .env.example .env   # then fill in the values
+#   docker compose up -d --build
+#
+# Run from the REPO ROOT context so the build can see the whole project.
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy-pi/Dockerfile.api
+    env_file: .env
+    environment:
+      # The api container fetches base images from the web container.
+      APP_URL: http://web
+      PORT: "3001"
+    expose:
+      - "3001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3001/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  web:
+    build:
+      context: ..
+      dockerfile: deploy-pi/Dockerfile.web
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+        VITE_MAPBOX_TOKEN: ${VITE_MAPBOX_TOKEN}
+        # Empty -> frontend calls same-origin /api, which nginx proxies.
+        VITE_API_URL: ${VITE_API_URL:-}
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

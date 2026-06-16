@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { spaces } from '../../data/spaces';
+import { spaces, povLabelKey } from '../../data/spaces';
 import { useAppStore } from '../../store/useAppStore';
 import { useVoiceStore } from '../../store/useVoiceStore';
 
@@ -16,6 +16,7 @@ export function POVSelector() {
       {space.povImages.map((pov) => {
         const isSelected = flow.selectedPovId === pov.id;
         const isAutoSelected = autoSelectedPovId === pov.id;
+        const label = t(povLabelKey(pov.id), { defaultValue: pov.label });
 
         return (
           <button
@@ -23,14 +24,14 @@ export function POVSelector() {
             className={`pov-card${isSelected ? ' selected' : ''}${isAutoSelected ? ' voice-auto-pulse' : ''}`}
             onClick={() => setSelectedPov(pov.id)}
             aria-pressed={isSelected}
-            aria-label={pov.label}
+            aria-label={label}
           >
             <span className="pov-card-selected-icon" aria-hidden="true">✓</span>
 
             <img
               className="pov-card-image"
               src={pov.path}
-              alt={pov.label}
+              alt={label}
               loading="lazy"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.opacity = '0.4';
@@ -38,7 +39,7 @@ export function POVSelector() {
             />
 
             <div className="pov-card-label">
-              <span>{pov.label}</span>
+              <span>{label}</span>
               {pov.isPlaceholder && (
                 <span className="pov-card-placeholder-badge">
                   {t('common.placeholder')}

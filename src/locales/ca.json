@@ -38,7 +38,7 @@
       "ageOptional": "(opcional)",
       "agePlaceholder": "p. ex. 28",
       "consentLabel": "Accepto que la meva proposta es mostri públicament en aquesta plataforma",
-      "privacyNote": "Només s'emmagatzemen el teu nom, edat i text de la proposta. No es recullen altres dades personals.",
+      "privacyNote": "Les teves respostes opcionals de perfil es guarden per a futures anàlisis i no es mostren públicament.",
       "submitBtn": "Enviar i generar"
     },
     "step5": {
@@ -54,8 +54,44 @@
       "title": "La teva visió cívica",
       "sharedBadge": "Visible al mapa",
       "startOver": "Suggerir un altre canvi",
-      "closeBtn": "Tornar al mapa"
+      "closeBtn": "Tornar al mapa",
+      "suggestedLabel": "Millora suggerida pels experts",
+      "regenerate": "Torna a generar",
+      "saving": "Desant…",
+      "saveExit": "Desa i surt",
+      "exitWithoutSaving": "Surt sense desar"
+    },
+    "voice": {
+      "on": "Veu activada",
+      "off": "Veu desactivada"
     }
+  },
+  "voting": {
+    "ariaPanel": "Votació de la comunitat",
+    "ariaStars": "Vota d'una a cinc estrelles",
+    "question": "Què et sembla aquesta proposta? Posa-li una puntuació.",
+    "skip": "Omet",
+    "starLabel": "{{score}} de 5",
+    "expertScore": "Puntuació experta {{score}}",
+    "summaryNote": "Només resum d'especialistes; no es mostren detalls dels agents.",
+    "helper": "Els vots de la comunitat ajuden a comparar propostes mentre es generen la teva imatge i el feedback dels experts."
+  },
+  "pov": {
+    "building": "Edifici",
+    "pedestrian": "Vianant",
+    "night": "Nit",
+    "top-view": "Vista superior",
+    "overview": "Vista general",
+    "resident": "Resident",
+    "rooftop": "Terrat",
+    "road": "Calçada",
+    "beach": "Platja",
+    "cyclist": "Ciclista",
+    "esplanade": "Esplanada",
+    "court": "Pati",
+    "alley": "Camí",
+    "pillars": "Columnes",
+    "two-towers": "Dues torres"
   },
   "proposal": {
     "beforeLabel": "Abans",

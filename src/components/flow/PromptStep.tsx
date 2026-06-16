@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { spaces } from '../../data/spaces';
+import { spaces, povLabelKey } from '../../data/spaces';
 import { useAppStore } from '../../store/useAppStore';
 import { useVoiceStore } from '../../store/useVoiceStore';
 import { VoiceIndicator } from '../voice/VoiceIndicator';
@@ -81,7 +81,7 @@ export function PromptStep() {
             <div className="prompt-preview-overlay">
               <div className="location-badge">{space.type}</div>
               <h4>{t(`spaces.${space.id}.name`, { defaultValue: space.name })}</h4>
-              <p>{pov.label}</p>
+              <p>{t(povLabelKey(pov.id), { defaultValue: pov.label })}</p>
             </div>
           </div>
         </div>

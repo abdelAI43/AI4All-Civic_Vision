@@ -38,7 +38,7 @@
       "ageOptional": "(opcional)",
       "agePlaceholder": "p. ej. 28",
       "consentLabel": "Acepto que mi propuesta se muestre públicamente en esta plataforma",
-      "privacyNote": "Solo se almacenan tu nombre, edad y texto de la propuesta. No se recogen otros datos personales.",
+      "privacyNote": "Tus respuestas opcionales de perfil se guardan para futuros análisis y no se muestran públicamente.",
       "submitBtn": "Enviar y generar"
     },
     "step5": {
@@ -54,8 +54,44 @@
       "title": "Tu visión cívica",
       "sharedBadge": "Visible en el mapa",
       "startOver": "Sugerir otro cambio",
-      "closeBtn": "Volver al mapa"
+      "closeBtn": "Volver al mapa",
+      "suggestedLabel": "Mejora sugerida por los expertos",
+      "regenerate": "Volver a generar",
+      "saving": "Guardando…",
+      "saveExit": "Guardar y salir",
+      "exitWithoutSaving": "Salir sin guardar"
+    },
+    "voice": {
+      "on": "Voz activada",
+      "off": "Voz desactivada"
     }
+  },
+  "voting": {
+    "ariaPanel": "Votación de la comunidad",
+    "ariaStars": "Vota de una a cinco estrellas",
+    "question": "¿Qué te parece esta propuesta? Ponle una puntuación.",
+    "skip": "Saltar",
+    "starLabel": "{{score}} de 5",
+    "expertScore": "Puntuación experta {{score}}",
+    "summaryNote": "Solo resumen de especialistas; no se muestran detalles de los agentes.",
+    "helper": "Los votos de la comunidad ayudan a comparar propuestas mientras se generan tu imagen y la evaluación de los expertos."
+  },
+  "pov": {
+    "building": "Edificio",
+    "pedestrian": "Peatón",
+    "night": "Noche",
+    "top-view": "Vista superior",
+    "overview": "Vista general",
+    "resident": "Residente",
+    "rooftop": "Azotea",
+    "road": "Calzada",
+    "beach": "Playa",
+    "cyclist": "Ciclista",
+    "esplanade": "Explanada",
+    "court": "Patio",
+    "alley": "Sendero",
+    "pillars": "Columnas",
+    "two-towers": "Dos torres"
   },
   "proposal": {
     "beforeLabel": "Antes",

@@ -15,6 +15,7 @@
 }
 
 .comparison-container {
+  --slider-pos: 50%;
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -59,6 +60,7 @@
 
 .comparison-original {
   z-index: 2;
+  clip-path: inset(0 calc(100% - var(--slider-pos)) 0 0);
 }
 
 .comparison-generated {
@@ -70,6 +72,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
+  left: var(--slider-pos);
   z-index: 3;
   display: flex;
   flex-direction: column;

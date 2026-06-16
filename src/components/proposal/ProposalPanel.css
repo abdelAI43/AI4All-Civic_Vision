@@ -165,6 +165,20 @@
   line-height: 1.6;
 }
 
+.proposal-community-score {
+  background: var(--color-surface);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-green);
+}
+
+.proposal-community-score p {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
 /* No proposal */
 .no-proposal {
   flex: 1;
@@ -319,6 +333,11 @@
   align-items: stretch;
   gap: 0;
   padding: 0;
+  /* Keep full height & let the list scroll instead of squishing when long —
+     without this, flex children shrink to fit and overlap. ~120px keeps the
+     author line + 2 prompt lines readable, so ~4 cards show before scrolling. */
+  flex-shrink: 0;
+  min-height: 120px;
   border: 2px solid transparent;
   border-radius: var(--radius-lg);
   background: var(--color-surface);
@@ -374,6 +393,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.browse-card-community {
+  width: fit-content;
+  color: var(--color-green);
+  background: rgba(107, 143, 113, 0.12);
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
 }
 
 .browse-card-score {

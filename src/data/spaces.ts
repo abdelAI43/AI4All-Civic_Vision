@@ -121,6 +121,12 @@ export const spaces: Space[] = [
   },
 ];
 
+/** i18n key for a POV's display label. Translations live under `pov.<id>`;
+ *  proper-noun POVs (e.g. placa-reial) have no key and fall back to the label. */
+export function povLabelKey(id: string): string {
+  return `pov.${id}`;
+}
+
 /** Derive a human-readable label from a kebab/snake_case filename stem.
  *  'bottom-up' → 'Bottom Up'  |  'street_level' → 'Street Level' */
 export function povLabelFromId(id: string): string {

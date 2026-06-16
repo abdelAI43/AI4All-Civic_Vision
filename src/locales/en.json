@@ -38,7 +38,7 @@
       "ageOptional": "(optional)",
       "agePlaceholder": "e.g. 28",
       "consentLabel": "I agree my proposal may be displayed publicly on this platform",
-      "privacyNote": "Only your name, age, and proposal text are stored. No other personal data is collected.",
+      "privacyNote": "Your optional profile answers are stored for future analysis and are not shown publicly.",
       "submitBtn": "Submit & generate"
     },
     "step5": {
@@ -54,8 +54,44 @@
       "title": "Your civic vision",
       "sharedBadge": "Visible on the map",
       "startOver": "Suggest another change",
-      "closeBtn": "Back to map"
+      "closeBtn": "Back to map",
+      "suggestedLabel": "Experts' suggested improvement",
+      "regenerate": "Regenerate",
+      "saving": "Saving…",
+      "saveExit": "Save & Exit",
+      "exitWithoutSaving": "Exit without saving"
+    },
+    "voice": {
+      "on": "Voice on",
+      "off": "Voice off"
     }
+  },
+  "voting": {
+    "ariaPanel": "Community voting",
+    "ariaStars": "Vote from one to five stars",
+    "question": "What do you think of this proposal? Please give it a score.",
+    "skip": "Skip",
+    "starLabel": "{{score}} out of 5",
+    "expertScore": "Expert score {{score}}",
+    "summaryNote": "Specialist summary only; no agent details shown.",
+    "helper": "Community votes help compare proposals while your new image and expert feedback are being generated."
+  },
+  "pov": {
+    "building": "Building",
+    "pedestrian": "Pedestrian",
+    "night": "Night",
+    "top-view": "Top View",
+    "overview": "Overview",
+    "resident": "Resident",
+    "rooftop": "Rooftop",
+    "road": "Road",
+    "beach": "Beach",
+    "cyclist": "Cyclist",
+    "esplanade": "Esplanade",
+    "court": "Court",
+    "alley": "Alley",
+    "pillars": "Pillars",
+    "two-towers": "Two Towers"
   },
   "proposal": {
     "beforeLabel": "Before",

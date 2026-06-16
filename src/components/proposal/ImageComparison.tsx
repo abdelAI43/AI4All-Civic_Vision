@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import './ImageComparison.css';
 
@@ -8,41 +8,94 @@ interface Props {
   locationName: string;
 }
 
+// Auto-sweep tuning. The divider drifts left↔right continuously until the user
+// grabs it; 4s after they let go it resumes on its own.
+const AUTO_SPEED = 10;      // percent of width per second
+const AUTO_MIN = 12;        // sweep bounds (keep a sliver of both images visible)
+const AUTO_MAX = 88;
+const RESUME_DELAY_MS = 4000;
+
 /**
  * Before/After image comparison slider.
- * Uses placeholder gradients when actual images are not available.
+ * The divider position lives in a CSS custom property (`--slider-pos`) driven by
+ * a rAF loop, so the constant animation costs zero React re-renders. User drags
+ * pause the sweep and it resumes 4s after the last interaction.
  */
 export function ImageComparison({ originalImage, generatedImage, locationName }: Props) {
   const { t } = useTranslation();
-  const [sliderPos, setSliderPos] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
   const [imgError, setImgError] = useState({ original: false, generated: false });
   const containerRef = useRef<HTMLDivElement>(null);
+  const posRef = useRef(50);
+  const dirRef = useRef(1);
+  const pausedRef = useRef(false);
+  const draggingRef = useRef(false);
+  const resumeTimerRef = useRef<number | null>(null);
 
-  const handleMove = (clientX: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPos(percentage);
-  };
+  const applyPos = useCallback((pct: number) => {
+    const clamped = Math.max(0, Math.min(100, pct));
+    posRef.current = clamped;
+    containerRef.current?.style.setProperty('--slider-pos', `${clamped}%`);
+  }, []);
 
-  const handleMouseDown = () => setIsDragging(true);
-  const handleMouseUp = () => setIsDragging(false);
+  // Pause the auto-sweep and schedule it to resume 4s after the last interaction.
+  const pauseAuto = useCallback(() => {
+    pausedRef.current = true;
+    if (resumeTimerRef.current !== null) window.clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = window.setTimeout(() => { pausedRef.current = false; }, RESUME_DELAY_MS);
+  }, []);
 
+  const moveTo = useCallback((clientX: number) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    applyPos(((clientX - rect.left) / rect.width) * 100);
+  }, [applyPos]);
+
+  // rAF auto-sweep + global drag listeners (so dragging works outside the box).
   useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (isDragging) handleMove(e.clientX);
-    };
-    const handleGlobalMouseUp = () => setIsDragging(false);
+    let last = performance.now();
+    let raf = requestAnimationFrame(function tick(now) {
+      const dt = (now - last) / 1000;
+      last = now;
+      if (!pausedRef.current && !draggingRef.current) {
+        let next = posRef.current + dirRef.current * AUTO_SPEED * dt;
+        if (next >= AUTO_MAX) { next = AUTO_MAX; dirRef.current = -1; }
+        else if (next <= AUTO_MIN) { next = AUTO_MIN; dirRef.current = 1; }
+        applyPos(next);
+      }
+      raf = requestAnimationFrame(tick);
+    });
 
-    window.addEventListener('mousemove', handleGlobalMouseMove);
-    window.addEventListener('mouseup', handleGlobalMouseUp);
+    const onMove = (e: MouseEvent) => { if (draggingRef.current) moveTo(e.clientX); };
+    const onUp = () => { if (draggingRef.current) { draggingRef.current = false; pauseAuto(); } };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+
     return () => {
-      window.removeEventListener('mousemove', handleGlobalMouseMove);
-      window.removeEventListener('mouseup', handleGlobalMouseUp);
+      cancelAnimationFrame(raf);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+      if (resumeTimerRef.current !== null) window.clearTimeout(resumeTimerRef.current);
     };
-  }, [isDragging]);
+  }, [applyPos, moveTo, pauseAuto]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    draggingRef.current = true;
+    pauseAuto();
+    moveTo(e.clientX);
+  };
+  const handleTouchStart = (e: React.TouchEvent) => {
+    draggingRef.current = true;
+    pauseAuto();
+    moveTo(e.touches[0].clientX);
+  };
+  const handleTouchMove = (e: React.TouchEvent) => {
+    pauseAuto();
+    moveTo(e.touches[0].clientX);
+  };
+  const handleTouchEnd = () => {
+    draggingRef.current = false;
+    pauseAuto();
+  };
 
   // Placeholder backgrounds for missing images
   const placeholderOriginal = `linear-gradient(135deg, #C5BEB5 0%, #A99F93 50%, #8E857A 100%)`;
@@ -58,9 +111,9 @@ export function ImageComparison({ originalImage, generatedImage, locationName }:
         ref={containerRef}
         className="comparison-container"
         onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onTouchStart={(e) => handleMove(e.touches[0].clientX)}
-        onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Generated (background – full width) */}
         <div className="comparison-image comparison-generated">
@@ -78,11 +131,8 @@ export function ImageComparison({ originalImage, generatedImage, locationName }:
           )}
         </div>
 
-        {/* Original (foreground – clipped) */}
-        <div
-          className="comparison-image comparison-original"
-          style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
-        >
+        {/* Original (foreground – clipped via --slider-pos) */}
+        <div className="comparison-image comparison-original">
           {!imgError.original ? (
             <img
               src={originalImage}
@@ -97,8 +147,8 @@ export function ImageComparison({ originalImage, generatedImage, locationName }:
           )}
         </div>
 
-        {/* Slider handle */}
-        <div className="comparison-slider" style={{ left: `${sliderPos}%` }}>
+        {/* Slider handle (positioned via --slider-pos) */}
+        <div className="comparison-slider">
           <div className="slider-line" />
           <div className="slider-handle">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">

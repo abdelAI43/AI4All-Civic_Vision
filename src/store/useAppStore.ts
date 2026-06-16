@@ -6,8 +6,13 @@ const DEFAULT_FLOW: SuggestFlowState = {
   selectedSpaceId: null,
   selectedPovId: null,
   promptText: '',
+  originalPromptText: '',
   participantName: '',
   participantAge: '',
+  participantGender: '',
+  hasChildren: null,
+  hasPets: null,
+  hasRestrictedMobility: null,
   consentGiven: false,
   currentProposal: null,
   promptRejectionReason: null,
@@ -39,11 +44,26 @@ export const useAppStore = create<AppState>((set) => ({
   setPromptText: (text: string) =>
     set((s) => ({ flow: { ...s.flow, promptText: text } })),
 
+  setOriginalPromptText: (text: string) =>
+    set((s) => ({ flow: { ...s.flow, originalPromptText: text } })),
+
   setParticipantName: (name: string) =>
     set((s) => ({ flow: { ...s.flow, participantName: name } })),
 
   setParticipantAge: (age: string) =>
     set((s) => ({ flow: { ...s.flow, participantAge: age } })),
+
+  setParticipantGender: (gender) =>
+    set((s) => ({ flow: { ...s.flow, participantGender: gender } })),
+
+  setHasChildren: (value) =>
+    set((s) => ({ flow: { ...s.flow, hasChildren: value } })),
+
+  setHasPets: (value) =>
+    set((s) => ({ flow: { ...s.flow, hasPets: value } })),
+
+  setHasRestrictedMobility: (value) =>
+    set((s) => ({ flow: { ...s.flow, hasRestrictedMobility: value } })),
 
   setConsentGiven: (given: boolean) =>
     set((s) => ({ flow: { ...s.flow, consentGiven: given } })),

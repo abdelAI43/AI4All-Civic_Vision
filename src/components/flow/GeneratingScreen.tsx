@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { spaces } from '../../data/spaces';
 import { useAppStore } from '../../store/useAppStore';
-import { supabase } from '../../lib/supabase';
 import type { Proposal, FlowStep } from '../../types';
+import { GenerationVotingPanel } from './GenerationVotingPanel';
 
 const PROGRESS_STEPS = [
   { key: 'flow.step5.progress1', duration: 15000 },
@@ -12,15 +12,6 @@ const PROGRESS_STEPS = [
 ] as const;
 
 /** Slim carousel item — we only need image + label + optional score */
-interface CarouselItem {
-  id: string;
-  imgSrc: string;
-  label: string;
-  score?: number;
-  /** 'proposal' = real submission (blue border); 'pov' = fallback POV image (orange border) */
-  type: 'proposal' | 'pov';
-}
-
 /**
  * Step 5 — Generating screen.
  *
@@ -53,51 +44,30 @@ export function GeneratingScreen() {
   const mountedRef = useRef(true);
   const errorRef = useRef(false);   // prevents animation from overwriting error state
   const hasFiredRef = useRef(false); // prevents double API call in React Strict Mode (dev only)
+  const carousel: Array<{
+    id: string;
+    imgSrc: string;
+    label: string;
+    score?: number;
+    type: 'proposal' | 'pov';
+  }> = [];
 
   // ── Carousel ──────────────────────────────────────────────────────────────
-  const [carousel, setCarousel] = useState<CarouselItem[]>([]);
-
-  useEffect(() => {
-    const spaceId = flow.selectedSpaceId;
-    if (!spaceId) return;
-
-    supabase
-      .from('proposals')
-      .select('id, generated_image_url, base_image_path, prompt_text, participant_name, participant_age, avg_agent_score')
-      .eq('space_id', spaceId)
-      .order('created_at', { ascending: false })
-      .limit(8)
-      .then(({ data }) => {
-        if (!mountedRef.current) return;
-        if (data && data.length > 0) {
-          setCarousel(
-            data.map((row) => ({
-              id: row.id as string,
-              imgSrc: (row.generated_image_url as string) || (row.base_image_path as string),
-              label: row.participant_name
-                ? `${row.participant_name as string}${row.participant_age ? `, ${row.participant_age as number}` : ''}`
-                : t('proposal.anonymous'),
-              score: row.avg_agent_score as number | undefined,
-              type: 'proposal' as const,
-            }))
-          );
-        } else {
-          // Fallback: other POV images of this space
-          const otherPovs = space?.povImages.filter((p) => p.id !== flow.selectedPovId) ?? [];
-          setCarousel(
-            otherPovs.map((p) => ({ id: p.id, imgSrc: p.path, label: p.label, type: 'pov' as const }))
-          );
-        }
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // ── API call ──────────────────────────────────────────────────────────────
   const runPipeline = async () => {
     setPromptRejectionReason(null); // clear any previous rejection
     const lang = i18n.language.split('-')[0];
     const effectiveLang = (['en', 'ca', 'es'].includes(lang) ? lang : 'en') as 'en' | 'ca' | 'es';
-    const isAnonymous = !flow.participantName.trim() && !flow.participantAge.trim();
+    const hasParticipantInfo =
+      !!flow.participantName.trim() ||
+      !!flow.participantAge.trim() ||
+      flow.participantGender !== '' ||
+      flow.hasChildren !== null ||
+      flow.hasPets !== null ||
+      flow.hasRestrictedMobility !== null;
+    const promptSource = flow.originalPromptText && flow.originalPromptText !== flow.promptText
+      ? 'expert_suggested'
+      : 'original';
 
     try {
       const resp = await fetch('/api/proposals/create', {
@@ -111,9 +81,16 @@ export function GeneratingScreen() {
           baseImagePath: pov?.path ?? '',
           promptText: flow.promptText,
           language: effectiveLang,
-          consentGiven: isAnonymous ? true : flow.consentGiven,
+          consentGiven: hasParticipantInfo ? flow.consentGiven : true,
           participantName: flow.participantName.trim() || undefined,
           participantAge: flow.participantAge.trim() || undefined,
+          participantGender: flow.participantGender || undefined,
+          hasChildren: flow.hasChildren,
+          hasPets: flow.hasPets,
+          hasRestrictedMobility: flow.hasRestrictedMobility,
+          originalPromptText: flow.originalPromptText || flow.promptText,
+          promptSource,
+          persist: false,
         }),
       });
 
@@ -227,7 +204,7 @@ export function GeneratingScreen() {
   const allDone = phase === 'waiting';
 
   return (
-    <div className="generating-screen">
+    <div className="generating-screen with-voting">
       {/* Blurred base image background */}
       {pov && (
         <div className="generating-bg">
@@ -315,6 +292,8 @@ export function GeneratingScreen() {
                 ? t('flow.step5.almostReady', { defaultValue: 'Almost ready…' })
                 : t('flow.step5.estimated')}
             </p>
+
+            <GenerationVotingPanel />
           </>
         )}
       </div>

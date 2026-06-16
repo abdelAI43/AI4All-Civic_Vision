@@ -1,0 +1,21 @@
+# Auto-start the kiosk browser on boot.
+# Install:  sudo cp kiosk.service /etc/systemd/system/
+#           sudo systemctl enable kiosk.service
+# Requires desktop auto-login enabled (raspi-config > System > Boot/Auto Login >
+# Desktop Autologin) so an X session exists for DISPLAY=:0.
+[Unit]
+Description=Barcelona Civic Vision kiosk browser
+After=network-online.target docker.service graphical.target
+Wants=network-online.target
+
+[Service]
+User=pi
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+# Adjust the path if you cloned the repo elsewhere.
+ExecStart=/bin/bash /home/pi/barcelona-civic-vision/deploy-pi/start-kiosk.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target

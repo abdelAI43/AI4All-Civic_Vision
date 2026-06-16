@@ -5,6 +5,9 @@ import { spaces } from '../../data/spaces';
 import { supabase } from '../../lib/supabase';
 import type { AgentFeedback, Proposal } from '../../types';
 
+const PROPOSAL_SELECT =
+  '*, agent_evaluations(agent_id, agent_name, agent_icon, score, feedback)';
+
 function formatTimestamp(iso: string): string {
   return new Date(iso).toLocaleString('en-GB', {
     day: '2-digit',
@@ -19,6 +22,13 @@ function scoreColor(score: number): string {
   if (score >= 4) return 'var(--color-green)';
   if (score >= 3) return 'var(--color-amber)';
   return 'var(--color-red)';
+}
+
+function formatCommunityScore(proposal: Proposal): string {
+  const count = proposal.voteCount ?? 0;
+  if (count === 0) return 'Community: no votes yet';
+  const score = proposal.communityScore ?? 0;
+  return `Community: ${score.toFixed(1)} (${count})`;
 }
 
 /** Tiny inline SVG radar — no Recharts, just 5-axis polygon */
@@ -99,6 +109,7 @@ function ProposalCard({ proposal, onClick }: { proposal: Proposal; onClick: () =
             {proposal.avgAgentScore.toFixed(1)}
           </span>
         </div>
+        <span className="browse-card-community">{formatCommunityScore(proposal)}</span>
         <p className="browse-card-prompt">&ldquo;{promptExcerpt}&rdquo;</p>
         <p className="browse-card-timestamp">{formatTimestamp(proposal.createdAt)}</p>
       </div>
@@ -119,18 +130,30 @@ function rowToProposal(row: Record<string, unknown>): Proposal {
     baseImagePath: row.base_image_path as string,
     generatedImageUrl: row.generated_image_url as string,
     avgAgentScore: parseFloat(String(row.avg_agent_score ?? 0)),
+    communityScore: parseFloat(String(row.community_score ?? 0)),
+    voteCount: Number(row.vote_count ?? 0),
     agentFeedback: evals.map((e) => ({
       agentId: e.agent_id as string,
       name: e.agent_name as string,
       icon: e.agent_icon as string,
       score: e.score as number,
       feedback: e.feedback as string,
+      risks: (e.risks as string[] | null) ?? undefined,
+      recommendations: (e.recommendations as string[] | null) ?? undefined,
+      references: (e.references as string[] | null) ?? undefined,
     })),
     participantName: (row.participant_name as string | null) ?? undefined,
     participantAge: (row.participant_age as number | null) ?? undefined,
+    participantGender: (row.participant_gender as Proposal['participantGender'] | null) ?? undefined,
+    hasChildren: (row.has_children as boolean | null) ?? undefined,
+    hasPets: (row.has_pets as boolean | null) ?? undefined,
+    hasRestrictedMobility: (row.has_restricted_mobility as boolean | null) ?? undefined,
     consentGiven: row.consent_given as boolean,
     status: row.status as Proposal['status'],
     createdAt: row.created_at as string,
+    originalPromptText: (row.original_prompt_text as string | null) ?? undefined,
+    expertSuggestedPrompt: (row.expert_suggested_prompt as string | null) ?? undefined,
+    promptSource: (row.prompt_source as Proposal['promptSource'] | null) ?? undefined,
   };
 }
 
@@ -151,16 +174,19 @@ export function ProposalListPanel() {
 
     let cancelled = false;
 
-    supabase
-      .from('proposals')
-      .select('*, agent_evaluations(agent_id, agent_name, agent_icon, score, feedback)')
-      .eq('space_id', browseSpaceId)
-      .order('created_at', { ascending: false })
-      .then(({ data }) => {
-        if (cancelled) return;
-        setProposals(data ? data.map((row) => rowToProposal(row as Record<string, unknown>)) : []);
-        setLoadedFor(browseSpaceId);
-      });
+    const loadProposals = async () => {
+      const result = await supabase
+        .from('proposals')
+        .select(PROPOSAL_SELECT)
+        .eq('space_id', browseSpaceId)
+        .order('created_at', { ascending: false });
+
+      if (cancelled) return;
+      setProposals(result.data ? result.data.map((row) => rowToProposal(row as Record<string, unknown>)) : []);
+      setLoadedFor(browseSpaceId);
+    };
+
+    void loadProposals();
 
     return () => { cancelled = true; };
   }, [browseSpaceId]);

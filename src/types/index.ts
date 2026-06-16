@@ -33,6 +33,8 @@ export interface AgentFeedback {
   references?: string[];
 }
 
+export type ParticipantGender = 'woman' | 'man' | 'non_binary' | 'prefer_not_to_say';
+export type PromptSource = 'original' | 'expert_suggested';
 export type ProposalStatus = 'pending' | 'generating' | 'complete' | 'failed';
 
 export interface Proposal {
@@ -45,11 +47,21 @@ export interface Proposal {
   generatedImageUrl: string;    // Supabase Storage URL (empty while pending)
   agentFeedback: AgentFeedback[];
   avgAgentScore: number;        // cached average for heatmap weighting
+  communityScore?: number;      // average public vote score, 0 when not voted yet
+  voteCount?: number;           // number of community votes
   participantName?: string;
   participantAge?: number;
+  participantGender?: ParticipantGender;
+  hasChildren?: boolean;
+  hasPets?: boolean;
+  hasRestrictedMobility?: boolean;
   consentGiven: boolean;
   status: ProposalStatus;
   createdAt: string;
+  originalPromptText?: string;
+  expertSuggestedPrompt?: string;
+  promptSource?: PromptSource;
+  isDraft?: boolean;
 }
 
 // ── Application State ─────────────────────────────────────────────────────────
@@ -67,8 +79,13 @@ export interface SuggestFlowState {
   selectedSpaceId: string | null;
   selectedPovId: string | null;
   promptText: string;
+  originalPromptText: string;
   participantName: string;
   participantAge: string;   // string while in input, parsed to number on submit
+  participantGender: ParticipantGender | '';
+  hasChildren: boolean | null;
+  hasPets: boolean | null;
+  hasRestrictedMobility: boolean | null;
   consentGiven: boolean;
   currentProposal: Proposal | null;
   promptRejectionReason: string | null; // set when the AI validator rejects a prompt
@@ -91,8 +108,13 @@ export interface AppState {
   setSelectedSpace: (spaceId: string | null) => void;
   setSelectedPov: (povId: string | null) => void;
   setPromptText: (text: string) => void;
+  setOriginalPromptText: (text: string) => void;
   setParticipantName: (name: string) => void;
   setParticipantAge: (age: string) => void;
+  setParticipantGender: (gender: ParticipantGender | '') => void;
+  setHasChildren: (value: boolean | null) => void;
+  setHasPets: (value: boolean | null) => void;
+  setHasRestrictedMobility: (value: boolean | null) => void;
   setConsentGiven: (given: boolean) => void;
   setCurrentProposal: (proposal: Proposal | null) => void;
   setPromptRejectionReason: (reason: string | null) => void;

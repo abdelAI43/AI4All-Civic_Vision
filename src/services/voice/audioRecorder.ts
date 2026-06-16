@@ -61,12 +61,19 @@ export async function recordAudioOnce(options: RecordAudioOptions = {}): Promise
   if (typeof MediaRecorder === 'undefined') {
     throw new Error('MediaRecorder is not supported in this browser');
   }
+  if (options.signal?.aborted) {
+    return null;
+  }
 
   const silenceThreshold = options.silenceThreshold ?? DEFAULTS.silenceThreshold;
   const silenceDurationMs = options.silenceDurationMs ?? DEFAULTS.silenceDurationMs;
   const maxDurationMs = options.maxDurationMs ?? DEFAULTS.maxDurationMs;
 
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  if (options.signal?.aborted) {
+    stream.getTracks().forEach((track) => track.stop());
+    return null;
+  }
 
   return new Promise<RecordedAudio | null>((resolve, reject) => {
     const mimeType = chooseMimeType();
