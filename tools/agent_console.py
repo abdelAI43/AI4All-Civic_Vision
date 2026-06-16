@@ -97,8 +97,16 @@ def api_post(
 
 def save_response_snapshot(kind: str, data: dict[str, Any]) -> None:
     snapshot = {"kind": kind, "data": data}
-    with open(SNAPSHOT_PATH, "w", encoding="utf-8") as file:
-        json.dump(snapshot, file, indent=2, ensure_ascii=False)
+    # Ensure the target directory exists; it can be removed by git operations
+    # while Streamlit keeps running. A snapshot failure must never mask an
+    # otherwise-successful API response, so write best-effort.
+    snapshot_dir = os.path.dirname(SNAPSHOT_PATH) or "."
+    try:
+        os.makedirs(snapshot_dir, exist_ok=True)
+        with open(SNAPSHOT_PATH, "w", encoding="utf-8") as file:
+            json.dump(snapshot, file, indent=2, ensure_ascii=False)
+    except OSError as exc:
+        st.warning(f"Could not write snapshot file ({exc}); response is still shown above.")
 
 
 def show_request_error(error: Exception) -> None:
