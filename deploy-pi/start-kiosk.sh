@@ -4,6 +4,13 @@ set -u
 
 URL="http://localhost"
 
+# kiosk.service is a *system* service, so it doesn't inherit the desktop
+# session's audio environment. Point Chromium at the logged-in user's
+# PipeWire/PulseAudio socket so getUserMedia (the mic) actually works.
+# Computed from the running user's UID so it's correct without hardcoding 1000.
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+export PULSE_SERVER="${PULSE_SERVER:-unix:${XDG_RUNTIME_DIR}/pulse/native}"
+
 # Wait until nginx is serving (containers may still be starting on boot).
 until wget -qO- "$URL/health" >/dev/null 2>&1; do
   sleep 2
