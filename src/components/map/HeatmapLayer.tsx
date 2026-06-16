@@ -1,31 +1,85 @@
+import { useEffect, useState } from 'react';
 import { Source, Layer } from 'react-map-gl/mapbox';
-import { mockProposals } from '../../data/mockProposals';
-import { hotspots } from '../../data/hotspots';
+import { spaces } from '../../data/spaces';
+import { supabase } from '../../lib/supabase';
+
+interface HeatmapPoint {
+  spaceId: string;
+  lat: number;
+  lng: number;
+  avgScore: number;
+}
+
+type HeatmapRow = { space_id: string; proposal_count: unknown; avg_score: unknown };
+
+function rowsToPoints(data: HeatmapRow[]): HeatmapPoint[] {
+  return data
+    .map((row) => {
+      const space = spaces.find((s) => s.id === row.space_id);
+      if (!space) return null;
+      return {
+        spaceId: row.space_id,
+        lat: space.lat,
+        lng: space.lng,
+        avgScore: parseFloat(String(row.avg_score ?? 0)),
+      };
+    })
+    .filter((p): p is HeatmapPoint => p !== null);
+}
 
 /**
- * Shows a subtle heatmap of proposal density on the map.
- * For the PoC, each hotspot that has a proposal counts as 1 point.
+ * Shows a live heatmap of proposal density on the map.
+ * Reads from the `heatmap_data` Supabase view and subscribes to
+ * Realtime INSERT events on the proposals table for live updates.
  */
 export function HeatmapLayer() {
+  const [points, setPoints] = useState<HeatmapPoint[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    // Initial fetch
+    supabase
+      .from('heatmap_data')
+      .select('space_id, proposal_count, avg_score')
+      .then(({ data }) => {
+        if (!cancelled && data) setPoints(rowsToPoints(data as HeatmapRow[]));
+      });
+
+    // Live updates — re-fetch when a new proposal is inserted
+    const channel = supabase
+      .channel('heatmap-updates')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'proposals' },
+        () => {
+          supabase
+            .from('heatmap_data')
+            .select('space_id, proposal_count, avg_score')
+            .then(({ data }) => {
+              if (!cancelled && data) setPoints(rowsToPoints(data as HeatmapRow[]));
+            });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      cancelled = true;
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   const geojson: GeoJSON.FeatureCollection = {
     type: 'FeatureCollection',
-    features: mockProposals.map((proposal) => {
-      const hotspot = hotspots.find((h) => h.id === proposal.hotspotId);
-      return {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [hotspot?.lng ?? 0, hotspot?.lat ?? 0],
-        },
-        properties: {
-          weight: 1,
-        },
-      };
-    }),
+    features: points.map((p) => ({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [p.lng, p.lat] },
+      properties: { weight: p.avgScore / 5 },
+    })),
   };
 
   const heatmapPaint: Record<string, unknown> = {
-    'heatmap-weight': 1,
+    'heatmap-weight': ['get', 'weight'],
     'heatmap-intensity': 1,
     'heatmap-radius': 60,
     'heatmap-opacity': 0.3,

@@ -1,8 +1,8 @@
 import { useRef, useCallback, useEffect } from 'react';
 import Map, { type MapRef } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { hotspots } from '../../data/hotspots';
-import { mockProposals } from '../../data/mockProposals';
+import { spaces } from '../../data/spaces';
+import { getProposalsForSpace } from '../../data/mockProposals';
 import { useAppStore } from '../../store/useAppStore';
 import { HotspotMarker } from './HotspotMarker';
 import { HeatmapLayer } from './HeatmapLayer';
@@ -19,32 +19,30 @@ const INITIAL_VIEW = {
 
 export function MapView() {
   const mapRef = useRef<MapRef>(null);
-  const { setSelectedHotspot, setSelectedProposal, setShowProposalPanel, mapResetTrigger } = useAppStore();
+  const { mode, setBrowseSpaceId, setBrowseProposal, mapResetTrigger } = useAppStore();
 
-  const handleHotspotClick = useCallback(
-    (hotspotId: string) => {
-      const hotspot = hotspots.find((h) => h.id === hotspotId);
-      const proposal = mockProposals.find((p) => p.hotspotId === hotspotId);
+  const handleSpaceClick = useCallback(
+    (spaceId: string) => {
+      // In browse mode, clicking a marker shows the proposals list for that space
+      if (mode !== 'browse') return;
 
-      if (hotspot) {
-        setSelectedHotspot(hotspot);
-        if (proposal) {
-          setSelectedProposal(proposal);
-        }
-        setShowProposalPanel(true);
+      const space = spaces.find((s) => s.id === spaceId);
 
-        // Fly to the hotspot
+      setBrowseSpaceId(spaceId);
+      setBrowseProposal(null); // clear any open detail
+
+      if (space) {
         mapRef.current?.flyTo({
-          center: [hotspot.lng, hotspot.lat],
+          center: [space.lng, space.lat],
           zoom: 17,
           pitch: 65,
-          bearing: Math.random() * 40 - 20, // slight variation
+          bearing: Math.random() * 40 - 20,
           duration: 2000,
           essential: true,
         });
       }
     },
-    [setSelectedHotspot, setSelectedProposal, setShowProposalPanel]
+    [mode, setBrowseSpaceId, setBrowseProposal]
   );
 
   // Add 3D buildings on map load
@@ -53,7 +51,6 @@ export function MapView() {
     if (!map) return;
 
     const layers = map.getStyle().layers;
-    // Find the first symbol layer to insert 3D buildings below labels
     let labelLayerId: string | undefined;
     if (layers) {
       for (const layer of layers) {
@@ -85,10 +82,12 @@ export function MapView() {
     }
   }, []);
 
-  // Keyboard shortcut: Escape to reset view
+  // Escape to reset (only when suggest flow is NOT open)
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && mode === 'browse') {
+        setBrowseProposal(null);
+        setBrowseSpaceId(null);
         mapRef.current?.flyTo({
           ...INITIAL_VIEW,
           center: [INITIAL_VIEW.longitude, INITIAL_VIEW.latitude],
@@ -99,11 +98,13 @@ export function MapView() {
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, []);
+  }, [mode, setBrowseProposal, setBrowseSpaceId]);
 
-  // Reset map view when logo is clicked (via mapResetTrigger)
+  // Reset map view when logo is clicked
   useEffect(() => {
     if (mapResetTrigger > 0) {
+      setBrowseProposal(null);
+      setBrowseSpaceId(null);
       mapRef.current?.flyTo({
         ...INITIAL_VIEW,
         center: [INITIAL_VIEW.longitude, INITIAL_VIEW.latitude],
@@ -111,7 +112,7 @@ export function MapView() {
         essential: true,
       });
     }
-  }, [mapResetTrigger]);
+  }, [mapResetTrigger, setBrowseProposal, setBrowseSpaceId]);
 
   return (
     <Map
@@ -129,14 +130,14 @@ export function MapView() {
       maxZoom={19}
       antialias
     >
-      {hotspots.map((hotspot) => {
-        const hasProposal = mockProposals.some((p) => p.hotspotId === hotspot.id);
+      {spaces.map((space) => {
+        const hasProposal = getProposalsForSpace(space.id).length > 0;
         return (
           <HotspotMarker
-            key={hotspot.id}
-            hotspot={hotspot}
+            key={space.id}
+            space={space}
             hasProposal={hasProposal}
-            onClick={handleHotspotClick}
+            onClick={handleSpaceClick}
           />
         );
       })}

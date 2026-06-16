@@ -32,6 +32,10 @@ dist-ssr
 DEVELOPMENT.md
 IMPLEMENTATION_PLAN.md
 **/images/README.md
+Material/
+.claude/
+.vercel
+scripts/
 
 # Knowledge base (large corpus, exclude from Vite scanning)
 Knwlodge base/
@@ -45,3 +49,6 @@ deploy/app/__pycache__/
 deploy/.env
 deploy/app/trees/
 
+# Local presentation exports
+PRESENTAION/
+PRESENTATION/

@@ -7,6 +7,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import type { AgentFeedback } from '../../types';
+import { useTranslation } from 'react-i18next';
 import { AgentCard } from './AgentCard';
 import { theme } from '../../styles/theme';
 import './AgentPanel.css';
@@ -15,39 +16,75 @@ interface Props {
   feedback: AgentFeedback[];
 }
 
+type RadarTickProps = {
+  x?: number | string;
+  y?: number | string;
+  cx?: number | string;
+  cy?: number | string;
+  payload?: { value?: string };
+  textAnchor?: 'inherit' | 'start' | 'middle' | 'end';
+};
+
+function toNumber(value: number | string | undefined): number {
+  return typeof value === 'number' ? value : Number(value ?? 0);
+}
+
+/** Custom SVG tick for the radar chart - wraps 2-word names onto two lines
+ *  and nudges the top label away from the chart center. */
+function RadarTick({ x, y, cx, cy, payload, textAnchor = 'middle' }: RadarTickProps) {
+  const xPos = toNumber(x);
+  const yPos = toNumber(y);
+  const centerY = toNumber(cy ?? cx);
+  const words = (payload?.value ?? '').split(' ');
+  const line1 = words[0] ?? '';
+  const line2 = words.slice(1).join(' ');
+
+  const isTop = yPos < centerY - 10;
+  const yBase = yPos + (isTop ? -10 : 0);
+
+  return (
+    <text
+      x={xPos}
+      y={yBase}
+      textAnchor={textAnchor}
+      fill={theme.colors.textSecondary}
+      fontSize={10}
+      fontFamily={theme.fonts.primary}
+    >
+      <tspan x={xPos} dy="-7">{line1}</tspan>
+      {line2 && <tspan x={xPos} dy="14">{line2}</tspan>}
+    </text>
+  );
+}
+
 export function AgentPanel({ feedback }: Props) {
-  // Prepare radar chart data
+  const { t } = useTranslation();
+
   const radarData = feedback.map((f) => ({
     agent: f.name,
     score: f.score,
     fullMark: 5,
   }));
 
-  // Calculate average score
   const avgScore = (feedback.reduce((sum, f) => sum + f.score, 0) / feedback.length).toFixed(1);
 
   return (
     <div className="agent-panel">
       <div className="agent-panel-header">
-        <h3>Expert Analysis</h3>
+        <h3>{t('agents.title')}</h3>
         <div className="avg-score">
           <span className="avg-score-value">{avgScore}</span>
           <span className="avg-score-label">/ 5</span>
         </div>
       </div>
 
-      {/* Radar Chart */}
       <div className="radar-chart-wrapper">
-        <ResponsiveContainer width="100%" height={220}>
-          <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="70%">
+        <ResponsiveContainer width="100%" height={250}>
+          <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="60%">
             <PolarGrid stroke={theme.radar.gridStroke} strokeOpacity={0.3} />
             <PolarAngleAxis
               dataKey="agent"
-              tick={{
-                fontSize: 11,
-                fill: theme.colors.textSecondary,
-                fontFamily: theme.fonts.primary,
-              }}
+              tick={(props) => <RadarTick {...props} />}
             />
             <PolarRadiusAxis
               angle={90}
@@ -74,7 +111,6 @@ export function AgentPanel({ feedback }: Props) {
         </ResponsiveContainer>
       </div>
 
-      {/* Agent cards */}
       <div className="agent-cards">
         {feedback.map((agent) => (
           <AgentCard key={agent.agentId} agent={agent} />
