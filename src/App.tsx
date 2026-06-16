@@ -7,6 +7,7 @@ import { ProposalListPanel } from './components/proposal/ProposalListPanel';
 import { ProposalPanel } from './components/proposal/ProposalPanel';
 import { Header } from './components/ui/Header';
 import { SuggestFlow } from './components/flow/SuggestFlow';
+import { AttractMode } from './components/attract/AttractMode';
 import { useAppStore } from './store/useAppStore';
 
 export default function App() {
@@ -32,6 +33,9 @@ export default function App() {
 
       {/* Suggest flow modal */}
       <SuggestFlow />
+
+      {/* Booth attract mode — full-screen idle slideshow */}
+      <AttractMode />
 
       {/* Floating action button — visible only in browse mode */}
       {showSuggestFab && (

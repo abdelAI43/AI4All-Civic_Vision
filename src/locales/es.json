@@ -66,6 +66,17 @@
       "off": "Voz desactivada"
     }
   },
+  "attract": {
+    "cta": "Toca la pantalla para empezar",
+    "tips": [
+      "Toca un punto brillante del mapa para explorar un espacio",
+      "Mira cómo los vecinos reimaginaron la Plaça Catalunya, La Rambla y más",
+      "Pulsa «Sugerir un cambio» para diseñar tu propia idea",
+      "Describe tu visión en voz alta — solo habla, el micrófono escucha",
+      "Cinco expertos en urbanismo puntúan cada propuesta",
+      "Valora las ideas de los demás con estrellas"
+    ]
+  },
   "voting": {
     "ariaPanel": "Votación de la comunidad",
     "ariaStars": "Vota de una a cinco estrellas",
