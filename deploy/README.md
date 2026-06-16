@@ -24,7 +24,7 @@ User submits proposal (React frontend)
 │       → Jina AI embeds the query            │
 │       → Returns top 5 relevant PDF chunks    │
 │    3. Build prompt: system + context + query │
-│    4. Call Groq LLM (llama-3.1-8b)          │
+│    4. Call Groq LLM (llama-3.3-70b)         │
 │    5. Parse JSON response                    │
 │                                             │
 │  Return all 5 agent evaluations as JSON     │
@@ -61,7 +61,7 @@ Each agent has its own:
 | Server | FastAPI + Uvicorn | Async Python, fast, auto-docs at `/docs` |
 | Vector DB | ChromaDB (PersistentClient) | Local file-based, no external DB needed |
 | Embeddings | Jina AI (`jina-embeddings-v3`) | Free tier, OpenAI-compatible API |
-| LLM | Groq (`llama-3.1-8b-instant`) | Free tier, fast inference with lower token pressure |
+| LLM | Groq (`llama-3.3-70b-versatile`) | Free tier, very fast inference |
 | Hosting | Render (free) | Docker support, auto-deploy from GitHub |
 
 ## File Structure
@@ -113,8 +113,8 @@ The Barcelona PDF corpus (regulations, safety codes, social studies, heritage do
 
 1. Frontend sends `POST /api/evaluate` with proposal text and location
 2. For each agent (sequentially, to stay within Groq rate limits):
-   - `rag_chroma.py` embeds the query via Jina AI and retrieves top 8 similar chunks
-   - `rag_hybrid.py` returns top 3 chunks (optionally refined by PageIndex tree search)
+   - `rag_chroma.py` embeds the query via Jina AI and retrieves top 15 similar chunks
+   - `rag_hybrid.py` returns top 5 chunks (optionally refined by PageIndex tree search)
    - `agents.py` builds a prompt: system instructions + retrieved context + proposal
    - `llm_client.py` sends system + user messages to Groq's LLM
    - Response is parsed as JSON: `{score, summary, risks, recommendations, references}`
@@ -127,7 +127,7 @@ The backend uses the OpenAI Python SDK with configurable `base_url`. You can swa
 ```bash
 # Groq (default, free)
 LLM_BASE_URL=https://api.groq.com/openai/v1
-LLM_MODEL=llama-3.1-8b-instant
+LLM_MODEL=llama-3.3-70b-versatile
 
 # OpenAI (paid, best quality)
 LLM_BASE_URL=https://api.openai.com/v1
@@ -180,13 +180,10 @@ docker run -p 8001:8001 --env-file .env bcn-api
 |----------|----------|---------|-------------|
 | `LLM_BASE_URL` | Yes | `https://api.groq.com/openai/v1` | LLM provider endpoint |
 | `LLM_API_KEY` | Yes | — | LLM provider API key |
-| `LLM_MODEL` | Yes | `llama-3.1-8b-instant` | LLM model ID |
-| `LLM_MAX_TOKENS` | No | `600` | Maximum response tokens per agent |
+| `LLM_MODEL` | Yes | `llama-3.3-70b-versatile` | LLM model ID |
 | `EMBEDDING_BASE_URL` | Yes | `https://api.jina.ai/v1` | Embedding provider endpoint |
 | `EMBEDDING_API_KEY` | Yes | — | Embedding provider API key |
 | `EMBEDDING_MODEL` | Yes | `jina-embeddings-v3` | Embedding model ID |
-| `CHROMA_N_RESULTS` | No | `8` | Initial retrieval count per agent |
-| `FINAL_CONTEXT_CHUNKS` | No | `3` | Context chunks sent to each agent LLM |
 | `ENABLE_PAGEINDEX` | No | `false` | Enable Stage 2 tree search |
 | `FRONTEND_URL` | No | — | Frontend URL for CORS |
 | `PORT` | No | `8001` | Server port (Render sets this) |

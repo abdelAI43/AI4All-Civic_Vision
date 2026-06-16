@@ -24,8 +24,7 @@ TREES_DIR = APP_DIR / "trees"
 # ── LLM Provider (OpenAI-compatible) ────────────────────
 LLM_BASE_URL: str = os.getenv("LLM_BASE_URL", "https://api.groq.com/openai/v1")
 LLM_API_KEY: str = os.getenv("LLM_API_KEY", "")
-LLM_MODEL: str = os.getenv("LLM_MODEL", "llama-3.1-8b-instant")
-LLM_MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "600"))
+LLM_MODEL: str = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
 
 # ── Embedding Provider (Jina AI — free, OpenAI-compatible) ─
 EMBEDDING_BASE_URL: str = os.getenv("EMBEDDING_BASE_URL", "https://api.jina.ai/v1")
@@ -66,6 +65,6 @@ AGENT_DISPLAY: dict[str, dict[str, str]] = {
 }
 
 # ── Retrieval tunables ───────────────────────────────────
-CHROMA_N_RESULTS: int = int(os.getenv("CHROMA_N_RESULTS", "8"))
+CHROMA_N_RESULTS: int = 15
 PAGEINDEX_TOP_NODES: int = 5
-FINAL_CONTEXT_CHUNKS: int = int(os.getenv("FINAL_CONTEXT_CHUNKS", "3"))
+FINAL_CONTEXT_CHUNKS: int = 5
