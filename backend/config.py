@@ -28,8 +28,13 @@ OLLAMA_URL: str = os.getenv("OLLAMA_URL", "http://localhost:11434")
 OLLAMA_EMBED_URL: str = OLLAMA_URL  # ChromaDB 1.x OllamaEmbeddingFunction needs base URL
 OLLAMA_GENERATE_URL: str = f"{OLLAMA_URL}/api/generate"
 
-# ── Models ───────────────────────────────────────────────
+# ── LLM & Embedding Providers ───────────────────────────
+LLM_BASE_URL: str = os.getenv("LLM_BASE_URL", "http://localhost:11434")
+LLM_MODEL: str = os.getenv("LLM_MODEL", "gemma3:4b")
+EMBEDDING_BASE_URL: str = os.getenv("EMBEDDING_BASE_URL", "http://localhost:11434")
 EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
+
+# ── Models ───────────────────────────────────────────────
 TREE_GENERATION_MODEL: str = os.getenv("TREE_GENERATION_MODEL", "gemma3:12b")
 RUNTIME_LLM_MODEL: str = os.getenv("RUNTIME_LLM_MODEL", "gemma3:4b")
 
@@ -72,3 +77,9 @@ CATEGORY_FOLDERS: dict[int, str] = {
     4: "Category 4_ Heritage and urban identity",
     5: "Category 5_ Mobility and environment",
 }
+
+# ── Feature flags ────────────────────────────────────────
+ENABLE_PAGEINDEX: bool = os.getenv("ENABLE_PAGEINDEX", "false").lower() == "true"
+
+# ── CORS & Frontend ──────────────────────────────────────
+FRONTEND_URL: str = os.getenv("FRONTEND_URL", "")

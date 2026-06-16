@@ -8,6 +8,7 @@ import datetime as dt
 import logging
 import os
 import uuid
+from contextlib import asynccontextmanager
 
 import httpx
 from fastapi import FastAPI, HTTPException
@@ -61,8 +62,8 @@ app.add_middleware(
 )
 
 
-@app.on_event("startup")
-async def startup():
+@app.get("/health")
+async def health():
     logger.info("=== BCN Civic Vision API starting ===")
     logger.info("LLM provider:       %s (model: %s)", LLM_BASE_URL, LLM_MODEL)
     logger.info("Embedding provider: %s (model: %s)", EMBEDDING_BASE_URL, EMBEDDING_MODEL)
@@ -70,6 +71,7 @@ async def startup():
     logger.info("PageIndex enabled:  %s", ENABLE_PAGEINDEX)
     if FRONTEND_URL:
         logger.info("Frontend CORS:      %s", FRONTEND_URL)
+    return {"status": "ok"}
 
 
 class EvaluateRequest(BaseModel):
