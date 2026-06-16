@@ -1,33 +1,41 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Render Blueprint — Barcelona Civic Vision MAIN APP (frontend + its API server)
+#
+# This branch (Orender-frontend-deploy) deploys the React UI together with the
+# Node API server (scripts/api-server.ts), which serves the built dist/ AND the
+# /api/* serverless handlers from a single web service.
+#
+# NOTE: This is NOT the RAG backend. The 5-agent FastAPI backend is a separate
+# service (deploy/ + Dockerfile) already live at ai4all-civic-vision.onrender.com.
+# This app calls it over the network via RAG_BACKEND_URL — no Docker, no
+# vectorstores needed here. `runtime: node` makes Render ignore the Dockerfile.
+# ─────────────────────────────────────────────────────────────────────────────
 services:
   - type: web
-    name: bcn-civic-vision-api
-    runtime: docker
+    name: bcn-civic-vision-app
+    runtime: node
     plan: free
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
+    branch: Orender-frontend-deploy
+    # --include=dev: the build needs vite/typescript and start needs tsx,
+    # all of which are devDependencies.
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run api
+    healthCheckPath: /api/health
     envVars:
-      - key: LLM_API_KEY
+      # ── Frontend (baked into the bundle at build time) ──────────────────────
+      - key: VITE_MAPBOX_TOKEN
         sync: false
-      - key: LLM_BASE_URL
-        value: "https://api.groq.com/openai/v1"
-      - key: LLM_MODEL
-        value: "llama-3.3-70b-versatile"
-      - key: EMBEDDING_API_KEY
+      - key: VITE_SUPABASE_URL          # also read at runtime by api/proposals/create.ts
         sync: false
-      - key: EMBEDDING_BASE_URL
-        value: "https://api.jina.ai/v1"
-      - key: EMBEDDING_MODEL
-        value: "jina-embeddings-v3"
-      - key: ENABLE_PAGEINDEX
-        value: "false"
-      - key: FRONTEND_URL
+      - key: VITE_SUPABASE_ANON_KEY
         sync: false
-      - key: APP_URL
-        sync: false
-      - key: GOOGLE_GEMINI_API_KEY
-        sync: false
-      - key: VITE_SUPABASE_URL
+      - key: VITE_API_URL
+        value: https://ai4all-civic-vision.onrender.com
+      # ── API server (runtime only) ──────────────────────────────────────────
+      - key: GOOGLE_GEMINI_API_KEY      # image gen + voice + agent fallback
         sync: false
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
-    healthCheckPath: /api/health
+      - key: RAG_BACKEND_URL
+        value: https://ai4all-civic-vision.onrender.com
+      # APP_URL is auto-derived from RENDER_EXTERNAL_URL by api-server.ts.
