@@ -6,7 +6,7 @@ import json
 import logging
 from dataclasses import dataclass, field
 
-from config import AGENT_CATEGORY, AGENT_DISPLAY
+from config import AGENT_CATEGORY, AGENT_DISPLAY, MAX_CHUNK_CHARS
 from llm_client import call_llm
 from prompt_loader import load_system_prompt
 from rag_hybrid import RetrievedPassage, hybrid_retrieve
@@ -56,7 +56,11 @@ def _build_user_prompt(
     for i, p in enumerate(passages, 1):
         page_str = f", page {p.page}" if p.page else ""
         source = f"{p.source_file}{page_str}"
-        context_parts.append(f"[CONTEXT {i} — source: {source}]\n{p.text}")
+        # Truncate each chunk to cap input-token spend (Groq TPD budget).
+        text = p.text[:MAX_CHUNK_CHARS]
+        if len(p.text) > MAX_CHUNK_CHARS:
+            text += " …"
+        context_parts.append(f"[CONTEXT {i} — source: {source}]\n{text}")
 
     context_block = "\n\n".join(context_parts)
 

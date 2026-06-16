@@ -1,32 +1,67 @@
 {
-  "kind": "health",
+  "kind": "evaluation",
   "data": {
-    "status": "healthy",
-    "llm_provider": "https://api.groq.com/openai/v1",
-    "llm_model": "llama-3.3-70b-versatile",
-    "embedding_model": "jina-embeddings-v3",
-    "pageindex_enabled": false,
-    "collections": {
-      "cat1": {
-        "collection": "barcelona_cat1_local_regulations",
-        "vectorstore_exists": true
+    "agents": [
+      {
+        "agentId": "regulations",
+        "name": "Local Regulations",
+        "icon": "📋",
+        "score": 4,
+        "feedback": "The proposal to create a protected cycling corridor with fewer car lanes and more trees in Plaça Catalunya aligns with the Superblock program's goals of increasing green spaces and promoting sustainable transportation. However, the retrieved documents do not provide specific information on the regulatory requirements for such a project. The proposal may require special permits or approvals, but the Superblock program's emphasis on reclaiming streets for citizens and creating green infrastructure suggests a favorable context.",
+        "risks": [
+          "Potential conflicts with existing traffic regulations",
+          "Insufficient information on regulatory requirements"
+        ],
+        "recommendations": [
+          "Consult the Superblock program's guidelines and regulations",
+          "Conduct a thorough review of traffic and urban planning laws in Barcelona"
+        ],
+        "references": [
+          "019_Superblock health impact study (Mueller et al.).pdf p.12",
+          "018_Superblock Barcelona â€” Towards the City We Want.pdf p.6",
+          "017_Omplim de Vida els Carrers â€” Superblock government measure.pdf p.7"
+        ]
       },
-      "cat2": {
-        "collection": "barcelona_cat2_safety_building",
-        "vectorstore_exists": true
+      {
+        "agentId": "safety",
+        "name": "Safety",
+        "icon": "⚠️",
+        "score": 0,
+        "feedback": "Agent error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jes6kz59fsxacsjyh8ybwd4g` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99998, Requested 3221. Please try again in 46m21.216s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+        "risks": [],
+        "recommendations": [],
+        "references": []
       },
-      "cat3": {
-        "collection": "barcelona_cat3_social_value",
-        "vectorstore_exists": true
+      {
+        "agentId": "sociologist",
+        "name": "Sociologist",
+        "icon": "⚠️",
+        "score": 0,
+        "feedback": "Agent error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jes6kz59fsxacsjyh8ybwd4g` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99995, Requested 1962. Please try again in 28m10.848s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+        "risks": [],
+        "recommendations": [],
+        "references": []
       },
-      "cat4": {
-        "collection": "barcelona_cat4_heritage",
-        "vectorstore_exists": true
+      {
+        "agentId": "heritage",
+        "name": "Heritage",
+        "icon": "⚠️",
+        "score": 0,
+        "feedback": "Agent error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jes6kz59fsxacsjyh8ybwd4g` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99993, Requested 3023. Please try again in 43m25.824s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+        "risks": [],
+        "recommendations": [],
+        "references": []
       },
-      "cat5": {
-        "collection": "barcelona_cat5_mobility",
-        "vectorstore_exists": true
+      {
+        "agentId": "mobility",
+        "name": "Mobility",
+        "icon": "⚠️",
+        "score": 0,
+        "feedback": "Agent error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jes6kz59fsxacsjyh8ybwd4g` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99990, Requested 3219. Please try again in 46m12.576s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+        "risks": [],
+        "recommendations": [],
+        "references": []
       }
-    }
+    ]
   }
 }

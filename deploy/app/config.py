@@ -25,6 +25,8 @@ TREES_DIR = APP_DIR / "trees"
 LLM_BASE_URL: str = os.getenv("LLM_BASE_URL", "https://api.groq.com/openai/v1")
 LLM_API_KEY: str = os.getenv("LLM_API_KEY", "")
 LLM_MODEL: str = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+# Output cap per agent call. Lower = fewer tokens/day spent (Groq TPD budget).
+LLM_MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "400"))
 
 # ── Embedding Provider (Jina AI — free, OpenAI-compatible) ─
 EMBEDDING_BASE_URL: str = os.getenv("EMBEDDING_BASE_URL", "https://api.jina.ai/v1")
@@ -67,4 +69,7 @@ AGENT_DISPLAY: dict[str, dict[str, str]] = {
 # ── Retrieval tunables ───────────────────────────────────
 CHROMA_N_RESULTS: int = 15
 PAGEINDEX_TOP_NODES: int = 5
-FINAL_CONTEXT_CHUNKS: int = 5
+# Chunks fed to the LLM per agent and the max chars kept per chunk.
+# These two dominate input-token spend → tune them to fit the Groq TPD budget.
+FINAL_CONTEXT_CHUNKS: int = int(os.getenv("FINAL_CONTEXT_CHUNKS", "3"))
+MAX_CHUNK_CHARS: int = int(os.getenv("MAX_CHUNK_CHARS", "700"))
