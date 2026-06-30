@@ -67,7 +67,15 @@
     }
   },
   "attract": {
-    "cta": "Toca la pantalla per començar",
+    "cta": "Prem una tecla per començar",
+    "instructionsTitle": "Participa",
+    "instructions": [
+      "Suggereix un canvi escrivint o dient la teva idea",
+      "Activa el micròfon abans de parlar — prem el botó amb la icona del micròfon (no el de les llums RGB) fins que s'encengui",
+      "Pots participar fent clic a «Suggereix un canvi»",
+      "Tria un espai al mapa, escull un punt de vista i descriu el teu canvi",
+      "Canvia d'idioma quan vulguis — EN · CA · ES, a dalt a la dreta"
+    ],
     "tips": [
       "Toca un punt brillant del mapa per explorar un espai",
       "Mira com els veïns han reimaginat la Plaça Catalunya, la Rambla i més",

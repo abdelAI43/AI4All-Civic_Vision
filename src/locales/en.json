@@ -67,7 +67,15 @@
     }
   },
   "attract": {
-    "cta": "Touch the screen to start",
+    "cta": "Press any key to start",
+    "instructionsTitle": "Get involved",
+    "instructions": [
+      "Suggest a change by typing or speaking your idea",
+      "Turn the mic on before speaking — press the mic-icon button (not the RGB-light one) until its light glows",
+      "You can take part by clicking “Suggest a change”",
+      "Pick a space on the map, choose a viewpoint, then describe your change",
+      "Change language any time — EN · CA · ES, top-right"
+    ],
     "tips": [
       "Tap a glowing point on the map to explore a space",
       "See how neighbours reimagined Plaça Catalunya, La Rambla and more",

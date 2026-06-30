@@ -6,11 +6,12 @@ import { spaces } from '../../data/spaces';
 import './AttractMode.css';
 
 /** Booth attract mode: after a stretch of no interaction on the home map,
- *  fade in a full-screen slideshow of real proposal images with a multilingual
- *  call-to-action and a rotating tips ticker. Any interaction dismisses it. */
+ *  fade in a slideshow of real proposal images on a floating panel, with a
+ *  multilingual call-to-action, an instructions strip and a tips ticker.
+ *  Any interaction dismisses it. */
 
 const IDLE_MS = 20_000; // go idle after 20s of no interaction
-const SLIDE_MS = 5_000; // each image holds 5s
+const SLIDE_MS = 10_000; // each image holds 10s
 const CTA_MS = 3_000; // cycle the call-to-action language every 3s
 const TIP_MS = 6_000; // change the tip every 6s
 const LANGS = ['en', 'ca', 'es'] as const;
@@ -19,6 +20,59 @@ const LANGS = ['en', 'ca', 'es'] as const;
 const FALLBACK_IMAGES = spaces.flatMap((s) =>
   s.povImages.filter((p) => !p.isPlaceholder).map((p) => p.path),
 );
+
+// Minimal inline icons for the instructions strip (no icon-font dependency).
+const ICONS = ['mic', 'volume', 'spark', 'pin', 'globe'] as const;
+
+function InstructionIcon({ name }: { name: (typeof ICONS)[number] }) {
+  const common = {
+    width: 18,
+    height: 18,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.8,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+    'aria-hidden': true,
+  };
+  switch (name) {
+    case 'mic':
+      return (
+        <svg {...common}>
+          <rect x="9" y="3" width="6" height="11" rx="3" />
+          <path d="M5 11a7 7 0 0 0 14 0M12 18v3" />
+        </svg>
+      );
+    case 'volume':
+      return (
+        <svg {...common}>
+          <path d="M11 5 6 9H3v6h3l5 4V5z" />
+          <path d="M16 9a4 4 0 0 1 0 6" />
+        </svg>
+      );
+    case 'spark':
+      return (
+        <svg {...common}>
+          <path d="M12 3v18M3 12h18M6 6l12 12M18 6 6 18" />
+        </svg>
+      );
+    case 'pin':
+      return (
+        <svg {...common}>
+          <path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11z" />
+          <circle cx="12" cy="10" r="2.5" />
+        </svg>
+      );
+    case 'globe':
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" />
+        </svg>
+      );
+  }
+}
 
 function shuffle<T>(input: T[]): T[] {
   const arr = [...input];
@@ -118,30 +172,67 @@ export function AttractMode() {
 
   const ctaText = i18n.getFixedT(LANGS[ctaIdx % LANGS.length])('attract.cta');
 
-  // Cycle the tip text every TIP_MS; cycle the *language* once per full pass so
-  // every tip is eventually shown in EN, CA and ES.
-  const tipLang = LANGS[0];
-  const allTips = i18n.getFixedT(tipLang)('attract.tips', { returnObjects: true });
-  const tips = Array.isArray(allTips) ? (allTips as string[]) : [];
-  const count = tips.length || 1;
-  const tipText = i18n.getFixedT(LANGS[Math.floor(tipIdx / count) % LANGS.length])(
-    'attract.tips',
-    { returnObjects: true },
-  );
-  const tipList = Array.isArray(tipText) ? (tipText as string[]) : [];
+  // Tips cycle every TIP_MS; the language advances once per full pass so every
+  // tip is eventually shown in EN, CA and ES.
+  const baseTips = i18n.getFixedT(LANGS[0])('attract.tips', { returnObjects: true });
+  const count = Array.isArray(baseTips) && baseTips.length ? baseTips.length : 1;
+  const tipPass = i18n.getFixedT(LANGS[Math.floor(tipIdx / count) % LANGS.length])('attract.tips', {
+    returnObjects: true,
+  });
+  const tipList = Array.isArray(tipPass) ? (tipPass as string[]) : [];
   const tip = tipList[tipIdx % count] ?? '';
+
+  // Instructions follow the currently-selected UI language.
+  const instructionsRaw = i18n.t('attract.instructions', { returnObjects: true });
+  const instructions = Array.isArray(instructionsRaw) ? (instructionsRaw as string[]) : [];
+  const instructionsTitle = i18n.t('attract.instructionsTitle');
 
   const next = images[(pair.cur + 1) % images.length];
 
   return (
     <div className="attract" role="presentation">
-      <img className="attract-img" src={images[pair.prev]} alt="" aria-hidden />
-      <img key={pair.cur} className="attract-img attract-img-top" src={images[pair.cur]} alt="" aria-hidden />
+      <div
+        className="attract-bg"
+        style={{ backgroundImage: `url("${images[pair.cur]}")` }}
+        aria-hidden
+      />
       <div className="attract-scrim" />
 
-      <div className="attract-content">
-        <span className="attract-pulse" aria-hidden />
-        <p className="attract-cta">{ctaText}</p>
+      <div className="attract-wordmark" aria-hidden>
+        <span className="attract-wordmark-badge">BCN</span> Civic Vision
+      </div>
+
+      <div className="attract-stage">
+        <div className="attract-figure">
+          <div className="attract-frame">
+            <img className="attract-img" src={images[pair.prev]} alt="" aria-hidden />
+            <img
+              key={pair.cur}
+              className="attract-img attract-img-top"
+              src={images[pair.cur]}
+              alt=""
+              aria-hidden
+            />
+          </div>
+          <div className="attract-cta-row">
+            <span className="attract-pulse" aria-hidden />
+            <p className="attract-cta">{ctaText}</p>
+          </div>
+        </div>
+
+        <aside className="attract-aside">
+          <p className="attract-aside-title">{instructionsTitle}</p>
+          <ul className="attract-instructions">
+            {instructions.map((text, i) => (
+              <li key={i} className="attract-instruction">
+                <span className="attract-instruction-icon">
+                  <InstructionIcon name={ICONS[i] ?? 'spark'} />
+                </span>
+                <span className="attract-instruction-text">{text}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
 
       <div className="attract-tips">
