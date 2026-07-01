@@ -70,10 +70,11 @@
     "cta": "Pulsa una tecla para empezar",
     "instructionsTitle": "Participa",
     "instructions": [
-      "Sugiere un cambio escribiendo o diciendo tu idea",
+      "Mira qué han sugerido otros — haz clic en un espacio del mapa para ver propuestas anteriores",
+      "Añade tu propia idea — haz clic en «Sugerir un cambio»",
+      "Elige un espacio, escoge un punto de vista y describe tu cambio escribiendo o hablando",
       "Activa el micrófono antes de hablar — pulsa el botón con el icono del micrófono (no el de las luces RGB) hasta que se encienda",
-      "Puedes participar haciendo clic en «Sugerir un cambio»",
-      "Elige un espacio en el mapa, escoge un punto de vista y describe tu cambio",
+      "¿Prefieres escribir? Desactiva la Voz con el botón «Voz activada» del panel",
       "Cambia de idioma cuando quieras — EN · CA · ES, arriba a la derecha"
     ],
     "tips": [

@@ -70,10 +70,11 @@
     "cta": "Press any key to start",
     "instructionsTitle": "Get involved",
     "instructions": [
-      "Suggest a change by typing or speaking your idea",
+      "See what others suggested — click a space on the map to browse past proposals",
+      "Add your own idea — click “Suggest a change”",
+      "Choose a space, pick a viewpoint, then describe your change by typing or speaking",
       "Turn the mic on before speaking — press the mic-icon button (not the RGB-light one) until its light glows",
-      "You can take part by clicking “Suggest a change”",
-      "Pick a space on the map, choose a viewpoint, then describe your change",
+      "Prefer to type? Turn Voice off with the “Voice on” button in the panel",
       "Change language any time — EN · CA · ES, top-right"
     ],
     "tips": [

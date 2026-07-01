@@ -22,12 +22,12 @@ const FALLBACK_IMAGES = spaces.flatMap((s) =>
 );
 
 // Minimal inline icons for the instructions strip (no icon-font dependency).
-const ICONS = ['mic', 'volume', 'spark', 'pin', 'globe'] as const;
+const ICONS = ['eye', 'spark', 'pin', 'bulb', 'micoff', 'globe'] as const;
 
 function InstructionIcon({ name }: { name: (typeof ICONS)[number] }) {
   const common = {
-    width: 18,
-    height: 18,
+    width: 22,
+    height: 22,
     viewBox: '0 0 24 24',
     fill: 'none',
     stroke: 'currentColor',
@@ -37,18 +37,11 @@ function InstructionIcon({ name }: { name: (typeof ICONS)[number] }) {
     'aria-hidden': true,
   };
   switch (name) {
-    case 'mic':
+    case 'eye':
       return (
         <svg {...common}>
-          <rect x="9" y="3" width="6" height="11" rx="3" />
-          <path d="M5 11a7 7 0 0 0 14 0M12 18v3" />
-        </svg>
-      );
-    case 'volume':
-      return (
-        <svg {...common}>
-          <path d="M11 5 6 9H3v6h3l5 4V5z" />
-          <path d="M16 9a4 4 0 0 1 0 6" />
+          <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z" />
+          <circle cx="12" cy="12" r="3" />
         </svg>
       );
     case 'spark':
@@ -62,6 +55,21 @@ function InstructionIcon({ name }: { name: (typeof ICONS)[number] }) {
         <svg {...common}>
           <path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11z" />
           <circle cx="12" cy="10" r="2.5" />
+        </svg>
+      );
+    case 'bulb':
+      return (
+        <svg {...common}>
+          <path d="M9 18h6M10 21h4" />
+          <path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.9 1 1 1.6h5c.1-.6.5-1.2 1-1.6A6 6 0 0 0 12 3z" />
+        </svg>
+      );
+    case 'micoff':
+      return (
+        <svg {...common}>
+          <rect x="9" y="3" width="6" height="11" rx="3" />
+          <path d="M5 11a7 7 0 0 0 11.5 5.4M19 11a7 7 0 0 1-.3 2M12 18v3" />
+          <path d="M4 4 20 20" />
         </svg>
       );
     case 'globe':

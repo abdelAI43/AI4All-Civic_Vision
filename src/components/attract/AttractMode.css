@@ -81,8 +81,8 @@
   display: flex;
   align-items: stretch;
   gap: var(--space-6);
-  height: 66vh;
-  max-width: 94vw;
+  height: 78vh;
+  max-width: 96vw;
   padding: 0 var(--space-6);
 }
 
@@ -100,7 +100,7 @@
   flex: 1;
   height: 100%;
   aspect-ratio: 16 / 10;
-  max-width: 72vw;
+  max-width: 82vw;
   border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(245, 240, 235, 0.18);
@@ -196,13 +196,13 @@
 /* ---- Instructions strip (as tall as the image) ---- */
 .attract-aside {
   flex-shrink: 0;
-  width: 270px;
+  width: 360px;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: var(--space-4);
-  padding: var(--space-5) var(--space-5);
+  padding: var(--space-6);
   background: rgba(28, 24, 18, 0.6);
   border: 1px solid rgba(245, 240, 235, 0.14);
   border-radius: 18px;
@@ -212,16 +212,16 @@
 .attract-aside-title {
   color: #fff;
   font-family: var(--font-primary);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: 600;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .attract-instructions {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .attract-instruction {
@@ -233,14 +233,14 @@
 .attract-instruction-icon {
   flex-shrink: 0;
   color: #e8985f;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 .attract-instruction-text {
-  color: rgba(245, 240, 235, 0.92);
+  color: rgba(245, 240, 235, 0.94);
   font-family: var(--font-primary);
-  font-size: var(--text-sm);
-  line-height: 1.45;
+  font-size: 1.08rem;
+  line-height: 1.5;
 }
 
 /* ---- Tips ticker ---- */

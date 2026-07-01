@@ -70,10 +70,11 @@
     "cta": "Prem una tecla per començar",
     "instructionsTitle": "Participa",
     "instructions": [
-      "Suggereix un canvi escrivint o dient la teva idea",
+      "Mira què han suggerit els altres — fes clic a un espai del mapa per veure propostes anteriors",
+      "Afegeix la teva idea — fes clic a «Suggereix un canvi»",
+      "Tria un espai, escull un punt de vista i descriu el teu canvi escrivint o parlant",
       "Activa el micròfon abans de parlar — prem el botó amb la icona del micròfon (no el de les llums RGB) fins que s'encengui",
-      "Pots participar fent clic a «Suggereix un canvi»",
-      "Tria un espai al mapa, escull un punt de vista i descriu el teu canvi",
+      "Prefereixes escriure? Desactiva la Veu amb el botó «Veu activada» del panell",
       "Canvia d'idioma quan vulguis — EN · CA · ES, a dalt a la dreta"
     ],
     "tips": [
