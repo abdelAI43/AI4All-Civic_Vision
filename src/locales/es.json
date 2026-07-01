@@ -47,7 +47,7 @@
       "progress2": "Generando tu visión…",
       "progress3": "Consultando a los especialistas…",
       "estimated": "Esto tarda unos 15–30 segundos",
-      "carouselTitle": "Mientras esperas — mira lo que otros han imaginado aquí",
+      "carouselTitle": "Mientras esperas, mira lo que otros han imaginado aquí",
       "carouselFallbackTitle": "Explora este espacio mientras esperas"
     },
     "step6": {
@@ -70,18 +70,18 @@
     "cta": "Pulsa una tecla para empezar",
     "instructionsTitle": "Participa",
     "instructions": [
-      "Mira qué han sugerido otros — haz clic en un espacio del mapa para ver propuestas anteriores",
-      "Añade tu propia idea — haz clic en «Sugerir un cambio»",
+      "Mira qué han sugerido otros: haz clic en un espacio del mapa para ver propuestas anteriores",
+      "Añade tu propia idea haciendo clic en «Sugerir un cambio»",
       "Elige un espacio, escoge un punto de vista y describe tu cambio escribiendo o hablando",
-      "Activa el micrófono antes de hablar — pulsa el botón con el icono del micrófono (no el de las luces RGB) hasta que se encienda",
+      "Activa el micrófono antes de hablar. Pulsa el botón con el icono del micrófono (no el de las luces RGB) hasta que se encienda",
       "¿Prefieres escribir? Desactiva la Voz con el botón «Voz activada» del panel",
-      "Cambia de idioma cuando quieras — EN · CA · ES, arriba a la derecha"
+      "Cambia de idioma cuando quieras. EN · CA · ES, arriba a la derecha"
     ],
     "tips": [
       "Toca un punto brillante del mapa para explorar un espacio",
       "Mira cómo los vecinos reimaginaron la Plaça Catalunya, La Rambla y más",
       "Pulsa «Sugerir un cambio» para diseñar tu propia idea",
-      "Describe tu visión en voz alta — solo habla, el micrófono escucha",
+      "Describe tu visión en voz alta. Solo habla, el micrófono escucha",
       "Cinco expertos en urbanismo puntúan cada propuesta",
       "Valora las ideas de los demás con estrellas"
     ]

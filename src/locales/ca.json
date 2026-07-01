@@ -47,7 +47,7 @@
       "progress2": "Generant la teva visió…",
       "progress3": "Consultant els especialistes…",
       "estimated": "Això triga uns 15–30 segons",
-      "carouselTitle": "Mentre esperes — mira el que altres han imaginat aquí",
+      "carouselTitle": "Mentre esperes, mira el que altres han imaginat aquí",
       "carouselFallbackTitle": "Explora aquest espai mentre esperes"
     },
     "step6": {
@@ -70,18 +70,18 @@
     "cta": "Prem una tecla per començar",
     "instructionsTitle": "Participa",
     "instructions": [
-      "Mira què han suggerit els altres — fes clic a un espai del mapa per veure propostes anteriors",
-      "Afegeix la teva idea — fes clic a «Suggereix un canvi»",
+      "Mira què han suggerit els altres: fes clic a un espai del mapa per veure propostes anteriors",
+      "Afegeix la teva idea fent clic a «Suggereix un canvi»",
       "Tria un espai, escull un punt de vista i descriu el teu canvi escrivint o parlant",
-      "Activa el micròfon abans de parlar — prem el botó amb la icona del micròfon (no el de les llums RGB) fins que s'encengui",
+      "Activa el micròfon abans de parlar. Prem el botó amb la icona del micròfon (no el de les llums RGB) fins que s'encengui",
       "Prefereixes escriure? Desactiva la Veu amb el botó «Veu activada» del panell",
-      "Canvia d'idioma quan vulguis — EN · CA · ES, a dalt a la dreta"
+      "Canvia d'idioma quan vulguis. EN · CA · ES, a dalt a la dreta"
     ],
     "tips": [
       "Toca un punt brillant del mapa per explorar un espai",
       "Mira com els veïns han reimaginat la Plaça Catalunya, la Rambla i més",
       "Prem «Suggereix un canvi» per dissenyar la teva pròpia idea",
-      "Descriu la teva visió en veu alta — només parla, el micròfon escolta",
+      "Descriu la teva visió en veu alta. Només parla, el micròfon escolta",
       "Cinc experts en urbanisme puntuen cada proposta",
       "Valora les idees dels altres amb estrelles"
     ]

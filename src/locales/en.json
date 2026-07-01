@@ -47,7 +47,7 @@
       "progress2": "Generating your vision…",
       "progress3": "Consulting the specialists…",
       "estimated": "This takes about 15–30 seconds",
-      "carouselTitle": "While you wait — see what others imagined here",
+      "carouselTitle": "While you wait, see what others imagined here",
       "carouselFallbackTitle": "Explore this space while you wait"
     },
     "step6": {
@@ -70,18 +70,18 @@
     "cta": "Press any key to start",
     "instructionsTitle": "Get involved",
     "instructions": [
-      "See what others suggested — click a space on the map to browse past proposals",
-      "Add your own idea — click “Suggest a change”",
+      "See what others suggested: click a space on the map to browse past proposals",
+      "Add your own idea by clicking “Suggest a change”",
       "Choose a space, pick a viewpoint, then describe your change by typing or speaking",
-      "Turn the mic on before speaking — press the mic-icon button (not the RGB-light one) until its light glows",
+      "Turn the mic on before speaking. Press the mic-icon button (not the RGB-light one) until its light glows",
       "Prefer to type? Turn Voice off with the “Voice on” button in the panel",
-      "Change language any time — EN · CA · ES, top-right"
+      "Change language any time. EN · CA · ES, top-right"
     ],
     "tips": [
       "Tap a glowing point on the map to explore a space",
       "See how neighbours reimagined Plaça Catalunya, La Rambla and more",
       "Press “Suggest a Change” to design your own idea",
-      "Describe your vision out loud — just speak, the microphone is listening",
+      "Describe your vision out loud. Just speak, the microphone is listening",
       "Five urban-planning experts score every proposal",
       "Give other people's ideas a star rating"
     ]
