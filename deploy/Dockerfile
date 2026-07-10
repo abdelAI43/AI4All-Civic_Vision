@@ -9,8 +9,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY app/ ./app/
 
-# Copy vectorstores (large layer — cached between deploys if unchanged)
-COPY data/vectorstores/ ./data/vectorstores/
+# Copy vectorstores if they exist (optional, will be populated at runtime if needed)
+RUN mkdir -p ./data/vectorstores/
+COPY data/vectorstores/ ./data/vectorstores/ || true
 
 # Expose port (Render injects $PORT at runtime)
 EXPOSE 8001

@@ -4,7 +4,7 @@ dist
 .git
 .claude
 .playwright-cli
-deploy/data/vectorstores
+# deploy/data/vectorstores - keep if you want to include vectorstores in the image
 *.log
 .env
 .env.*

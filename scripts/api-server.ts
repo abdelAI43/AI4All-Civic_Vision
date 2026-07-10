@@ -8,11 +8,11 @@
  *   Terminal 2 ? npm run api   (this server on :3001)
  */
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { fileURLToPath } from 'node:url';
-import { resolve, dirname } from 'node:path';
+import { resolve, dirname, join, normalize, extname } from 'node:path';
 
 // —— Load .env before handlers are called —————————————————————————————————————
 const __dir = dirname(fileURLToPath(import.meta.url));
@@ -31,6 +31,13 @@ try {
   console.log('? Loaded .env');
 } catch {
   console.warn('??  No .env file found — make sure env vars are set manually');
+}
+
+// —— Production: APP_URL defaults to Render's own external URL ————————————————————
+// In a single-service deploy this server also serves the static frontend, so the
+// base POV images live at the same origin. Render injects RENDER_EXTERNAL_URL.
+if (!process.env.APP_URL && process.env.RENDER_EXTERNAL_URL) {
+  process.env.APP_URL = process.env.RENDER_EXTERNAL_URL;
 }
 
 // —— Import handlers (env vars are now set before any handler is called) ———————
@@ -87,6 +94,59 @@ const ROUTES: Record<string, Handler> = {
   '/api/voice/agent':               agentHandler,
 };
 
+// —— Static frontend serving (single-service deploy) ————————————————————————————————
+// The built Vite app lives in ../dist. We serve it (with SPA fallback to
+// index.html) for every non-/api path, so one Render web service hosts both the
+// UI and the API. In local dev you run Vite separately, so dist/ may be absent.
+const DIST_DIR = resolve(__dir, '../dist');
+
+const MIME: Record<string, string> = {
+  '.html': 'text/html; charset=utf-8',
+  '.js':   'text/javascript; charset=utf-8',
+  '.mjs':  'text/javascript; charset=utf-8',
+  '.css':  'text/css; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.map':  'application/json; charset=utf-8',
+  '.svg':  'image/svg+xml',
+  '.png':  'image/png',
+  '.jpg':  'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.gif':  'image/gif',
+  '.ico':  'image/x-icon',
+  '.woff':  'font/woff',
+  '.woff2': 'font/woff2',
+  '.ttf':   'font/ttf',
+  '.mp3':  'audio/mpeg',
+  '.wav':  'audio/wav',
+  '.txt':  'text/plain; charset=utf-8',
+};
+
+function serveStatic(urlPath: string, nodeRes: ServerResponse) {
+  if (!existsSync(DIST_DIR)) {
+    nodeRes.writeHead(404, { 'Content-Type': 'application/json' });
+    nodeRes.end(JSON.stringify({ error: 'Frontend build not found. Run `npm run build` first.' }));
+    return;
+  }
+
+  // Resolve the request to a file inside dist/, guarding against path traversal.
+  const rel = normalize(decodeURIComponent(urlPath)).replace(/^([/\\]|\.\.[/\\])+/, '');
+  let filePath = join(DIST_DIR, rel);
+  if (!filePath.startsWith(DIST_DIR) || !existsSync(filePath) || statSync(filePath).isDirectory()) {
+    filePath = join(DIST_DIR, 'index.html'); // SPA fallback
+  }
+
+  try {
+    const data = readFileSync(filePath);
+    const type = MIME[extname(filePath).toLowerCase()] ?? 'application/octet-stream';
+    nodeRes.writeHead(200, { 'Content-Type': type });
+    nodeRes.end(data);
+  } catch {
+    nodeRes.writeHead(404, { 'Content-Type': 'application/json' });
+    nodeRes.end(JSON.stringify({ error: 'Not found' }));
+  }
+}
+
 // —— Server ———————————————————————————————————————————————————————————————————————
 const PORT = Number(process.env.PORT) || 3001;
 
@@ -111,27 +171,37 @@ createServer(async (req: IncomingMessage, nodeRes: ServerResponse) => {
     return;
   }
 
-  const handler = ROUTES[path];
+  // —— API routes ————————————————————————————————————————————————————————————————
+  if (path.startsWith('/api/')) {
+    const handler = ROUTES[path];
 
-  if (!handler) {
-    nodeRes.writeHead(404, { 'Content-Type': 'application/json' });
-    nodeRes.end(JSON.stringify({ error: 'API route not found', path }));
+    if (!handler) {
+      nodeRes.writeHead(404, { 'Content-Type': 'application/json' });
+      nodeRes.end(JSON.stringify({ error: 'API route not found', path }));
+      return;
+    }
+
+    try {
+      const body = await readBody(req);
+      const mockReq = { method: req.method, body, query: {} };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await handler(mockReq as any, makeRes(nodeRes) as any);
+    } catch (err) {
+      makeRes(nodeRes)
+        .status(500)
+        .json({ error: err instanceof Error ? err.message : 'Unknown server error' });
+    }
     return;
   }
 
-  try {
-    const body = await readBody(req);
-    const mockReq = { method: req.method, body, query: {} };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await handler(mockReq as any, makeRes(nodeRes) as any);
-  } catch (err) {
-    makeRes(nodeRes)
-      .status(500)
-      .json({ error: err instanceof Error ? err.message : 'Unknown server error' });
-  }
-}).listen(PORT, () => {
-  console.log(`\n??  API server ready at http://localhost:${PORT}`);
-  console.log('    Routes:');
+  // —— Everything else: the built frontend (SPA) ————————————————————————————————————
+  serveStatic(path, nodeRes);
+}).listen(PORT, '0.0.0.0', () => {
+  console.log(`\n??  Server ready on port ${PORT}`);
+  console.log(existsSync(DIST_DIR)
+    ? `    Serving frontend from ${DIST_DIR}`
+    : '    No dist/ found — API only (run `npm run build` to serve the UI)');
+  console.log('    API routes:');
   Object.keys(ROUTES).forEach((r) => console.log(`      ${r}`));
   console.log('');
 });
